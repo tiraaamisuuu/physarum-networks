@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
+  <a href="#native-desktop-viewer">Desktop viewer</a> ·
   <a href="#measured-results">Results</a> ·
   <a href="docs/MATHEMATICAL_MODEL.md">Mathematics</a> ·
   <a href="docs/LITERATURE.md">Literature</a> ·
@@ -49,6 +50,24 @@ The source is node **0** and the sink is node **3**. The routes have total lengt
 The baseline uses `I₀ = 2`, `γ = 1.8`, `Δt = 0.05`, initial `D = 0.5`, and duration `30`. Tests compare pressures and flows with hand-calculated circuit solutions and compare the update with an exact scalar Euler recurrence. Halving the time step approximately halves the measured transient error for this fixture. The fine-step comparison has finite numerical error.
 
 **Validation scope:** all 14 CTest cases passed locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
+
+## Native desktop viewer
+
+The native Qt viewer runs the same C++ engine and displays its exact recorded states. Network conductivity, flow trajectories, pressure values and solver diagnostics remain synchronized when playing, stepping or scrubbing through a run.
+
+After building the C++ project, install the viewer dependencies and launch:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r desktop/requirements.txt -r analysis/requirements.txt
+.venv/bin/python desktop/viewer.py
+```
+
+On macOS, double-click **`Launch Physarum.command`** in Finder. It prepares the local environment if needed, builds the engine and opens the native window. Press **Play** to animate the baseline.
+
+![Native Qt viewer with the network, scientific plots and numerical state tables.](docs/assets/desktop-viewer.jpg)
+
+Use **File → Open run folder** to inspect an existing CLI experiment, or **Save run archive** to preserve the original CSV, configuration, compiler/Eigen metadata and summary together. Plot zoom, pan and figure export use Matplotlib's standard toolbar. Playback rate is independent of the model time step. See [viewer documentation](docs/DESKTOP_VIEWER.md) for display conventions, parameter bounds and checks.
 
 ## Quick start
 
@@ -117,6 +136,7 @@ The next step is to establish a source-audited replication protocol before addin
 | [`tests/`](tests) | Analytic fixtures and numerical checks |
 | [`experiments/configs/`](experiments/configs) | Reproducible experiment parameters |
 | [`analysis/`](analysis) | Independent CSV checks and figure generation |
+| [`desktop/`](desktop) | Native Qt viewer and C++ run-data bridge |
 | [`results/phase1/`](results/phase1) | Recorded histories, diagnostics and figures |
 | [`docs/`](docs) | [Project brief](docs/PROJECT_BRIEF.md), [literature notes](docs/LITERATURE.md), [bibliography](docs/references.bib) and research record |
 

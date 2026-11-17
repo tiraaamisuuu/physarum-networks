@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Install Eigen on Ubuntu
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev
+        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev libegl1
       - name: Install Eigen on macOS
         if: runner.os == 'macOS'
         run: brew list eigen >/dev/null 2>&1 || brew install eigen
@@ -33,3 +33,12 @@ jobs:
         run: cmake --build build --parallel 2
       - name: Run mathematical and CLI tests
         run: ctest --test-dir build --output-on-failure --timeout 60
+      - name: Prepare native viewer tests
+        run: |
+          python3 -m venv .venv
+          .venv/bin/python -m pip install -r desktop/requirements.txt -r analysis/requirements.txt
+          .venv/bin/python -c "import PySide6.QtWidgets; import matplotlib.backends.backend_qtagg"
+      - name: Test viewer data and synchronized states
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: .venv/bin/python -m unittest discover -s tests -p test_viewer.py -v

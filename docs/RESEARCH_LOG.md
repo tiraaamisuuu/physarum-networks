@@ -50,3 +50,17 @@ Replaced the initial development brief with a concise public research brief, ret
 The new CI configuration is intended to test Ubuntu and macOS; hosted outcomes must be read from the actual workflow run, not inferred from its presence.
 
 The first hosted Ubuntu Release build completed successfully on 17 November 2026, including all 14 CTest cases. This verifies Linux compilation and the mathematical tests in addition to the initial local macOS checks. Run: https://github.com/tiraaamisuuu/physarum-networks/actions/runs/44124562834 .
+
+## 17 November 2026 - native experiment viewer
+
+Added a native Qt/Matplotlib desktop viewer, while keeping simulation in the existing C++ executable. The initial browser prototype was discarded; it was never committed. This is a viewing and experiment-control layer for the same four-node Phase 1 fixture, not a new network model or a Phase 2 experiment.
+
+The interface synchronizes a conductivity-width schematic, full D/Q trajectories, exact step/time selection, node pressures, four-edge tables and C++ solver diagnostics. Parameter edits remain separate from the loaded data until a new run is requested. C++ execution is placed on a worker thread. Model dt and display playback rate are distinct. Colour-stroke omission below D=1e-10 is a documented drawing convention, never an alteration to the record.
+
+Run archives preserve the original CSV, configuration, compiler/Eigen metadata and summary byte for byte. The reader checks finite values, configuration validity, step/time/edge ordering, shared pressures, the pressure-flow law and conservation of demand. Backward error and condition estimates are displayed from the C++ record; the viewer does not claim to recompute those independently.
+
+Verification on this Mac: 14 CTest cases and 16 viewer/data tests passed. Tests include archive round trips, corrupt records, a fresh C++ run, discrete playback, exact-step synchronization, draft-parameter separation, signed-flow plot bounds and the worker-thread handoff. In the visible native window, I0 was changed to 1 and the initial route flows were 2/3 and 1/3; the run was saved and reopened successfully. The baseline was then restored and step 120 selected: t=6, short-route D approximately 0.770611 and long-route D approximately 0.00636404. The native screenshot records this state.
+
+A restart test exposed a local macOS setup issue: Qt platform-plugin DLLs in .venv had UF_HIDDEN set. Python could see the files, while Qt directory scanning omitted them. Clearing that Finder display flag restored discovery. A targeted macOS startup compatibility function and regression test now cover the observed condition. The viewer dependency is pinned to PySide6-Essentials 6.10.2, with unnecessary Qt add-ons removed. The cause of the file flags being set has not been established.
+
+The new viewer tests are included in the Ubuntu/macOS workflow; hosted results must be checked in the workflow, rather than inferred from this configuration. These checks validate the viewer's data handling and synchronization, not every model parameter choice or scientific conclusion.

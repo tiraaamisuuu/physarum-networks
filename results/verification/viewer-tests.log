@@ -1,0 +1,22 @@
+test_default_parameters (test_viewer.RunDataTest.test_default_parameters) ... ok
+test_finite_but_inconsistent_flow_rejected (test_viewer.RunDataTest.test_finite_but_inconsistent_flow_rejected) ... ok
+test_fresh_cpp_run (test_viewer.RunDataTest.test_fresh_cpp_run) ... ok
+test_hidden_platform_plugin_can_be_discovered (test_viewer.RunDataTest.test_hidden_platform_plugin_can_be_discovered) ... ok
+test_invalid_configuration_rejected (test_viewer.RunDataTest.test_invalid_configuration_rejected) ... ok
+test_invalid_parameters (test_viewer.RunDataTest.test_invalid_parameters) ... ok
+test_nonfinite_and_reordered_history_rejected (test_viewer.RunDataTest.test_nonfinite_and_reordered_history_rejected) ... ok
+test_recorded_analytic_state (test_viewer.RunDataTest.test_recorded_analytic_state) ... ok
+test_save_load_preserves_original_bytes (test_viewer.RunDataTest.test_save_load_preserves_original_bytes) ... ok
+test_truncated_history_rejected (test_viewer.RunDataTest.test_truncated_history_rejected) ... ok
+test_draft_parameters_do_not_change_loaded_run (test_viewer.ViewerStateTest.test_draft_parameters_do_not_change_loaded_run) ... qt.qpa.fonts: Populating font family aliases took 76 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+ok
+test_playback_uses_discrete_frame (test_viewer.ViewerStateTest.test_playback_uses_discrete_frame) ... ok
+test_reverse_flow_visible_without_axis_clipping (test_viewer.ViewerStateTest.test_reverse_flow_visible_without_axis_clipping) ... ok
+test_scrub_synchronizes_tables_and_plot (test_viewer.ViewerStateTest.test_scrub_synchronizes_tables_and_plot) ... ok
+test_step_restart_and_end (test_viewer.ViewerStateTest.test_step_restart_and_end) ... ok
+test_worker_applies_fresh_run (test_viewer.ViewerStateTest.test_worker_applies_fresh_run) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.185s
+
+OK
