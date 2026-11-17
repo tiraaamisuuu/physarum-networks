@@ -43,7 +43,7 @@ There are four nodes and two routes from source 0 to sink 3:
 
 Each edge starts at conductivity 0.5. With current 2, the initial short-route flow is 4/3 and the long-route flow is 2/3. The conductivities then change simultaneously using explicit Euler with gamma=1.8 and dt=0.05. The two edges on each route have matching conductivity by symmetry. At t=30, the shorter route carries almost all the flow. This result agrees with the known shorter route for this initial condition; it is not a proof of general shortest-path convergence for the saturating model.
 
-The runner takes exactly `CONFIG OUTPUT_DIRECTORY`. The config contains seven required `key=value` entries: `dt`, `steps`, `gamma`, `current`, `initial_conductivity`, `source`, `sink`. Blank lines and `#` comments are supported; unknown and duplicate keys fail. The CLI fixes the four-node topology; other graphs can be constructed through the C++ API. Edge orientations only set the sign of reported flows. Source and sink must differ, and current must be positive. There is no randomness or seed in this milestone.
+The baseline invocation takes `CONFIG OUTPUT_DIRECTORY`. The config contains seven required `key=value` entries: `dt`, `steps`, `gamma`, `current`, `initial_conductivity`, `source`, `sink`. Blank lines and `#` comments are supported; unknown and duplicate keys fail. Without optional graph arguments, the CLI uses the four-node topology. The spatial extension accepts `CONFIG OUTPUT_DIRECTORY EDGES_CSV NODE_COUNT [DEMAND_CSV]`; see below. Edge orientations only set the sign of reported flows. Source and sink must differ, and current must be positive. The C++ engine has no internal randomness; spatial demand is prepared and recorded by the Python experiment layer.
 
 Each run writes:
 
@@ -57,7 +57,7 @@ The dense Eigen LDLT solve uses a grounded, diagonally scaled graph Laplacian. T
 
 Restricting `0 < dt <= 1` guarantees nonnegative Euler updates in exact arithmetic. It does **not** establish stability or accuracy of the coupled nonlinear dynamics; the refinement experiment measures accuracy only for this fixture. Default acceptance checks are `max conservation error <= 1e-12 + 1e-10 I0`, grounded backward error <=1e-12, and scaled reciprocal condition estimate >=1e-14. These numerical safeguards are implementation choices, not published biological parameters. See [the mathematical derivation](MATHEMATICAL_MODEL.md).
 
-The fixed terminal pair, uniform initial conductivities, four-node graph and Euler step size are our validation choices. The paper samples random food sources on a fine mesh, including extra representation of Tokyo. No stochastic selection, geography, topology growth, damage experiment, fungal model, performance metric comparison or Phase 2 reproduction is implemented.
+The fixed terminal pair, uniform initial conductivities, four-node graph and Euler step size are our validation choices. The paper samples random food sources on a fine mesh, including extra representation of Tokyo. The separate London extension adds frozen geography, an assumed crossing cost and recorded synthetic terminal schedules. It does not implement topology growth, damage recovery, a fungal model, performance comparisons or a Phase 2 reproduction.
 
 ## Verification on 16 November 2026
 
@@ -76,3 +76,16 @@ ctest --test-dir build-debug --output-on-failure
 ```
 
 An AddressSanitizer+UndefinedBehaviorSanitizer build compiled, but its first test hung before `main` in Apple's ASan runtime initialization. A process sample showed recursive allocator initialization and a sanitizer spin lock. The run was stopped. ASan validation is therefore inconclusive, not passed; this does not affect the completed Release tests. The runtime observation is recorded in the research log.
+
+
+## Arbitrary graphs and scheduled demand
+
+The spatial runner also accepts:
+
+```sh
+./build/physarum_run CONFIG OUTPUT_DIRECTORY EDGES_CSV NODE_COUNT DEMAND_CSV
+```
+
+`EDGES_CSV` has the exact header `edge,from,to,length`, consecutive zero-based edge IDs, zero-based endpoints and positive finite effective resistance lengths. It supports 2–256 nodes and 1–4,000 edges; desktop bounds are narrower. Without `DEMAND_CSV`, the config's fixed pair is used. With it, the header is `step,source,sink`, followed by exactly `steps+1` distinct, valid terminal pairs at consecutive states. The first scheduled pair is written into the resolved config. The actual schedule is copied to the output. Conductivities persist when terminals change.
+
+Custom graph histories append `source,sink` to the original baseline columns. All edge flows, pressures, conductivities and terminals on a row refer to the same state. The terminal pair used in an update is the pair recorded at its starting state. Baseline history columns and numeric results remain unchanged. Compiler/Eigen details and the schedule source are recorded in metadata. The engine does not interpret geography or generate randomness; those choices are explicit inputs. See [the London protocol](LONDON_EXPERIMENT.md) for the meaning of its effective edge cost and terminal-switching interval.

@@ -22,6 +22,12 @@ PhysarumModel::PhysarumModel(Graph graph, std::vector<double> initial, Parameter
 FlowResult PhysarumModel::flow() const {
     return solve_flow(graph_,d_,parameters_.source,parameters_.sink,parameters_.current);
 }
+void PhysarumModel::set_terminals(std::size_t source, std::size_t sink) {
+    if (source>=graph_.node_count() || sink>=graph_.node_count() || source==sink)
+        throw std::invalid_argument("Invalid source and sink");
+    parameters_.source=source;
+    parameters_.sink=sink;
+}
 void PhysarumModel::step() {
     const auto state=flow();
     auto next=d_;

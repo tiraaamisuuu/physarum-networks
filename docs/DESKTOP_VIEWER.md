@@ -1,18 +1,20 @@
-# Native desktop viewer
+# Native desktop viewers
 
 The viewer is a Qt desktop application using PySide6 and Matplotlib. Python provides the interface and plotting; the existing C++20/Eigen executable remains responsible for all simulation steps. There is no web server or browser component.
 
-## Start
+The default application opens the **London geographic explorer**. Start with the [London tutorial and research protocol](LONDON_EXPERIMENT.md) for station selection, junctions, restrictions, geography, demand assumptions and automatically saved spatial runs. The rest of this document describes the original **four-node validation viewer**, available through the London File menu or `--fixture`. Its schematic geometry and archive format are deliberately separate from the spatial experiment.
+
+## Start the four-node viewer
 
 Build the engine using the README commands. Use Python 3.12–3.14 (3.14 is the tested version); the pinned Qt release does not support Python 3.15. Then:
 
 ```sh
 python3.14 -m venv .venv
 .venv/bin/python -m pip install -r desktop/requirements.txt -r analysis/requirements.txt
-.venv/bin/python desktop/viewer.py
+.venv/bin/python desktop/viewer.py --fixture
 ```
 
-On macOS, `Launch Physarum.command` supplies the same setup/build/launch sequence. Keep its terminal open while using the viewer. The initial window computes the default baseline and pauses at step zero. Press **Play** to animate.
+On macOS, `Launch Physarum.command` supplies the same setup/build/launch sequence. Keep its terminal open while using the viewer. The launcher opens the London example. Use File → Open validated four-node viewer to inspect the baseline, which pauses at step zero. Press **Play** to animate.
 
 To open an existing experiment directly:
 
@@ -62,7 +64,7 @@ Run the existing C++ tests and the additional viewer checks:
 
 ```sh
 ctest --test-dir build --output-on-failure
-QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p test_viewer.py -v
+QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
 The viewer suite covers analytic baseline values, a fresh C++ run, exact archive round trips, malformed and inconsistent records, parameter/dataset separation, synchronized state selection, step/restart/end behaviour, signed-flow axis limits and the worker-thread handoff. Native window interaction is also checked on the development Mac; offscreen tests do not establish native UI behaviour on every operating system.

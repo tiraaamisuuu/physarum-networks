@@ -45,4 +45,4 @@ jobs:
       - name: Test viewer data and synchronized states
         env:
           QT_QPA_PLATFORM: offscreen
-        run: .venv/bin/python -m unittest discover -s tests -p test_viewer.py -v
+        run: .venv/bin/python -m unittest discover -s tests -p 'test_*.py' -v

@@ -1,0 +1,35 @@
+test_display_overlay_does_not_change_geometry (test_spatial.GeographicViewerTest.test_display_overlay_does_not_change_geometry) ... qt.qpa.fonts: Populating font family aliases took 83 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost.
+ok
+test_preview_is_distinct_from_a_run (test_spatial.GeographicViewerTest.test_preview_is_distinct_from_a_run) ... ok
+test_real_london_run_and_synchronized_selection (test_spatial.GeographicViewerTest.test_real_london_run_and_synchronized_selection) ... ok
+test_cost_and_overlay_separation (test_spatial.GeometryTest.test_cost_and_overlay_separation) ... ok
+test_demand_schedule_reproducible_and_station_only (test_spatial.GeometryTest.test_demand_schedule_reproducible_and_station_only) ... ok
+test_geography_snapshot (test_spatial.GeometryTest.test_geography_snapshot) ... ok
+test_incomplete_river_coverage_rejected (test_spatial.GeometryTest.test_incomplete_river_coverage_rejected) ... ok
+test_restrictions_do_not_silently_add_links (test_spatial.GeometryTest.test_restrictions_do_not_silently_add_links) ... ok
+test_segments (test_spatial.GeometryTest.test_segments) ... ok
+test_arbitrary_graph_pressure_matches_independent_numpy (test_spatial.SpatialIntegrationTest.test_arbitrary_graph_pressure_matches_independent_numpy) ... ok
+test_euler_corruption_detected_after_physical_flow_checks (test_spatial.SpatialIntegrationTest.test_euler_corruption_detected_after_physical_flow_checks) ... ok
+test_invalid_cli_schedule_rejected (test_spatial.SpatialIntegrationTest.test_invalid_cli_schedule_rejected) ... ok
+test_recorded_schedule_replay_is_byte_identical (test_spatial.SpatialIntegrationTest.test_recorded_schedule_replay_is_byte_identical) ... ok
+test_default_parameters (test_viewer.RunDataTest.test_default_parameters) ... ok
+test_finite_but_inconsistent_flow_rejected (test_viewer.RunDataTest.test_finite_but_inconsistent_flow_rejected) ... ok
+test_fresh_cpp_run (test_viewer.RunDataTest.test_fresh_cpp_run) ... ok
+test_hidden_platform_plugin_can_be_discovered (test_viewer.RunDataTest.test_hidden_platform_plugin_can_be_discovered) ... ok
+test_invalid_configuration_rejected (test_viewer.RunDataTest.test_invalid_configuration_rejected) ... ok
+test_invalid_parameters (test_viewer.RunDataTest.test_invalid_parameters) ... ok
+test_nonfinite_and_reordered_history_rejected (test_viewer.RunDataTest.test_nonfinite_and_reordered_history_rejected) ... ok
+test_recorded_analytic_state (test_viewer.RunDataTest.test_recorded_analytic_state) ... ok
+test_save_load_preserves_original_bytes (test_viewer.RunDataTest.test_save_load_preserves_original_bytes) ... ok
+test_truncated_history_rejected (test_viewer.RunDataTest.test_truncated_history_rejected) ... ok
+test_draft_parameters_do_not_change_loaded_run (test_viewer.ViewerStateTest.test_draft_parameters_do_not_change_loaded_run) ... ok
+test_playback_uses_discrete_frame (test_viewer.ViewerStateTest.test_playback_uses_discrete_frame) ... ok
+test_reverse_flow_visible_without_axis_clipping (test_viewer.ViewerStateTest.test_reverse_flow_visible_without_axis_clipping) ... ok
+test_scrub_synchronizes_tables_and_plot (test_viewer.ViewerStateTest.test_scrub_synchronizes_tables_and_plot) ... ok
+test_step_restart_and_end (test_viewer.ViewerStateTest.test_step_restart_and_end) ... ok
+test_worker_applies_fresh_run (test_viewer.ViewerStateTest.test_worker_applies_fresh_run) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 5.344s
+
+OK

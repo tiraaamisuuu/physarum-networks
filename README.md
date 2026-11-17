@@ -24,7 +24,7 @@
 
 This research project implements the adaptive tube model of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894) in C++20. Pressure differences drive flow; flow reinforces tube conductivity; the updated conductivities redistribute the next flow.
 
-The current milestone is a small, independently testable numerical baseline: four nodes, two competing routes, a fixed source and sink, and reproducible results. Larger network reproduction, changing transport demand and disruption recovery are future research directions.
+The core has an independently checked four-node numerical baseline. A native desktop explorer now applies the same equations to **real London station locations**, with editable hypothetical connections, recorded synthetic demand and an explicit Thames crossing cost. This geographic example is exploratory; it is not a Tube engineering design or a replication of the published Tokyo experiment.
 
 ## See the adaptation
 
@@ -49,11 +49,11 @@ The source is node **0** and the sink is node **3**. The routes have total lengt
 
 The baseline uses `I₀ = 2`, `γ = 1.8`, `Δt = 0.05`, initial `D = 0.5`, and duration `30`. Tests compare pressures and flows with hand-calculated circuit solutions and compare the update with an exact scalar Euler recurrence. Halving the time step approximately halves the measured transient error for this fixture. The fine-step comparison has finite numerical error.
 
-**Validation scope:** all 14 CTest cases passed locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
+**Validation scope:** the current 15 CTest cases pass locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64; 29 Python checks cover both native viewers, geographic preparation and run integrity. The table above records the original Phase 1 experiment. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
 
 ## Native desktop viewer
 
-The native Qt viewer runs the same C++ engine and displays its exact recorded states. Network conductivity, flow trajectories, pressure values and solver diagnostics remain synchronized when playing, stepping or scrubbing through a run.
+The native Qt explorer opens a **46-station London example with 183 possible connections**. Station positions come from TfL, the Thames centreline from OpenStreetMap, and sampled elevation from Copernicus/Open-Meteo. The C++ engine computes every state; Python provides the interface and scientific plots. Normal use works offline with frozen geographic inputs.
 
 After building the C++ project, install the viewer dependencies and launch. The pinned viewer stack supports Python 3.12–3.14 and is tested with 3.14:
 
@@ -63,11 +63,22 @@ python3.14 -m venv .venv
 .venv/bin/python desktop/viewer.py
 ```
 
-On macOS, double-click **`Launch Physarum.command`** in Finder. It prepares the local environment if needed, builds the engine and opens the native window. Press **Play** to animate the baseline.
+On macOS, double-click **`Launch Physarum.command`** in Finder. It prepares the local environment if needed, builds the engine and opens the native window. Press **Play** to watch connections reinforce and weaken.
 
-![Native Qt viewer with the network, scientific plots and numerical state tables.](docs/assets/desktop-viewer.jpg)
+![Actual native London explorer with station geography, conductivity and flow trajectories, and recorded values.](docs/assets/london-explorer.jpg)
 
-Use **File → Open run folder** to inspect an existing CLI experiment, or **Save run archive** to preserve the original CSV, configuration, compiler/Eigen metadata and summary together. Plot zoom, pan and figure export use Matplotlib's standard toolbar. Playback rate is independent of the model time step. See [viewer documentation](docs/DESKTOP_VIEWER.md) for display conventions, parameter bounds and checks.
+- Click stations or links to inspect their values and trajectories.
+- Choose different stations, add hypothetical junctions or drag restricted rectangles, then **Run adaptation**.
+- Try Thames penalties of 0 and 2 with the same seed to explore the effect of an assumed crossing cost.
+- Every run saves its scene, cost assumptions, exact demand schedule, C++ output and software hashes locally.
+
+**Real geography does not make the transport assumptions real:** demand is synthetic, links are straight candidate segments, and surface elevation is visual context only. The crossing penalty is an assumed km-equivalent resistance length. Capacity, passenger journey times, service patterns and ground conditions are not modelled. [London guide and protocol](docs/LONDON_EXPERIMENT.md) · [Data provenance and licences](data/london/README.md)
+
+![Four computed geographic states of the default London example.](docs/assets/london-evolution.png)
+
+*Fixed width scale proportional to √D; pale outlines retain possible connections. Actual recorded states, arbitrary model time. [Figure provenance](docs/assets/README.md).*
+
+The original four-node viewer is available from **File → Open validated four-node viewer**, or `.venv/bin/python desktop/viewer.py --fixture`. It retains run archives and analytic-fixture inspection. [Viewer documentation](docs/DESKTOP_VIEWER.md).
 
 ## Quick start
 
@@ -90,6 +101,8 @@ ctest --test-dir build --output-on-failure
 On Ubuntu, install `build-essential`, `cmake` and `libeigen3-dev` with your package manager, then use the same configure, build, test and run commands. See [build and experiment instructions](docs/BUILDING.md) for configuration options and solver diagnostics.
 
 ### Reproduce the figures
+
+For the London snapshots, run `.venv/bin/python analysis/make_london_figure.py` after installing both desktop and analysis dependencies. It computes the frozen default example, saves the raw run locally and writes PNG/SVG snapshots with a compact provenance JSON.
 
 The C++ program performs the simulation. Python validates the exported CSV data and generates the plots. The recorded analysis environment uses Python 3.14; dependency versions are pinned.
 
@@ -126,7 +139,7 @@ The core uses a dense, diagonally scaled Eigen LDLT solver. It retains positive 
 
 The fixed terminals, uniform initialization and four-node graph are validation choices. The 2010 paper uses random food-source pairs and a fine mesh. This repository does **not** yet reproduce its Tokyo experiment, establish general shortest-path convergence for the sigmoid law, or demonstrate resilience or real transport-system feasibility. The dense solver is intended for small graphs, and Euler step-size accuracy must be checked for each setup. Local AddressSanitizer verification remains inconclusive because its runtime stalled before `main`; the separate UBSan run passed.
 
-The next step is to establish a source-audited replication protocol before adding stochastic network experiments. No originality claim is made for the implemented baseline.
+The London explorer is a separately documented geographic extension with synthetic terminal sampling, added to support hands-on exploration. A source-audited reproduction protocol and controlled numerical/statistical studies remain necessary before interpreting it as published network reproduction or transport research evidence. No originality claim is made.
 
 ## Explore the project
 
@@ -136,7 +149,8 @@ The next step is to establish a source-audited replication protocol before addin
 | [`tests/`](tests) | Analytic fixtures and numerical checks |
 | [`experiments/configs/`](experiments/configs) | Reproducible experiment parameters |
 | [`analysis/`](analysis) | Independent CSV checks and figure generation |
-| [`desktop/`](desktop) | Native Qt viewer and C++ run-data bridge |
+| [`desktop/`](desktop) | Native geographic explorer, four-node viewer and C++ data bridges |
+| [`data/london/`](data/london) | Frozen TfL/OSM/elevation inputs and source attribution |
 | [`results/phase1/`](results/phase1) | Recorded histories, diagnostics and figures |
 | [`docs/`](docs) | [Project brief](docs/PROJECT_BRIEF.md), [literature notes](docs/LITERATURE.md), [bibliography](docs/references.bib) and research record |
 

@@ -1,0 +1,8779 @@
+{
+  "schema_version": 1,
+  "name": "London Tube exploratory connections",
+  "retrieved_utc": "2026-11-17T22:10:37.136652+00:00",
+  "prepared_utc": "2026-11-17T22:35:22.182414+00:00",
+  "projection": {
+    "crs": "EPSG:27700",
+    "units": "km",
+    "pyproj": "3.8.0",
+    "operation": "Inverse of OSGB36 to WGS 84 (6) + British National Grid (with axis order normalized for visualization)",
+    "advertised_accuracy_m": 2.0
+  },
+  "station_catalog": [
+    {
+      "tfl_id": "940GZZLUACT",
+      "name": "Acton Town",
+      "lat": 51.503057,
+      "lon": -0.280462,
+      "x": 519.4459783873209,
+      "y": 179.6371841365972,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUALD",
+      "name": "Aldgate",
+      "lat": 51.514246,
+      "lon": -0.075689,
+      "x": 533.6249715534703,
+      "y": 181.23518186924997,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUADE",
+      "name": "Aldgate East",
+      "lat": 51.515037,
+      "lon": -0.072384,
+      "x": 533.8519697767214,
+      "y": 181.32917840703024,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUALP",
+      "name": "Alperton",
+      "lat": 51.540627,
+      "lon": -0.29961,
+      "x": 518.0199661486392,
+      "y": 183.78414899240255,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUAMS",
+      "name": "Amersham",
+      "lat": 51.674126,
+      "lon": -0.607714,
+      "x": 496.3710125599888,
+      "y": 198.17915753477521,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUAGL",
+      "name": "Angel",
+      "lat": 51.53184,
+      "lon": -0.10635,
+      "x": 531.4469404284912,
+      "y": 183.13619891104108,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUACY",
+      "name": "Archway",
+      "lat": 51.565478,
+      "lon": -0.134819,
+      "x": 529.3770034998754,
+      "y": 186.82616452893998,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUASG",
+      "name": "Arnos Grove",
+      "lat": 51.616446,
+      "lon": -0.133062,
+      "x": 529.3540286535592,
+      "y": 192.49716417885728,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUASL",
+      "name": "Arsenal",
+      "lat": 51.558655,
+      "lon": -0.107457,
+      "x": 531.2930120136749,
+      "y": 186.11614138971007,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBST",
+      "name": "Baker Street",
+      "lat": 51.522883,
+      "lon": -0.15713,
+      "x": 527.9500233856364,
+      "y": 182.0502077947071,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBLM",
+      "name": "Balham",
+      "lat": 51.443288,
+      "lon": -0.152997,
+      "x": 528.4600311012601,
+      "y": 173.2062053268463,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBNK",
+      "name": "Bank",
+      "lat": 51.513132,
+      "lon": -0.090047,
+      "x": 532.6319833359839,
+      "y": 181.08520329847042,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBBN",
+      "name": "Barbican",
+      "lat": 51.520275,
+      "lon": -0.097993,
+      "x": 532.0599948985713,
+      "y": 181.86516794099288,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBKG",
+      "name": "Barking",
+      "lat": 51.539321,
+      "lon": 0.081053,
+      "x": 544.4209836235077,
+      "y": 184.32116822139923,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBKE",
+      "name": "Barkingside",
+      "lat": 51.585689,
+      "lon": 0.088585,
+      "x": 544.7960184226688,
+      "y": 189.49222562342823,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBSC",
+      "name": "Barons Court",
+      "lat": 51.490311,
+      "lon": -0.213427,
+      "x": 524.1329918025057,
+      "y": 178.33119727826445,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZBPSUST",
+      "name": "Battersea Power Station",
+      "lat": 51.479932,
+      "lon": -0.142142,
+      "x": 529.1110023546914,
+      "y": 177.3001977647823,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBWT",
+      "name": "Bayswater",
+      "lat": 51.512284,
+      "lon": -0.187938,
+      "x": 525.8419939053595,
+      "y": 180.81817687911627,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBEC",
+      "name": "Becontree",
+      "lat": 51.540331,
+      "lon": 0.127016,
+      "x": 547.604998218696,
+      "y": 184.52515924577665,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBZP",
+      "name": "Belsize Park",
+      "lat": 51.550311,
+      "lon": -0.164648,
+      "x": 527.3519673685344,
+      "y": 185.0872151256593,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBMY",
+      "name": "Bermondsey",
+      "lat": 51.49775,
+      "lon": -0.063993,
+      "x": 534.4850147102998,
+      "y": 179.42219021074877,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBLG",
+      "name": "Bethnal Green",
+      "lat": 51.527222,
+      "lon": -0.055506,
+      "x": 534.9870084794502,
+      "y": 182.7151639541663,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBKF",
+      "name": "Blackfriars",
+      "lat": 51.511581,
+      "lon": -0.103659,
+      "x": 531.691967220158,
+      "y": 180.8881651367263,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBLR",
+      "name": "Blackhorse Road",
+      "lat": 51.586919,
+      "lon": -0.04115,
+      "x": 535.8049985077697,
+      "y": 189.38021154746576,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBND",
+      "name": "Bond Street",
+      "lat": 51.514304,
+      "lon": -0.149723,
+      "x": 528.4879831105052,
+      "y": 181.10915629045468,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBOR",
+      "name": "Borough",
+      "lat": 51.501199,
+      "lon": -0.09337,
+      "x": 532.4359826362314,
+      "y": 179.75220647198665,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBOS",
+      "name": "Boston Manor",
+      "lat": 51.495635,
+      "lon": -0.324939,
+      "x": 516.3780138659508,
+      "y": 178.7402371372099,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBDS",
+      "name": "Bounds Green",
+      "lat": 51.607034,
+      "lon": -0.124235,
+      "x": 529.9919798247997,
+      "y": 191.46614977539448,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBWR",
+      "name": "Bow Road",
+      "lat": 51.52694,
+      "lon": -0.025128,
+      "x": 537.0950031876598,
+      "y": 182.7402432997488,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBTX",
+      "name": "Brent Cross",
+      "lat": 51.57665,
+      "lon": -0.213622,
+      "x": 523.8850306846807,
+      "y": 187.9322009243979,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBXN",
+      "name": "Brixton",
+      "lat": 51.462618,
+      "lon": -0.114888,
+      "x": 531.0530046888058,
+      "y": 175.4232080772143,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBBB",
+      "name": "Bromley-by-Bow",
+      "lat": 51.524839,
+      "lon": -0.011538,
+      "x": 538.0440164706661,
+      "y": 182.53213979379274,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBKH",
+      "name": "Buckhurst Hill",
+      "lat": 51.626605,
+      "lon": 0.046757,
+      "x": 541.770987017177,
+      "y": 193.96022805696447,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUBTK",
+      "name": "Burnt Oak",
+      "lat": 51.602774,
+      "lon": -0.264048,
+      "x": 520.3219883073908,
+      "y": 190.75320973426057,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCAR",
+      "name": "Caledonian Road",
+      "lat": 51.548519,
+      "lon": -0.118493,
+      "x": 530.5570235241581,
+      "y": 184.96923912719333,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCTN",
+      "name": "Camden Town",
+      "lat": 51.539292,
+      "lon": -0.14274,
+      "x": 528.9019643769169,
+      "y": 183.9001940919331,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCWR",
+      "name": "Canada Water",
+      "lat": 51.497931,
+      "lon": -0.049405,
+      "x": 535.4970204856521,
+      "y": 179.46920005692175,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCYF",
+      "name": "Canary Wharf",
+      "lat": 51.503488,
+      "lon": -0.018246,
+      "x": 537.6429964624132,
+      "y": 180.14524283681186,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCGT",
+      "name": "Canning Town",
+      "lat": 51.513584,
+      "lon": 0.008322,
+      "x": 539.4560073756198,
+      "y": 181.31819304178202,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCST",
+      "name": "Cannon Street",
+      "lat": 51.51151,
+      "lon": -0.090432,
+      "x": 532.6099761378179,
+      "y": 180.90413496326755,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCPK",
+      "name": "Canons Park",
+      "lat": 51.607701,
+      "lon": -0.294693,
+      "x": 518.186995114052,
+      "y": 191.25117380546354,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCAL",
+      "name": "Chalfont & Latimer",
+      "lat": 51.667985,
+      "lon": -0.560689,
+      "x": 499.6360189153035,
+      "y": 197.55923832471007,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCFM",
+      "name": "Chalk Farm",
+      "lat": 51.544118,
+      "lon": -0.153388,
+      "x": 528.1500115188819,
+      "y": 184.41817394173506,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCHL",
+      "name": "Chancery Lane",
+      "lat": 51.518247,
+      "lon": -0.111583,
+      "x": 531.1230025381973,
+      "y": 181.61522881095513,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCHX",
+      "name": "Charing Cross",
+      "lat": 51.50741,
+      "lon": -0.127277,
+      "x": 530.0650121959771,
+      "y": 180.38213482571226,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCSM",
+      "name": "Chesham",
+      "lat": 51.705208,
+      "lon": -0.611247,
+      "x": 496.06097944483327,
+      "y": 201.6312192640059,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCWL",
+      "name": "Chigwell",
+      "lat": 51.617916,
+      "lon": 0.075041,
+      "x": 543.7560216019003,
+      "y": 193.0492108369578,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCWP",
+      "name": "Chiswick Park",
+      "lat": 51.494627,
+      "lon": -0.267972,
+      "x": 520.3350040269796,
+      "y": 178.72016192738775,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCYD",
+      "name": "Chorleywood",
+      "lat": 51.654358,
+      "lon": -0.518461,
+      "x": 502.5869970175936,
+      "y": 196.10215455126115,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCPC",
+      "name": "Clapham Common",
+      "lat": 51.461742,
+      "lon": -0.138317,
+      "x": 529.4280259079252,
+      "y": 175.28416259158706,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCPN",
+      "name": "Clapham North",
+      "lat": 51.465135,
+      "lon": -0.130016,
+      "x": 529.9950176959073,
+      "y": 175.6761642111091,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCPS",
+      "name": "Clapham South",
+      "lat": 51.452654,
+      "lon": -0.147582,
+      "x": 528.8099956957319,
+      "y": 174.25723149119335,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCKS",
+      "name": "Cockfosters",
+      "lat": 51.65152,
+      "lon": -0.149171,
+      "x": 528.1400035393448,
+      "y": 196.3692319077567,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCND",
+      "name": "Colindale",
+      "lat": 51.595424,
+      "lon": -0.249919,
+      "x": 521.3200078584746,
+      "y": 189.9591722379329,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCSD",
+      "name": "Colliers Wood",
+      "lat": 51.41816,
+      "lon": -0.178086,
+      "x": 526.7860057475775,
+      "y": 170.36824006603274,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCGN",
+      "name": "Covent Garden",
+      "lat": 51.513093,
+      "lon": -0.124436,
+      "x": 530.2459681471119,
+      "y": 181.01915233945027,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUCXY",
+      "name": "Croxley",
+      "lat": 51.647044,
+      "lon": -0.441718,
+      "x": 507.91300253626133,
+      "y": 195.3992167928341,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUDGE",
+      "name": "Dagenham East",
+      "lat": 51.544096,
+      "lon": 0.166017,
+      "x": 550.2970275365432,
+      "y": 185.023188831233,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUDGY",
+      "name": "Dagenham Heathway",
+      "lat": 51.541639,
+      "lon": 0.147527,
+      "x": 549.0230141312303,
+      "y": 184.7121666935498,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUDBN",
+      "name": "Debden",
+      "lat": 51.645386,
+      "lon": 0.083782,
+      "x": 544.2739873475957,
+      "y": 196.1211576313889,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUDOH",
+      "name": "Dollis Hill",
+      "lat": 51.551955,
+      "lon": -0.239068,
+      "x": 522.1879819503565,
+      "y": 185.14320227996777,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEBY",
+      "name": "Ealing Broadway",
+      "lat": 51.515017,
+      "lon": -0.301457,
+      "x": 517.9579928066072,
+      "y": 180.93318463502092,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUECM",
+      "name": "Ealing Common",
+      "lat": 51.51014,
+      "lon": -0.288265,
+      "x": 518.8860050513797,
+      "y": 180.41216030296158,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUECT",
+      "name": "Earl's Court",
+      "lat": 51.492063,
+      "lon": -0.193378,
+      "x": 525.5200226254054,
+      "y": 178.56018368486508,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEAN",
+      "name": "East Acton",
+      "lat": 51.516612,
+      "lon": -0.247248,
+      "x": 521.7150305676511,
+      "y": 181.1992444412292,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEFY",
+      "name": "East Finchley",
+      "lat": 51.587131,
+      "lon": -0.165012,
+      "x": 527.2239863550114,
+      "y": 189.18114989227703,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEHM",
+      "name": "East Ham",
+      "lat": 51.538948,
+      "lon": 0.051186,
+      "x": 542.3510237414916,
+      "y": 184.2211909635454,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEPY",
+      "name": "East Putney",
+      "lat": 51.459205,
+      "lon": -0.211,
+      "x": 524.3859908201797,
+      "y": 174.87619968743454,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEAE",
+      "name": "Eastcote",
+      "lat": 51.576506,
+      "lon": -0.397373,
+      "x": 511.15301742841325,
+      "y": 187.62114035057246,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEGW",
+      "name": "Edgware",
+      "lat": 51.613653,
+      "lon": -0.274928,
+      "x": 519.5399798037961,
+      "y": 191.94519514888066,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUERB",
+      "name": "Edgware Road (Bakerloo)",
+      "lat": 51.520299,
+      "lon": -0.17015,
+      "x": 527.0539855666054,
+      "y": 181.74018889610127,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUERC",
+      "name": "Edgware Road (Circle Line)",
+      "lat": 51.519858,
+      "lon": -0.167832,
+      "x": 527.2160269391602,
+      "y": 181.69517166941822,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEAC",
+      "name": "Elephant & Castle",
+      "lat": 51.494536,
+      "lon": -0.100606,
+      "x": 531.9529993015653,
+      "y": 178.99820450338862,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEPK",
+      "name": "Elm Park",
+      "lat": 51.549775,
+      "lon": 0.19864,
+      "x": 552.5400054082071,
+      "y": 185.72217922389524,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEMB",
+      "name": "Embankment",
+      "lat": 51.507058,
+      "lon": -0.122666,
+      "x": 530.3859974470089,
+      "y": 180.35118890161726,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEPG",
+      "name": "Epping",
+      "lat": 51.69368,
+      "lon": 0.113767,
+      "x": 546.1929718435911,
+      "y": 201.55117540325568,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUEUS",
+      "name": "Euston",
+      "lat": 51.527999,
+      "lon": -0.133785,
+      "x": 529.5549986754942,
+      "y": 182.66017149993561,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUESQ",
+      "name": "Euston Square",
+      "lat": 51.525604,
+      "lon": -0.135829,
+      "x": 529.4200042503732,
+      "y": 182.39022399618716,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUFLP",
+      "name": "Fairlop",
+      "lat": 51.595618,
+      "lon": 0.091004,
+      "x": 544.9320079176817,
+      "y": 190.60113580167467,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUFCN",
+      "name": "Farringdon",
+      "lat": 51.520252,
+      "lon": -0.104913,
+      "x": 531.5799832876123,
+      "y": 181.85015444149548,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUFYC",
+      "name": "Finchley Central",
+      "lat": 51.600921,
+      "lon": -0.192527,
+      "x": 525.2799849724779,
+      "y": 190.66719557192928,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUFYR",
+      "name": "Finchley Road",
+      "lat": 51.546825,
+      "lon": -0.179845,
+      "x": 526.3080000655881,
+      "y": 184.67322775922472,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUFPK",
+      "name": "Finsbury Park",
+      "lat": 51.564158,
+      "lon": -0.106825,
+      "x": 531.3209788916961,
+      "y": 186.72923103059404,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUFBY",
+      "name": "Fulham Broadway",
+      "lat": 51.480081,
+      "lon": -0.195422,
+      "x": 525.410972731331,
+      "y": 177.22423766243475,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGTH",
+      "name": "Gants Hill",
+      "lat": 51.576544,
+      "lon": 0.066185,
+      "x": 543.2730177767063,
+      "y": 188.43118902809866,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGTR",
+      "name": "Gloucester Road",
+      "lat": 51.494316,
+      "lon": -0.182658,
+      "x": 526.2579751793484,
+      "y": 178.8291457503815,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGGN",
+      "name": "Golders Green",
+      "lat": 51.572259,
+      "lon": -0.194039,
+      "x": 525.254007620241,
+      "y": 187.47722940885131,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGHK",
+      "name": "Goldhawk Road",
+      "lat": 51.502005,
+      "lon": -0.226715,
+      "x": 523.1790105731772,
+      "y": 179.609195616215,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGDG",
+      "name": "Goodge Street",
+      "lat": 51.520599,
+      "lon": -0.134361,
+      "x": 529.5360265134804,
+      "y": 181.8362444737523,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGGH",
+      "name": "Grange Hill",
+      "lat": 51.613378,
+      "lon": 0.092066,
+      "x": 544.9490261157059,
+      "y": 192.57818288185425,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGPS",
+      "name": "Great Portland Street",
+      "lat": 51.52384,
+      "lon": -0.144262,
+      "x": 528.8400018312134,
+      "y": 182.1791904251352,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGPK",
+      "name": "Green Park",
+      "lat": 51.506947,
+      "lon": -0.142787,
+      "x": 528.9899980205871,
+      "y": 180.30322117982024,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGFD",
+      "name": "Greenford",
+      "lat": 51.542424,
+      "lon": -0.34605,
+      "x": 514.7950040792399,
+      "y": 183.91016143898264,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUGBY",
+      "name": "Gunnersbury",
+      "lat": 51.491803,
+      "lon": -0.275267,
+      "x": 519.8360139340774,
+      "y": 178.39416276995348,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHLT",
+      "name": "Hainault",
+      "lat": 51.603659,
+      "lon": 0.093482,
+      "x": 545.078019300208,
+      "y": 191.5002206267948,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHSD",
+      "name": "Hammersmith (Dist&Picc Line)",
+      "lat": 51.4923,
+      "lon": -0.22362,
+      "x": 523.4200064564756,
+      "y": 178.53516369680798,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHSC",
+      "name": "Hammersmith (H&C Line)",
+      "lat": 51.49339,
+      "lon": -0.22503,
+      "x": 523.3191867144138,
+      "y": 178.65400247357604,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHTD",
+      "name": "Hampstead",
+      "lat": 51.556239,
+      "lon": -0.177464,
+      "x": 526.4470036521379,
+      "y": 185.7242209352728,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHGR",
+      "name": "Hanger Lane",
+      "lat": 51.530177,
+      "lon": -0.292704,
+      "x": 518.5259878786766,
+      "y": 182.63319797659315,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHSN",
+      "name": "Harlesden",
+      "lat": 51.53631,
+      "lon": -0.257883,
+      "x": 520.9249977838994,
+      "y": 183.37215240234656,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHAW",
+      "name": "Harrow & Wealdstone",
+      "lat": 51.592268,
+      "lon": -0.335217,
+      "x": 515.4200277200199,
+      "y": 189.47021426252752,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHOH",
+      "name": "Harrow-on-the-Hill",
+      "lat": 51.579195,
+      "lon": -0.337225,
+      "x": 515.3139999345156,
+      "y": 188.01323191335968,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHNX",
+      "name": "Hatton Cross",
+      "lat": 51.466747,
+      "lon": -0.423191,
+      "x": 509.6270148731603,
+      "y": 175.3762205109687,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHR4",
+      "name": "Heathrow Terminal 4",
+      "lat": 51.458524,
+      "lon": -0.445771,
+      "x": 508.0780237925172,
+      "y": 174.4282424008089,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHR5",
+      "name": "Heathrow Terminal 5",
+      "lat": 51.470052,
+      "lon": -0.49056,
+      "x": 504.94001178880865,
+      "y": 175.6451688113095,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHRC",
+      "name": "Heathrow Terminals 2 & 3",
+      "lat": 51.471235,
+      "lon": -0.452265,
+      "x": 507.59700122613043,
+      "y": 175.83224036689376,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHCL",
+      "name": "Hendon Central",
+      "lat": 51.583301,
+      "lon": -0.226424,
+      "x": 522.9800304920234,
+      "y": 188.65023882119416,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHBT",
+      "name": "High Barnet",
+      "lat": 51.650541,
+      "lon": -0.194298,
+      "x": 525.0209766904121,
+      "y": 196.18222509404708,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHSK",
+      "name": "High Street Kensington",
+      "lat": 51.501055,
+      "lon": -0.192792,
+      "x": 525.5360154795426,
+      "y": 179.56113541033497,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHAI",
+      "name": "Highbury & Islington",
+      "lat": 51.54635,
+      "lon": -0.103324,
+      "x": 531.6149830602941,
+      "y": 184.7551997546757,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHGT",
+      "name": "Highgate",
+      "lat": 51.577532,
+      "lon": -0.145857,
+      "x": 528.57800393409,
+      "y": 188.14717300050083,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHGD",
+      "name": "Hillingdon",
+      "lat": 51.553715,
+      "lon": -0.449828,
+      "x": 507.57199521124085,
+      "y": 185.00823138118437,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHBN",
+      "name": "Holborn",
+      "lat": 51.51758,
+      "lon": -0.120475,
+      "x": 530.5079928712635,
+      "y": 181.52517340522957,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHPK",
+      "name": "Holland Park",
+      "lat": 51.507143,
+      "lon": -0.205679,
+      "x": 524.6249903227312,
+      "y": 180.21614383120118,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHWY",
+      "name": "Holloway Road",
+      "lat": 51.552697,
+      "lon": -0.113244,
+      "x": 530.9089656432102,
+      "y": 185.4432233653037,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHCH",
+      "name": "Hornchurch",
+      "lat": 51.554093,
+      "lon": 0.219116,
+      "x": 553.9449852523643,
+      "y": 186.2452104030974,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHWC",
+      "name": "Hounslow Central",
+      "lat": 51.471295,
+      "lon": -0.366578,
+      "x": 513.5480284560077,
+      "y": 175.96816622863665,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHWE",
+      "name": "Hounslow East",
+      "lat": 51.473213,
+      "lon": -0.356474,
+      "x": 514.2449849933636,
+      "y": 176.19715950272675,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHWT",
+      "name": "Hounslow West",
+      "lat": 51.473469,
+      "lon": -0.386544,
+      "x": 512.1560201946202,
+      "y": 176.17918859808648,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUHPC",
+      "name": "Hyde Park Corner",
+      "lat": 51.503035,
+      "lon": -0.152441,
+      "x": 528.3310294818573,
+      "y": 179.85123618929768,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUICK",
+      "name": "Ickenham",
+      "lat": 51.56177,
+      "lon": -0.442225,
+      "x": 508.08001447041727,
+      "y": 185.9152123054749,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKNG",
+      "name": "Kennington",
+      "lat": 51.488337,
+      "lon": -0.105963,
+      "x": 531.5989812148779,
+      "y": 178.29922298483444,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKSL",
+      "name": "Kensal Green",
+      "lat": 51.530539,
+      "lon": -0.225016,
+      "x": 523.2199671904729,
+      "y": 182.7851749059839,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKOY",
+      "name": "Kensington (Olympia)",
+      "lat": 51.497624,
+      "lon": -0.210015,
+      "x": 524.3499744057342,
+      "y": 179.15022056304915,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKSH",
+      "name": "Kentish Town",
+      "lat": 51.550312,
+      "lon": -0.140733,
+      "x": 529.0099959451826,
+      "y": 185.1292001481466,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKEN",
+      "name": "Kenton",
+      "lat": 51.581756,
+      "lon": -0.31691,
+      "x": 516.715024181601,
+      "y": 188.33023708468733,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKWG",
+      "name": "Kew Gardens",
+      "lat": 51.477058,
+      "lon": -0.285241,
+      "x": 519.1820191041664,
+      "y": 176.73817761717376,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKBN",
+      "name": "Kilburn",
+      "lat": 51.547183,
+      "lon": -0.204248,
+      "x": 524.6150204325209,
+      "y": 184.67122059400293,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKPK",
+      "name": "Kilburn Park",
+      "lat": 51.534979,
+      "lon": -0.194232,
+      "x": 525.3429825102899,
+      "y": 183.33117135485693,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKSX",
+      "name": "King's Cross St. Pancras",
+      "lat": 51.530663,
+      "lon": -0.123194,
+      "x": 530.282032721766,
+      "y": 182.97520894757594,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKBY",
+      "name": "Kingsbury",
+      "lat": 51.584845,
+      "lon": -0.27879,
+      "x": 519.3480274547213,
+      "y": 188.73523749687837,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUKNB",
+      "name": "Knightsbridge",
+      "lat": 51.501669,
+      "lon": -0.160508,
+      "x": 527.7749802112326,
+      "y": 179.68523052741716,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULAD",
+      "name": "Ladbroke Grove",
+      "lat": 51.517449,
+      "lon": -0.210391,
+      "x": 524.2699701860032,
+      "y": 181.35421309453167,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULBN",
+      "name": "Lambeth North",
+      "lat": 51.498808,
+      "lon": -0.112315,
+      "x": 531.1279728486367,
+      "y": 179.452239162501,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULGT",
+      "name": "Lancaster Gate",
+      "lat": 51.511723,
+      "lon": -0.175494,
+      "x": 526.7070168199301,
+      "y": 180.77724410000332,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULRD",
+      "name": "Latimer Road",
+      "lat": 51.513389,
+      "lon": -0.217799,
+      "x": 523.7669929478128,
+      "y": 180.89017866342894,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULSQ",
+      "name": "Leicester Square",
+      "lat": 51.511386,
+      "lon": -0.128426,
+      "x": 529.9739702880728,
+      "y": 180.82224018524127,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULYN",
+      "name": "Leyton",
+      "lat": 51.556589,
+      "lon": -0.005523,
+      "x": 538.3649977349172,
+      "y": 186.07416566665273,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULYS",
+      "name": "Leytonstone",
+      "lat": 51.568324,
+      "lon": 0.008194,
+      "x": 539.2800135565028,
+      "y": 187.40514530710112,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULVT",
+      "name": "Liverpool Street",
+      "lat": 51.517372,
+      "lon": -0.083182,
+      "x": 533.0959689308702,
+      "y": 181.56915781170275,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULNB",
+      "name": "London Bridge",
+      "lat": 51.505721,
+      "lon": -0.088873,
+      "x": 532.7349635224568,
+      "y": 180.26320530585292,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLULGN",
+      "name": "Loughton",
+      "lat": 51.641443,
+      "lon": 0.055476,
+      "x": 542.3280219739652,
+      "y": 195.62719639942458,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMVL",
+      "name": "Maida Vale",
+      "lat": 51.529777,
+      "lon": -0.185758,
+      "x": 525.9450313467107,
+      "y": 182.7672241967102,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMRH",
+      "name": "Manor House",
+      "lat": 51.570738,
+      "lon": -0.096118,
+      "x": 532.0440160305759,
+      "y": 187.48021855957137,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMSH",
+      "name": "Mansion House",
+      "lat": 51.512117,
+      "lon": -0.094009,
+      "x": 532.360014926943,
+      "y": 180.9651648950849,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMBA",
+      "name": "Marble Arch",
+      "lat": 51.513424,
+      "lon": -0.158953,
+      "x": 527.8500217374541,
+      "y": 180.99514532273577,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMYB",
+      "name": "Marylebone",
+      "lat": 51.522322,
+      "lon": -0.163207,
+      "x": 527.530015911876,
+      "y": 181.97722252032784,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMED",
+      "name": "Mile End",
+      "lat": 51.525122,
+      "lon": -0.03364,
+      "x": 536.5100048456995,
+      "y": 182.5221749020223,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMHL",
+      "name": "Mill Hill East",
+      "lat": 51.608229,
+      "lon": -0.209986,
+      "x": 524.0509838751523,
+      "y": 191.45013741099655,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMMT",
+      "name": "Monument",
+      "lat": 51.5107,
+      "lon": -0.085969,
+      "x": 532.9220133405479,
+      "y": 180.82215059746324,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMPK",
+      "name": "Moor Park",
+      "lat": 51.629845,
+      "lon": -0.432454,
+      "x": 508.59496977965586,
+      "y": 193.50023231196113,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMGT",
+      "name": "Moorgate",
+      "lat": 51.518176,
+      "lon": -0.088322,
+      "x": 532.737021670397,
+      "y": 181.6492363972963,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMDN",
+      "name": "Morden",
+      "lat": 51.402142,
+      "lon": -0.194839,
+      "x": 525.6650203215603,
+      "y": 168.55816805967117,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUMTC",
+      "name": "Mornington Crescent",
+      "lat": 51.534679,
+      "lon": -0.138789,
+      "x": 529.1890044089497,
+      "y": 183.3941729536932,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNDN",
+      "name": "Neasden",
+      "lat": 51.553986,
+      "lon": -0.249837,
+      "x": 521.4359795039584,
+      "y": 185.35114293855534,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNBP",
+      "name": "Newbury Park",
+      "lat": 51.575726,
+      "lon": 0.090004,
+      "x": 544.9259913729629,
+      "y": 188.38713606724045,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZNEUGST",
+      "name": "Nine Elms",
+      "lat": 51.479912,
+      "lon": -0.128476,
+      "x": 530.0599858419788,
+      "y": 177.3221410489625,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNAN",
+      "name": "North Acton",
+      "lat": 51.523524,
+      "lon": -0.259755,
+      "x": 520.8289873631774,
+      "y": 181.94718760238746,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNEN",
+      "name": "North Ealing",
+      "lat": 51.517505,
+      "lon": -0.288868,
+      "x": 518.8250123620271,
+      "y": 181.23021204814256,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNGW",
+      "name": "North Greenwich",
+      "lat": 51.50047,
+      "lon": 0.004287,
+      "x": 539.2159786003606,
+      "y": 179.8522212276102,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNHA",
+      "name": "North Harrow",
+      "lat": 51.584872,
+      "lon": -0.362408,
+      "x": 513.554983931911,
+      "y": 188.6051819007221,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNWY",
+      "name": "North Wembley",
+      "lat": 51.562551,
+      "lon": -0.304,
+      "x": 517.6590082920895,
+      "y": 186.21517568714708,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNFD",
+      "name": "Northfields",
+      "lat": 51.499319,
+      "lon": -0.314719,
+      "x": 517.0780008951206,
+      "y": 179.16620109076175,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNHT",
+      "name": "Northolt",
+      "lat": 51.548236,
+      "lon": -0.368699,
+      "x": 513.2100221382775,
+      "y": 184.5212352563513,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNKP",
+      "name": "Northwick Park",
+      "lat": 51.578481,
+      "lon": -0.318056,
+      "x": 516.6440025031662,
+      "y": 187.96420628816315,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNOW",
+      "name": "Northwood",
+      "lat": 51.611053,
+      "lon": -0.423829,
+      "x": 509.23698913626373,
+      "y": 191.42322781731536,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNWH",
+      "name": "Northwood Hills",
+      "lat": 51.600572,
+      "lon": -0.409464,
+      "x": 510.25698244858273,
+      "y": 190.27919363984088,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUNHG",
+      "name": "Notting Hill Gate",
+      "lat": 51.509128,
+      "lon": -0.196104,
+      "x": 525.2840189043567,
+      "y": 180.45321779736113,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUOAK",
+      "name": "Oakwood",
+      "lat": 51.647726,
+      "lon": -0.132182,
+      "x": 529.3260234718689,
+      "y": 195.9772323742461,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUODS",
+      "name": "Old Street",
+      "lat": 51.525864,
+      "lon": -0.08777,
+      "x": 532.7529765418649,
+      "y": 182.50516638417693,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUOSY",
+      "name": "Osterley",
+      "lat": 51.481274,
+      "lon": -0.352224,
+      "x": 514.5199716739479,
+      "y": 177.10022307512816,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUOVL",
+      "name": "Oval",
+      "lat": 51.48185,
+      "lon": -0.112439,
+      "x": 531.1679899875858,
+      "y": 177.5662382843261,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUOXC",
+      "name": "Oxford Circus",
+      "lat": 51.515224,
+      "lon": -0.141903,
+      "x": 529.0279753172848,
+      "y": 181.2252111114339,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPAC",
+      "name": "Paddington",
+      "lat": 51.516581,
+      "lon": -0.175689,
+      "x": 526.6800191194142,
+      "y": 181.31713684277224,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPAH",
+      "name": "Paddington (H&C Line)-Underground",
+      "lat": 51.518187,
+      "lon": -0.178306,
+      "x": 526.4940014233658,
+      "y": 181.49120782957766,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPKR",
+      "name": "Park Royal",
+      "lat": 51.527123,
+      "lon": -0.284341,
+      "x": 519.114025061069,
+      "y": 182.30714312325767,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPSG",
+      "name": "Parsons Green",
+      "lat": 51.475277,
+      "lon": -0.20117,
+      "x": 525.0249710651077,
+      "y": 176.6801926175737,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPVL",
+      "name": "Perivale",
+      "lat": 51.536717,
+      "lon": -0.323446,
+      "x": 516.3769927545015,
+      "y": 183.31118319390336,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPCC",
+      "name": "Piccadilly Circus",
+      "lat": 51.51005,
+      "lon": -0.133798,
+      "x": 529.6049999696019,
+      "y": 180.6641532332236,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPCO",
+      "name": "Pimlico",
+      "lat": 51.489097,
+      "lon": -0.133761,
+      "x": 529.6669747181842,
+      "y": 178.33417448111908,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPNR",
+      "name": "Pinner",
+      "lat": 51.592901,
+      "lon": -0.381161,
+      "x": 512.236017179694,
+      "y": 189.4691417002955,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPLW",
+      "name": "Plaistow",
+      "lat": 51.531341,
+      "lon": 0.017451,
+      "x": 540.0349734228256,
+      "y": 183.31022162989382,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPRD",
+      "name": "Preston Road",
+      "lat": 51.571972,
+      "lon": -0.295107,
+      "x": 518.250983511674,
+      "y": 187.2771854862774,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUPYB",
+      "name": "Putney Bridge",
+      "lat": 51.468262,
+      "lon": -0.208731,
+      "x": 524.5189819937336,
+      "y": 175.88722512876802,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUQPS",
+      "name": "Queen's Park",
+      "lat": 51.534158,
+      "lon": -0.204574,
+      "x": 524.6279648129671,
+      "y": 183.22221980831242,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUQBY",
+      "name": "Queensbury",
+      "lat": 51.594188,
+      "lon": -0.286219,
+      "x": 518.8090003034358,
+      "y": 189.76215478550893,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUQWY",
+      "name": "Queensway",
+      "lat": 51.510312,
+      "lon": -0.187152,
+      "x": 525.9019651083481,
+      "y": 180.60023263651425,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURVP",
+      "name": "Ravenscourt Park",
+      "lat": 51.494122,
+      "lon": -0.235881,
+      "x": 522.5639767954696,
+      "y": 178.71719674384937,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURYL",
+      "name": "Rayners Lane",
+      "lat": 51.575147,
+      "lon": -0.371127,
+      "x": 512.9750282318721,
+      "y": 187.51019213991432,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURBG",
+      "name": "Redbridge",
+      "lat": 51.576243,
+      "lon": 0.04536,
+      "x": 541.8310248473638,
+      "y": 188.3571448564965,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURGP",
+      "name": "Regent's Park",
+      "lat": 51.523344,
+      "lon": -0.146444,
+      "x": 528.6900328546375,
+      "y": 182.1201966982612,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURMD",
+      "name": "Richmond",
+      "lat": 51.463237,
+      "lon": -0.301336,
+      "x": 518.0999889662017,
+      "y": 175.17516084777122,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURKW",
+      "name": "Rickmansworth",
+      "lat": 51.640207,
+      "lon": -0.473703,
+      "x": 505.7159904809692,
+      "y": 194.59215650755988,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURVY",
+      "name": "Roding Valley",
+      "lat": 51.617199,
+      "lon": 0.043647,
+      "x": 541.5849925069892,
+      "y": 192.90822935075872,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURYO",
+      "name": "Royal Oak",
+      "lat": 51.519113,
+      "lon": -0.188748,
+      "x": 525.7669939143575,
+      "y": 181.57620053512957,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURSP",
+      "name": "Ruislip",
+      "lat": 51.571354,
+      "lon": -0.421898,
+      "x": 509.46598392583917,
+      "y": 187.0112362537447,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURSG",
+      "name": "Ruislip Gardens",
+      "lat": 51.560736,
+      "lon": -0.41071,
+      "x": 510.266974977075,
+      "y": 185.84721763706864,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURSM",
+      "name": "Ruislip Manor",
+      "lat": 51.573202,
+      "lon": -0.412973,
+      "x": 510.0800296860385,
+      "y": 187.23013338300393,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLURSQ",
+      "name": "Russell Square",
+      "lat": 51.523073,
+      "lon": -0.124285,
+      "x": 530.2279984337213,
+      "y": 182.12923231227876,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSVS",
+      "name": "Seven Sisters",
+      "lat": 51.58333,
+      "lon": -0.072584,
+      "x": 533.6379739647182,
+      "y": 188.92322181730904,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSBC",
+      "name": "Shepherd's Bush (Central)",
+      "lat": 51.504376,
+      "lon": -0.218813,
+      "x": 523.7210267560405,
+      "y": 179.88617774524556,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSBM",
+      "name": "Shepherd's Bush Market",
+      "lat": 51.505579,
+      "lon": -0.226375,
+      "x": 523.1929773901236,
+      "y": 180.00721303011815,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSSQ",
+      "name": "Sloane Square",
+      "lat": 51.49227,
+      "lon": -0.156377,
+      "x": 528.088013531823,
+      "y": 178.647240906848,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSNB",
+      "name": "Snaresbrook",
+      "lat": 51.580678,
+      "lon": 0.02144,
+      "x": 540.159996083718,
+      "y": 188.8042326620375,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSEA",
+      "name": "South Ealing",
+      "lat": 51.501003,
+      "lon": -0.307424,
+      "x": 517.5800098934013,
+      "y": 179.36515374841971,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSHH",
+      "name": "South Harrow",
+      "lat": 51.564888,
+      "lon": -0.352492,
+      "x": 514.2920260171417,
+      "y": 186.39824156533285,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSKS",
+      "name": "South Kensington",
+      "lat": 51.494094,
+      "lon": -0.174138,
+      "x": 526.8500114875002,
+      "y": 178.81917543944687,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSKT",
+      "name": "South Kenton",
+      "lat": 51.570232,
+      "lon": -0.308433,
+      "x": 517.331987614024,
+      "y": 187.06224006222473,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSRP",
+      "name": "South Ruislip",
+      "lat": 51.556853,
+      "lon": -0.398915,
+      "x": 511.09401409415887,
+      "y": 185.43322811685096,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSWN",
+      "name": "South Wimbledon",
+      "lat": 51.415309,
+      "lon": -0.192005,
+      "x": 525.8260212318976,
+      "y": 170.0272314107975,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSWF",
+      "name": "South Woodford",
+      "lat": 51.591907,
+      "lon": 0.027338,
+      "x": 540.5339939452473,
+      "y": 190.064239679316,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSFS",
+      "name": "Southfields",
+      "lat": 51.445073,
+      "lon": -0.206602,
+      "x": 524.7299937220619,
+      "y": 173.3121429623472,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSGT",
+      "name": "Southgate",
+      "lat": 51.632315,
+      "lon": -0.127816,
+      "x": 529.6719905516652,
+      "y": 194.2711740673585,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSWK",
+      "name": "Southwark",
+      "lat": 51.50427,
+      "lon": -0.105331,
+      "x": 531.59699643354,
+      "y": 180.07215428534022,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSJP",
+      "name": "St. James's Park",
+      "lat": 51.499544,
+      "lon": -0.133608,
+      "x": 529.6479762112804,
+      "y": 179.4961859184784,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSJW",
+      "name": "St. John's Wood",
+      "lat": 51.534521,
+      "lon": -0.173948,
+      "x": 526.7510258093106,
+      "y": 183.3151560980904,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSPU",
+      "name": "St. Paul's",
+      "lat": 51.514936,
+      "lon": -0.097567,
+      "x": 532.10498394799,
+      "y": 181.27222255139455,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSFB",
+      "name": "Stamford Brook",
+      "lat": 51.494917,
+      "lon": -0.245704,
+      "x": 521.8799810708863,
+      "y": 178.78921840364933,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSTM",
+      "name": "Stanmore",
+      "lat": 51.619839,
+      "lon": -0.303266,
+      "x": 517.5620284251303,
+      "y": 192.58719727694373,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSGN",
+      "name": "Stepney Green",
+      "lat": 51.521858,
+      "lon": -0.046596,
+      "x": 535.6209698700117,
+      "y": 182.13513649554102,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSKW",
+      "name": "Stockwell",
+      "lat": 51.472184,
+      "lon": -0.122644,
+      "x": 530.486976589626,
+      "y": 176.47313315526333,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSGP",
+      "name": "Stonebridge Park",
+      "lat": 51.543959,
+      "lon": -0.275892,
+      "x": 519.6559836287161,
+      "y": 184.1931815040064,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSTD",
+      "name": "Stratford",
+      "lat": 51.541806,
+      "lon": -0.003458,
+      "x": 538.5530153599133,
+      "y": 184.43416797723114,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSUH",
+      "name": "Sudbury Hill",
+      "lat": 51.556946,
+      "lon": -0.336435,
+      "x": 515.4250187122916,
+      "y": 185.540225995656,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSUT",
+      "name": "Sudbury Town",
+      "lat": 51.550815,
+      "lon": -0.315745,
+      "x": 516.8749805540172,
+      "y": 184.89124020949984,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUSWC",
+      "name": "Swiss Cottage",
+      "lat": 51.543681,
+      "lon": -0.174894,
+      "x": 526.6600042100209,
+      "y": 184.33215336592082,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTMP",
+      "name": "Temple",
+      "lat": 51.511006,
+      "lon": -0.11426,
+      "x": 530.9580252139406,
+      "y": 180.80521587802738,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTHB",
+      "name": "Theydon Bois",
+      "lat": 51.671759,
+      "lon": 0.103085,
+      "x": 545.524970486654,
+      "y": 199.0921741826397,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTBC",
+      "name": "Tooting Bec",
+      "lat": 51.435678,
+      "lon": -0.159736,
+      "x": 528.0129763324952,
+      "y": 172.34816651067953,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTBY",
+      "name": "Tooting Broadway",
+      "lat": 51.42763,
+      "lon": -0.168374,
+      "x": 527.4349695862522,
+      "y": 171.43816189218748,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTCR",
+      "name": "Tottenham Court Road",
+      "lat": 51.516426,
+      "lon": -0.13041,
+      "x": 529.821983876416,
+      "y": 181.379187399126,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTMH",
+      "name": "Tottenham Hale",
+      "lat": 51.588108,
+      "lon": -0.060241,
+      "x": 534.4789887537935,
+      "y": 189.47716926289658,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTAW",
+      "name": "Totteridge & Whetstone",
+      "lat": 51.630597,
+      "lon": -0.17921,
+      "x": 526.1200105944765,
+      "y": 193.99023376003285,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTWH",
+      "name": "Tower Hill",
+      "lat": 51.509971,
+      "lon": -0.076546,
+      "x": 533.5780039480793,
+      "y": 180.7582268233217,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTFP",
+      "name": "Tufnell Park",
+      "lat": 51.556822,
+      "lon": -0.138433,
+      "x": 529.1510298263444,
+      "y": 185.85719628749578,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTNG",
+      "name": "Turnham Green",
+      "lat": 51.495148,
+      "lon": -0.254555,
+      "x": 521.264974189316,
+      "y": 178.800220509779,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUTPN",
+      "name": "Turnpike Lane",
+      "lat": 51.590272,
+      "lon": -0.102953,
+      "x": 531.513997091398,
+      "y": 189.64017322927685,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUUPM",
+      "name": "Upminster",
+      "lat": 51.559063,
+      "lon": 0.250882,
+      "x": 556.1300136347689,
+      "y": 186.86516598385205,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUUPB",
+      "name": "Upminster Bridge",
+      "lat": 51.55856,
+      "lon": 0.235809,
+      "x": 555.0869690245454,
+      "y": 186.77718103788067,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUUPY",
+      "name": "Upney",
+      "lat": 51.538372,
+      "lon": 0.10153,
+      "x": 545.8439850336861,
+      "y": 184.25623536320006,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUUPK",
+      "name": "Upton Park",
+      "lat": 51.53534,
+      "lon": 0.035263,
+      "x": 541.2579955432981,
+      "y": 183.78913404760794,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUUXB",
+      "name": "Uxbridge",
+      "lat": 51.546565,
+      "lon": -0.477949,
+      "x": 505.63897923340437,
+      "y": 184.17215081217955,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUVXL",
+      "name": "Vauxhall",
+      "lat": 51.485743,
+      "lon": -0.124204,
+      "x": 530.3400074551541,
+      "y": 177.97815653187618,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUVIC",
+      "name": "Victoria",
+      "lat": 51.496359,
+      "lon": -0.143102,
+      "x": 528.9980085576601,
+      "y": 179.12524346458173,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWWL",
+      "name": "Walthamstow Central",
+      "lat": 51.582965,
+      "lon": -0.019885,
+      "x": 537.2900059757841,
+      "y": 188.9802004490614,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWSD",
+      "name": "Wanstead",
+      "lat": 51.575501,
+      "lon": 0.028527,
+      "x": 540.6669729711767,
+      "y": 188.24213834596677,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWRR",
+      "name": "Warren Street",
+      "lat": 51.524951,
+      "lon": -0.138321,
+      "x": 529.248987690698,
+      "y": 182.31320673137216,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWKA",
+      "name": "Warwick Avenue",
+      "lat": 51.523263,
+      "lon": -0.183783,
+      "x": 526.1000010763178,
+      "y": 182.04623645374144,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWLO",
+      "name": "Waterloo",
+      "lat": 51.503299,
+      "lon": -0.11478,
+      "x": 530.9440187150801,
+      "y": 179.94724298266834,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWAF",
+      "name": "Watford",
+      "lat": 51.657446,
+      "lon": -0.417377,
+      "x": 509.5719783545098,
+      "y": 196.59222145461592,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWYC",
+      "name": "Wembley Central",
+      "lat": 51.552304,
+      "lon": -0.296852,
+      "x": 518.1809904340474,
+      "y": 185.08715489179204,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWYP",
+      "name": "Wembley Park",
+      "lat": 51.563198,
+      "lon": -0.279262,
+      "x": 519.371974185501,
+      "y": 186.32717752906697,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWTA",
+      "name": "West Acton",
+      "lat": 51.518001,
+      "lon": -0.28098,
+      "x": 519.3709956454933,
+      "y": 181.29819570956496,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWBN",
+      "name": "West Brompton",
+      "lat": 51.487268,
+      "lon": -0.195599,
+      "x": 525.3789852769983,
+      "y": 178.02315761987853,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWFN",
+      "name": "West Finchley",
+      "lat": 51.609426,
+      "lon": -0.188362,
+      "x": 525.544983150194,
+      "y": 191.62014277964224,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWHM",
+      "name": "West Ham",
+      "lat": 51.528136,
+      "lon": 0.005055,
+      "x": 539.1849849632024,
+      "y": 182.93018392231448,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWHP",
+      "name": "West Hampstead",
+      "lat": 51.546638,
+      "lon": -0.191059,
+      "x": 525.5309829256772,
+      "y": 184.63314523074735,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWHW",
+      "name": "West Harrow",
+      "lat": 51.57971,
+      "lon": -0.3534,
+      "x": 514.1919792227893,
+      "y": 188.04514300597,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWKN",
+      "name": "West Kensington",
+      "lat": 51.490459,
+      "lon": -0.206636,
+      "x": 524.6040328617675,
+      "y": 178.35918241820968,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWRP",
+      "name": "West Ruislip",
+      "lat": 51.569688,
+      "lon": -0.437886,
+      "x": 508.36196586945596,
+      "y": 186.80217554085445,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWSP",
+      "name": "Westbourne Park",
+      "lat": 51.52111,
+      "lon": -0.201065,
+      "x": 524.9070057854635,
+      "y": 181.77719771072077,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWSM",
+      "name": "Westminster",
+      "lat": 51.50132,
+      "lon": -0.124861,
+      "x": 530.250021299921,
+      "y": 179.7091993352719,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWCY",
+      "name": "White City",
+      "lat": 51.511959,
+      "lon": -0.224297,
+      "x": 523.3199750233069,
+      "y": 180.7201960961999,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWPL",
+      "name": "Whitechapel",
+      "lat": 51.519518,
+      "lon": -0.059971,
+      "x": 534.7000108818213,
+      "y": 181.85023671590176,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWIG",
+      "name": "Willesden Green",
+      "lat": 51.549146,
+      "lon": -0.221537,
+      "x": 523.4109722327518,
+      "y": 184.8602311483187,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWJN",
+      "name": "Willesden Junction",
+      "lat": 51.532259,
+      "lon": -0.244283,
+      "x": 521.8789997458315,
+      "y": 182.94420528066524,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWIM",
+      "name": "Wimbledon",
+      "lat": 51.421207,
+      "lon": -0.206573,
+      "x": 524.7969730708344,
+      "y": 170.65821581424004,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWIP",
+      "name": "Wimbledon Park",
+      "lat": 51.434573,
+      "lon": -0.199719,
+      "x": 525.2369908474025,
+      "y": 172.15624090287835,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWOG",
+      "name": "Wood Green",
+      "lat": 51.597479,
+      "lon": -0.109886,
+      "x": 531.0130326767028,
+      "y": 190.4291855164018,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWLA",
+      "name": "Wood Lane",
+      "lat": 51.509669,
+      "lon": -0.22453,
+      "x": 523.3099851100502,
+      "y": 180.4651448144216,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWOF",
+      "name": "Woodford",
+      "lat": 51.606899,
+      "lon": 0.03397,
+      "x": 540.9469666210232,
+      "y": 191.74414954310353,
+      "kind": "station"
+    },
+    {
+      "tfl_id": "940GZZLUWOP",
+      "name": "Woodside Park",
+      "lat": 51.618014,
+      "lon": -0.18542,
+      "x": 525.7249760387291,
+      "y": 192.5802337951754,
+      "kind": "station"
+    }
+  ],
+  "default_station_ids": [
+    "940GZZLUBST",
+    "940GZZLUPAC",
+    "940GZZLUNHG",
+    "940GZZLUSBC",
+    "940GZZLUHSD",
+    "940GZZLUECT",
+    "940GZZLUSKS",
+    "940GZZLUKNB",
+    "940GZZLUVIC",
+    "940GZZLUVXL",
+    "940GZZLUWLO",
+    "940GZZLUWSM",
+    "940GZZLUEMB",
+    "940GZZLUCHX",
+    "940GZZLUPCC",
+    "940GZZLUGPK",
+    "940GZZLUOXC",
+    "940GZZLUBND",
+    "940GZZLUTCR",
+    "940GZZLUHBN",
+    "940GZZLUFCN",
+    "940GZZLUEUS",
+    "940GZZLUKSX",
+    "940GZZLUAGL",
+    "940GZZLUODS",
+    "940GZZLULVT",
+    "940GZZLUBNK",
+    "940GZZLUMGT",
+    "940GZZLUSPU",
+    "940GZZLUBKF",
+    "940GZZLUTMP",
+    "940GZZLUTWH",
+    "940GZZLUADE",
+    "940GZZLUWPL",
+    "940GZZLUMED",
+    "940GZZLUSTD",
+    "940GZZLUCYF",
+    "940GZZLUCWR",
+    "940GZZLUBMY",
+    "940GZZLULNB",
+    "940GZZLUSWK",
+    "940GZZLUEAC",
+    "940GZZLUKNG",
+    "940GZZLUOVL",
+    "940GZZLUSKW",
+    "940GZZBPSUST"
+  ],
+  "river": [
+    {
+      "osm_way_id": 183633367,
+      "xy_km": [
+        [
+          541.5045124341285,
+          179.51509675390372
+        ],
+        [
+          541.5174329759931,
+          179.51708115974162
+        ],
+        [
+          541.5662996856051,
+          179.52459573204075
+        ],
+        [
+          541.6022004505561,
+          179.53150481737777
+        ],
+        [
+          541.6490955563944,
+          179.54669973773719
+        ],
+        [
+          541.6919009317342,
+          179.553601521925
+        ],
+        [
+          541.7148969821102,
+          179.55770347823594
+        ],
+        [
+          541.7382974489628,
+          179.56050362595602
+        ],
+        [
+          541.7971991423393,
+          179.5650951446287
+        ],
+        [
+          541.8538012291214,
+          179.569200296777
+        ],
+        [
+          541.9001992271294,
+          179.57380028729315
+        ],
+        [
+          541.9651004890392,
+          179.5806979334788
+        ],
+        [
+          541.9949980708632,
+          179.5844040637257
+        ],
+        [
+          542.0252978275101,
+          179.58440460523119
+        ],
+        [
+          542.1099961417926,
+          179.58209726223262
+        ],
+        [
+          542.198296953846,
+          179.57840082755138
+        ],
+        [
+          542.2566965349455,
+          179.57709653181223
+        ],
+        [
+          542.3200978678519,
+          179.5737961902618
+        ],
+        [
+          542.365195162172,
+          179.5724991652879
+        ],
+        [
+          542.408898145165,
+          179.56369607017865
+        ],
+        [
+          542.4562962616244,
+          179.556399104705
+        ],
+        [
+          542.4990968124584,
+          179.5518004267094
+        ],
+        [
+          542.523297327654,
+          179.54959641139354
+        ],
+        [
+          542.5639011815193,
+          179.5458047412362
+        ],
+        [
+          542.5946969969306,
+          179.5429958570747
+        ],
+        [
+          542.6204951280479,
+          179.54030292533193
+        ],
+        [
+          542.6389006919949,
+          179.53890510749568
+        ],
+        [
+          542.673799196334,
+          179.53569987599923
+        ],
+        [
+          542.7294998966353,
+          179.5310978875436
+        ],
+        [
+          542.8610001646765,
+          179.5185987341756
+        ],
+        [
+          542.9707977780291,
+          179.5098996426835
+        ],
+        [
+          543.0000947550626,
+          179.507796677124
+        ],
+        [
+          543.0440993111935,
+          179.5080997121032
+        ],
+        [
+          543.0828737880101,
+          179.51084896132454
+        ],
+        [
+          543.1484965978362,
+          179.5168027042066
+        ],
+        [
+          543.2013992566099,
+          179.52229885368405
+        ],
+        [
+          543.2252997603659,
+          179.52509769585274
+        ],
+        [
+          543.2666962203405,
+          179.5297028382811
+        ],
+        [
+          543.3015954059179,
+          179.533401811469
+        ],
+        [
+          543.3657997963359,
+          179.54210062310648
+        ],
+        [
+          543.523997290802,
+          179.55989638338772
+        ],
+        [
+          543.6598971716281,
+          179.58600352921255
+        ],
+        [
+          543.8922946436236,
+          179.65020119052426
+        ],
+        [
+          544.0041971099129,
+          179.6940013522153
+        ],
+        [
+          544.0061957749652,
+          179.69480360453343
+        ],
+        [
+          544.0226990477033,
+          179.70220443057826
+        ],
+        [
+          544.0560964119534,
+          179.7188981170989
+        ],
+        [
+          544.0825004277883,
+          179.73430319287394
+        ],
+        [
+          544.1207985928202,
+          179.7559995753765
+        ],
+        [
+          544.1574007925344,
+          179.7836021661758
+        ],
+        [
+          544.1833010305434,
+          179.8045023495329
+        ],
+        [
+          544.2050007178705,
+          179.82410385056812
+        ],
+        [
+          544.2394977107086,
+          179.85340574061695
+        ],
+        [
+          544.2722948065413,
+          179.8840952797014
+        ],
+        [
+          544.2918968099813,
+          179.90489522879693
+        ],
+        [
+          544.3135990053646,
+          179.93049582808564
+        ],
+        [
+          544.332296083906,
+          179.95600007967772
+        ],
+        [
+          544.3633969033956,
+          179.9977043213418
+        ],
+        [
+          544.3692953144998,
+          180.00719792441558
+        ],
+        [
+          544.3800009106795,
+          180.02449594171748
+        ],
+        [
+          544.4076000590082,
+          180.0684047428541
+        ],
+        [
+          544.4417947788758,
+          180.1190004640253
+        ],
+        [
+          544.4842008429036,
+          180.18760286327947
+        ],
+        [
+          544.5657037877787,
+          180.33724605885038
+        ],
+        [
+          544.6479953715343,
+          180.47950133441284
+        ],
+        [
+          544.6493950495187,
+          180.48230116681324
+        ],
+        [
+          544.6722988085637,
+          180.53019577639276
+        ],
+        [
+          544.705301041688,
+          180.59709705577458
+        ],
+        [
+          544.7282981635014,
+          180.66069770721322
+        ],
+        [
+          544.7461980931927,
+          180.7067029856632
+        ],
+        [
+          544.768296504116,
+          180.7511029370117
+        ],
+        [
+          544.7798964975798,
+          180.77029711136908
+        ],
+        [
+          544.791897642497,
+          180.78930242292188
+        ],
+        [
+          544.823600035568,
+          180.82980289444166
+        ],
+        [
+          544.8560990228502,
+          180.8744996915935
+        ],
+        [
+          544.932995951689,
+          180.9669043142553
+        ],
+        [
+          544.9778955052512,
+          181.01430389967828
+        ],
+        [
+          545.0001008979483,
+          181.03949930893543
+        ],
+        [
+          545.0157997319967,
+          181.0525008730751
+        ],
+        [
+          545.1228976209535,
+          181.1405955820654
+        ],
+        [
+          545.1376944865814,
+          181.1516019459652
+        ],
+        [
+          545.1827975263149,
+          181.18300569312623
+        ],
+        [
+          545.1969983936862,
+          181.19080116318747
+        ],
+        [
+          545.2162955537946,
+          181.1995992525223
+        ],
+        [
+          545.238298974881,
+          181.2074954068786
+        ],
+        [
+          545.2987001400107,
+          181.23110197469902
+        ],
+        [
+          545.3493004986674,
+          181.2453030599209
+        ],
+        [
+          545.3781961844603,
+          181.25209488485626
+        ],
+        [
+          545.4070972095968,
+          181.25869783539693
+        ],
+        [
+          545.4632971884981,
+          181.26939884066854
+        ],
+        [
+          545.5074952557658,
+          181.27410318387305
+        ],
+        [
+          545.5602989545657,
+          181.27729602114775
+        ],
+        [
+          545.5847982709257,
+          181.28070226770103
+        ],
+        [
+          545.6302769415662,
+          181.2877258527197
+        ],
+        [
+          545.7107961683201,
+          181.30009491352254
+        ],
+        [
+          545.8019964866969,
+          181.3087986280207
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 183633368,
+      "xy_km": [
+        [
+          537.3329274067193,
+          178.28001405084208
+        ],
+        [
+          537.3835223842855,
+          178.24571427790488
+        ],
+        [
+          537.4994985126394,
+          178.17020455745748
+        ],
+        [
+          537.5742983538124,
+          178.129104994562
+        ],
+        [
+          537.6127964553027,
+          178.11189598078198
+        ],
+        [
+          537.6583681634052,
+          178.0926196287601
+        ],
+        [
+          537.7046271403202,
+          178.07568808862044
+        ],
+        [
+          537.7406998893707,
+          178.06520261046995
+        ],
+        [
+          537.8037504327932,
+          178.05604908530898
+        ],
+        [
+          537.852730005213,
+          178.0507993830086
+        ],
+        [
+          537.9046535576315,
+          178.04767756867986
+        ],
+        [
+          537.9624952761257,
+          178.04538448822265
+        ],
+        [
+          538.0387493582264,
+          178.0456504221713
+        ],
+        [
+          538.100829995166,
+          178.05076299893489
+        ],
+        [
+          538.1730992817024,
+          178.06139453299076
+        ],
+        [
+          538.2305201395409,
+          178.0751067537667
+        ],
+        [
+          538.2884558189663,
+          178.09312917526037
+        ],
+        [
+          538.3914271119941,
+          178.1257313811307
+        ],
+        [
+          538.4836696993119,
+          178.1619051708678
+        ],
+        [
+          538.5635600820551,
+          178.20284098370996
+        ],
+        [
+          538.6303921389291,
+          178.2469165029617
+        ],
+        [
+          538.6901555819562,
+          178.29512915363094
+        ],
+        [
+          538.7545015922949,
+          178.36021581343434
+        ],
+        [
+          538.80557309006,
+          178.41803033530746
+        ],
+        [
+          538.8350974042871,
+          178.45580474254496
+        ],
+        [
+          538.8528952284865,
+          178.48869653693646
+        ],
+        [
+          538.8723994502504,
+          178.534399290237
+        ],
+        [
+          538.8978378247938,
+          178.60268796191218
+        ],
+        [
+          538.9103956027461,
+          178.66129934860072
+        ],
+        [
+          538.9162947395437,
+          178.71289604621364
+        ],
+        [
+          538.9162960020442,
+          178.78050125226676
+        ],
+        [
+          538.9142731295799,
+          178.81208410579762
+        ],
+        [
+          538.9041015863658,
+          178.89173061508964
+        ],
+        [
+          538.884384459709,
+          178.97369822526542
+        ],
+        [
+          538.8502347302385,
+          179.0637293899852
+        ],
+        [
+          538.8167550528688,
+          179.13383690538322
+        ],
+        [
+          538.7632991700286,
+          179.24310562386864
+        ],
+        [
+          538.733243949196,
+          179.30133288533548
+        ],
+        [
+          538.6798247883304,
+          179.4180371378084
+        ],
+        [
+          538.6416195832454,
+          179.51436883135827
+        ],
+        [
+          538.6108348397358,
+          179.59843924336803
+        ],
+        [
+          538.5821882399504,
+          179.69176015654375
+        ],
+        [
+          538.5665352381744,
+          179.79562895887798
+        ],
+        [
+          538.5660336354831,
+          179.90678811487788
+        ],
+        [
+          538.5658639317891,
+          179.94512087083766
+        ],
+        [
+          538.5758509655914,
+          180.0045072370313
+        ],
+        [
+          538.5866975918764,
+          180.0647071914845
+        ],
+        [
+          538.5979003595764,
+          180.11030528223816
+        ],
+        [
+          538.609796714435,
+          180.14370331608487
+        ],
+        [
+          538.6276281564938,
+          180.18790201409965
+        ],
+        [
+          538.6526384294717,
+          180.23675910125783
+        ],
+        [
+          538.6825279306439,
+          180.28698471096206
+        ],
+        [
+          538.7127248310742,
+          180.3355941642404
+        ],
+        [
+          538.7477787612428,
+          180.3779820668783
+        ],
+        [
+          538.7759225246299,
+          180.41170169617462
+        ],
+        [
+          538.8105970377259,
+          180.44200536023948
+        ],
+        [
+          538.8376976238708,
+          180.4638005675238
+        ],
+        [
+          538.8793578470849,
+          180.48902067082446
+        ],
+        [
+          538.9335017458766,
+          180.51535021845723
+        ],
+        [
+          539.0086864903737,
+          180.53714781610853
+        ],
+        [
+          539.0865079531444,
+          180.54987110079836
+        ],
+        [
+          539.1497974512503,
+          180.5513029401505
+        ],
+        [
+          539.1895398239504,
+          180.5445344284055
+        ],
+        [
+          539.2594008697905,
+          180.51650129436177
+        ],
+        [
+          539.3150971191337,
+          180.48840354502866
+        ],
+        [
+          539.4108003145409,
+          180.4318017085129
+        ],
+        [
+          539.4303958771004,
+          180.41899612879783
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 197709455,
+      "xy_km": [
+        [
+          536.862857020853,
+          179.0163734589857
+        ],
+        [
+          536.8713994374035,
+          178.96069514513266
+        ],
+        [
+          536.931700611887,
+          178.80600020867814
+        ],
+        [
+          537.0170012341144,
+          178.63349531685247
+        ],
+        [
+          537.0577999546936,
+          178.5654993892738
+        ],
+        [
+          537.1071989793713,
+          178.50219801043212
+        ],
+        [
+          537.2435991806852,
+          178.35349765786512
+        ],
+        [
+          537.3329274067193,
+          178.28001405084208
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 197772035,
+      "xy_km": [
+        [
+          531.6296118625279,
+          180.6957640855728
+        ],
+        [
+          531.6476249185043,
+          180.69572987428162
+        ],
+        [
+          531.6630511486242,
+          180.69584014257427
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 197772040,
+      "xy_km": [
+        [
+          531.3613027031932,
+          180.6910034816626
+        ],
+        [
+          531.4009973713141,
+          180.6937988731694
+        ],
+        [
+          531.4399947102689,
+          180.69509655147615
+        ],
+        [
+          531.4400016493923,
+          180.6950967309276
+        ],
+        [
+          531.4658985287691,
+          180.69630064621353
+        ],
+        [
+          531.4987965847934,
+          180.69689575614652
+        ],
+        [
+          531.5630002604983,
+          180.69629833561672
+        ],
+        [
+          531.5913950110372,
+          180.69569808486838
+        ],
+        [
+          531.6296118625279,
+          180.6957640855728
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 198012868,
+      "xy_km": [
+        [
+          531.1551598464476,
+          180.67311662356045
+        ],
+        [
+          531.1825995135056,
+          180.67669572315518
+        ],
+        [
+          531.214201097507,
+          180.67990392368142
+        ],
+        [
+          531.2304983119559,
+          180.6807030271241
+        ],
+        [
+          531.2611991084763,
+          180.68329849410523
+        ],
+        [
+          531.3131949056087,
+          180.68810231164412
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 202183121,
+      "xy_km": [
+        [
+          523.6029803033935,
+          176.3177470490366
+        ],
+        [
+          523.6889004319927,
+          176.21070086163235
+        ],
+        [
+          523.8046949682424,
+          176.06440326384072
+        ],
+        [
+          523.8133949667828,
+          176.05500115491003
+        ],
+        [
+          523.8354965584285,
+          176.0309036389109
+        ],
+        [
+          523.8392979772036,
+          176.0269013881744
+        ],
+        [
+          523.8606003737682,
+          176.0050989430928
+        ],
+        [
+          523.8860978922055,
+          175.97940408646298
+        ],
+        [
+          523.9380955357988,
+          175.92939663198462
+        ],
+        [
+          523.9869966193509,
+          175.88530057501538
+        ],
+        [
+          524.0149976161812,
+          175.86130296320184
+        ],
+        [
+          524.0293950469003,
+          175.8497033272269
+        ],
+        [
+          524.0590977119303,
+          175.8269046110292
+        ],
+        [
+          524.128296453781,
+          175.78300408915553
+        ],
+        [
+          524.1996997796709,
+          175.7427967797495
+        ],
+        [
+          524.2247409778375,
+          175.72937659918225
+        ],
+        [
+          524.2481956289698,
+          175.71689699265076
+        ],
+        [
+          524.3219011529695,
+          175.6803971764138
+        ],
+        [
+          524.4652232607142,
+          175.62297864460504
+        ],
+        [
+          524.651399664995,
+          175.55010055138112
+        ],
+        [
+          524.7068950993093,
+          175.52690219737985
+        ],
+        [
+          524.745499374728,
+          175.51260387711088
+        ],
+        [
+          524.7646007001382,
+          175.50599512822413
+        ],
+        [
+          524.7994958986866,
+          175.49530049604613
+        ],
+        [
+          524.8441949521382,
+          175.48360025982407
+        ],
+        [
+          524.8668993408319,
+          175.47830421515525
+        ],
+        [
+          524.9123947063949,
+          175.46900528812833
+        ],
+        [
+          524.9583986311171,
+          175.46079856870497
+        ],
+        [
+          524.99999849516,
+          175.45419769972418
+        ],
+        [
+          525.0000957411595,
+          175.4542000872733
+        ],
+        [
+          525.065601301631,
+          175.44350222884503
+        ],
+        [
+          525.1569962127618,
+          175.43850438169088
+        ],
+        [
+          525.2156990533693,
+          175.43200303127833
+        ],
+        [
+          525.2472957895741,
+          175.43990155628998
+        ],
+        [
+          525.2643991977483,
+          175.4425032421697
+        ],
+        [
+          525.3119981759223,
+          175.4421056457036
+        ],
+        [
+          525.3673983243373,
+          175.43510191996813
+        ],
+        [
+          525.4714999580833,
+          175.42500369585042
+        ],
+        [
+          525.494698784119,
+          175.42619858098834
+        ],
+        [
+          525.6067970067689,
+          175.4387992667968
+        ],
+        [
+          525.6100954306254,
+          175.43920332924526
+        ],
+        [
+          525.7031010333334,
+          175.45910189024977
+        ],
+        [
+          525.7262011704428,
+          175.46259871936823
+        ],
+        [
+          525.7437991808832,
+          175.46430181667284
+        ],
+        [
+          525.780797471082,
+          175.4724038660807
+        ],
+        [
+          525.7955994424833,
+          175.4739045426656
+        ],
+        [
+          525.8025987032665,
+          175.47530147233175
+        ],
+        [
+          525.8190006309115,
+          175.48040243893635
+        ],
+        [
+          525.8957963783633,
+          175.5123998091127
+        ],
+        [
+          525.9204993147385,
+          175.5247053687141
+        ],
+        [
+          525.9795989745742,
+          175.55639993020375
+        ],
+        [
+          526.0098005449535,
+          175.57370457902167
+        ],
+        [
+          526.0802004449118,
+          175.61829827771354
+        ],
+        [
+          526.0856968507226,
+          175.6219950958698
+        ],
+        [
+          526.1375950622393,
+          175.6572964732773
+        ],
+        [
+          526.1699970438073,
+          175.68280173777904
+        ],
+        [
+          526.2250004100159,
+          175.7397009965995
+        ],
+        [
+          526.2482989654117,
+          175.76540392473572
+        ],
+        [
+          526.2709966904195,
+          175.7915037731258
+        ],
+        [
+          526.2812001290138,
+          175.80379649424623
+        ],
+        [
+          526.3099001383952,
+          175.84090557451046
+        ],
+        [
+          526.315496482092,
+          175.8498015394876
+        ],
+        [
+          526.37329881391,
+          175.96710371109668
+        ],
+        [
+          526.3944004118689,
+          176.01040060037042
+        ],
+        [
+          526.3991324337843,
+          176.02134487290553
+        ],
+        [
+          526.4055994308717,
+          176.03630464802822
+        ],
+        [
+          526.4413000170085,
+          176.13449879001237
+        ],
+        [
+          526.4802006458536,
+          176.2462033251116
+        ],
+        [
+          526.4835982991664,
+          176.2809045370156
+        ],
+        [
+          526.4856967019446,
+          176.2907041280737
+        ],
+        [
+          526.4887993462341,
+          176.29840337748138
+        ],
+        [
+          526.5281951713112,
+          176.43229727490134
+        ],
+        [
+          526.534797072206,
+          176.4498977681544
+        ],
+        [
+          526.5404957212945,
+          176.4619010732422
+        ],
+        [
+          526.5515013202989,
+          176.47929951921415
+        ],
+        [
+          526.5552010889902,
+          176.48309688238362
+        ],
+        [
+          526.5589968001487,
+          176.4903015670602
+        ],
+        [
+          526.5684976020365,
+          176.51120109691132
+        ],
+        [
+          526.5774004834565,
+          176.5444036260562
+        ],
+        [
+          526.5835947583136,
+          176.57949720200332
+        ],
+        [
+          526.5861974570129,
+          176.62739792478644
+        ],
+        [
+          526.5902966416431,
+          176.64530346394102
+        ],
+        [
+          526.6012011531488,
+          176.6929990029224
+        ],
+        [
+          526.6089002807958,
+          176.73350452566078
+        ],
+        [
+          526.6208978641938,
+          176.77160225814163
+        ],
+        [
+          526.62289876411,
+          176.7839031366987
+        ],
+        [
+          526.6232946398297,
+          176.80150515790015
+        ],
+        [
+          526.6234990359981,
+          176.80390260088782
+        ],
+        [
+          526.6241957976107,
+          176.81360063924262
+        ],
+        [
+          526.626001181135,
+          176.82370458905217
+        ],
+        [
+          526.6288969701127,
+          176.83550475887785
+        ],
+        [
+          526.6307950053751,
+          176.84160520881125
+        ],
+        [
+          526.6485972617573,
+          176.87120160412002
+        ],
+        [
+          526.6530004405048,
+          176.88329523331177
+        ],
+        [
+          526.654398542177,
+          176.89049597689242
+        ],
+        [
+          526.6549990875708,
+          176.89679781850654
+        ],
+        [
+          526.6544973348558,
+          176.91109497160156
+        ],
+        [
+          526.654897095505,
+          176.9209970447576
+        ],
+        [
+          526.6543956733608,
+          176.92969720056996
+        ],
+        [
+          526.6527997666676,
+          176.9404954209191
+        ],
+        [
+          526.6504956901413,
+          176.94959580217994
+        ],
+        [
+          526.6468961645251,
+          176.9590979065089
+        ],
+        [
+          526.6434352842886,
+          176.97196389241307
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 608139644,
+      "xy_km": [
+        [
+          532.2488005910077,
+          180.64710718930408
+        ],
+        [
+          532.2786030019247,
+          180.63780091326933
+        ],
+        [
+          532.3035017896246,
+          180.62881227534317
+        ],
+        [
+          532.3689981634449,
+          180.6069043186274
+        ],
+        [
+          532.4281967252113,
+          180.5818063186223
+        ],
+        [
+          532.4363448290609,
+          180.57823515306106
+        ],
+        [
+          532.4526060858684,
+          180.57110307676967
+        ],
+        [
+          532.4647016040212,
+          180.566611061364
+        ],
+        [
+          532.4850001652615,
+          180.55990701297665
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 608139656,
+      "xy_km": [
+        [
+          535.5249061725735,
+          180.40089960801828
+        ],
+        [
+          535.5587011483475,
+          180.43360498735208
+        ],
+        [
+          535.7386972291102,
+          180.58880556821754
+        ],
+        [
+          535.8459020104106,
+          180.64031094838302
+        ],
+        [
+          535.8860065936489,
+          180.65350159086117
+        ],
+        [
+          535.9720977803953,
+          180.66791149679764
+        ],
+        [
+          536.0534000417772,
+          180.67520618388068
+        ],
+        [
+          536.1445015058953,
+          180.67649948872986
+        ],
+        [
+          536.2408257131167,
+          180.66455832428346
+        ],
+        [
+          536.3911670219873,
+          180.6221970260407
+        ],
+        [
+          536.5252953671982,
+          180.57132544896874
+        ],
+        [
+          536.6508161999927,
+          180.49976104166814
+        ],
+        [
+          536.7144939026468,
+          180.44825815137983
+        ],
+        [
+          536.7962344357784,
+          180.33720518272958
+        ],
+        [
+          536.8490029845076,
+          180.18750389236905
+        ],
+        [
+          536.8731984488888,
+          180.03560923155524
+        ],
+        [
+          536.8584030325292,
+          179.75189684034453
+        ],
+        [
+          536.8493020351182,
+          179.6848935250042
+        ],
+        [
+          536.8408945161699,
+          179.55830605774105
+        ],
+        [
+          536.8421019468875,
+          179.46260232167143
+        ],
+        [
+          536.8352968856905,
+          179.29759888831805
+        ],
+        [
+          536.8437983134563,
+          179.14249980567809
+        ],
+        [
+          536.862857020853,
+          179.0163734589857
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 608139670,
+      "xy_km": [
+        [
+          532.9603037259125,
+          180.49130724968447
+        ],
+        [
+          532.9850045632046,
+          180.48890440377488
+        ],
+        [
+          533.0056953223019,
+          180.48450499986345
+        ],
+        [
+          533.0535042847638,
+          180.4729035363038
+        ],
+        [
+          533.0725009271436,
+          180.46770335574158
+        ],
+        [
+          533.1051985203488,
+          180.46250591684768
+        ],
+        [
+          533.160902925374,
+          180.4504000203507
+        ],
+        [
+          533.2131011412464,
+          180.4396049492847
+        ],
+        [
+          533.2497007200827,
+          180.43100539603427
+        ],
+        [
+          533.2685987293373,
+          180.4264042550486
+        ],
+        [
+          533.2733037308755,
+          180.42520339362045
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 608139710,
+      "xy_km": [
+        [
+          534.9189969246527,
+          179.90869969392784
+        ],
+        [
+          535.0275053712066,
+          179.95299926016813
+        ],
+        [
+          535.1031037585575,
+          180.00000974181148
+        ],
+        [
+          535.5249061725735,
+          180.40089960801828
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 608139765,
+      "xy_km": [
+        [
+          533.3328682926611,
+          180.4068131313309
+        ],
+        [
+          533.3486048659636,
+          180.39990376882855
+        ],
+        [
+          533.6657950329065,
+          180.26682086456876
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 796382632,
+      "xy_km": [
+        [
+          539.4303958771004,
+          180.41899612879783
+        ],
+        [
+          539.4727953938914,
+          180.38909971499402
+        ],
+        [
+          539.5000950731319,
+          180.36559985090392
+        ],
+        [
+          539.5173992904097,
+          180.34950443288113
+        ],
+        [
+          539.5400006627449,
+          180.32639885016468
+        ],
+        [
+          539.5763991994314,
+          180.2862004261997
+        ],
+        [
+          539.5961997195686,
+          180.26419778693526
+        ],
+        [
+          539.6188970471449,
+          180.2350968875023
+        ],
+        [
+          539.642000067362,
+          180.20539515535359
+        ],
+        [
+          539.6897957688175,
+          180.13669882455176
+        ],
+        [
+          539.7760951494008,
+          180.02340109060205
+        ],
+        [
+          539.8047005562814,
+          179.9873967697986
+        ],
+        [
+          539.8439001029648,
+          179.93769544268474
+        ],
+        [
+          539.8988950262201,
+          179.8677967199809
+        ],
+        [
+          539.9610979834758,
+          179.78539929707418
+        ],
+        [
+          539.9863964155111,
+          179.75330000326346
+        ],
+        [
+          540.0053949598241,
+          179.73129898031905
+        ],
+        [
+          540.0489956904016,
+          179.68989976845555
+        ],
+        [
+          540.1435979255295,
+          179.612102783414
+        ],
+        [
+          540.2044962226418,
+          179.56769840149371
+        ],
+        [
+          540.2599002626298,
+          179.53440524523683
+        ],
+        [
+          540.3029960586899,
+          179.5132036167072
+        ],
+        [
+          540.3650945606939,
+          179.4853044663659
+        ],
+        [
+          540.45179606259,
+          179.44690138783278
+        ],
+        [
+          540.537098084534,
+          179.42399656697026
+        ],
+        [
+          540.5982965119563,
+          179.40939621757704
+        ],
+        [
+          540.6456948762752,
+          179.40250533462032
+        ],
+        [
+          540.7148991117305,
+          179.40060299612045
+        ],
+        [
+          540.7960999789298,
+          179.39869992510882
+        ],
+        [
+          540.8595988644931,
+          179.4019054052451
+        ],
+        [
+          540.9479986709764,
+          179.41220086842776
+        ],
+        [
+          540.9821963057457,
+          179.4192029636734
+        ],
+        [
+          541.0786981698094,
+          179.43690336250106
+        ],
+        [
+          541.112797183351,
+          179.44870006417332
+        ],
+        [
+          541.1354331270836,
+          179.4527893638704
+        ],
+        [
+          541.177497554755,
+          179.46040067605628
+        ],
+        [
+          541.2751958721825,
+          179.48749730177823
+        ],
+        [
+          541.3504968658101,
+          179.503901673839
+        ],
+        [
+          541.3547994559358,
+          179.5048003004716
+        ],
+        [
+          541.3947976787755,
+          179.50850547562894
+        ],
+        [
+          541.4007494972778,
+          179.50854858373438
+        ],
+        [
+          541.457301112418,
+          179.50899766842292
+        ],
+        [
+          541.4912168944915,
+          179.51335790540045
+        ],
+        [
+          541.5045124341285,
+          179.51509675390372
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 814535859,
+      "xy_km": [
+        [
+          526.6434352842886,
+          176.97196389241307
+        ],
+        [
+          526.643504399946,
+          176.97449149785865
+        ],
+        [
+          526.6437875742153,
+          176.9759562147195
+        ],
+        [
+          526.644246539461,
+          176.9770581073083
+        ],
+        [
+          526.6453119053874,
+          176.97864243597445
+        ],
+        [
+          526.6476317360351,
+          176.98119267436007
+        ],
+        [
+          526.6596858900904,
+          176.99464509826515
+        ],
+        [
+          526.6638405178438,
+          176.99941082734398
+        ],
+        [
+          526.6666870669882,
+          177.00313141996665
+        ],
+        [
+          526.6696415140259,
+          177.00837913362466
+        ],
+        [
+          526.67379531948,
+          177.01680571716545
+        ],
+        [
+          526.6789440002838,
+          177.0279721209207
+        ],
+        [
+          526.6876192809425,
+          177.04819489450426
+        ],
+        [
+          526.6908737661046,
+          177.05478536312282
+        ],
+        [
+          526.7143491658146,
+          177.09173375370978
+        ],
+        [
+          526.7289848373448,
+          177.11589943363
+        ],
+        [
+          526.7329147778988,
+          177.1232634095932
+        ],
+        [
+          526.7443952814759,
+          177.14382321980125
+        ],
+        [
+          526.7513155303773,
+          177.15610205453075
+        ],
+        [
+          526.7550581233805,
+          177.16233753048226
+        ],
+        [
+          526.7610443576108,
+          177.1722230073933
+        ],
+        [
+          526.7722978344499,
+          177.19045163758005
+        ],
+        [
+          526.7764228548123,
+          177.19695258654485
+        ],
+        [
+          526.7864978589395,
+          177.21283742071688
+        ],
+        [
+          526.8029359205219,
+          177.23630272999824
+        ],
+        [
+          526.8131788593256,
+          177.24823050190287
+        ],
+        [
+          526.8224098050985,
+          177.2581079102101
+        ],
+        [
+          526.8498870405977,
+          177.2849530521909
+        ],
+        [
+          526.8600763130438,
+          177.29400875337316
+        ],
+        [
+          526.8803003133293,
+          177.31190494978608
+        ],
+        [
+          526.900895183308,
+          177.32829717264843
+        ],
+        [
+          526.9235905118903,
+          177.34515358929139
+        ],
+        [
+          526.9407239994516,
+          177.35601840136036
+        ],
+        [
+          526.9476093657923,
+          177.3601960062029
+        ],
+        [
+          526.9547946820701,
+          177.3643254685198
+        ],
+        [
+          526.9622838390793,
+          177.36852928681665
+        ],
+        [
+          526.967383256685,
+          177.3713270817963
+        ],
+        [
+          526.9722810220312,
+          177.3738527951018
+        ],
+        [
+          526.9806472595529,
+          177.37798951072142
+        ],
+        [
+          526.9903505363847,
+          177.3822820108803
+        ],
+        [
+          526.9999638132144,
+          177.3868393387231
+        ],
+        [
+          527.0020616479019,
+          177.39019650618295
+        ],
+        [
+          527.0037431367763,
+          177.39297579049244
+        ],
+        [
+          527.0068875045895,
+          177.39699333831297
+        ],
+        [
+          527.0100926859603,
+          177.4005228056239
+        ],
+        [
+          527.014497978315,
+          177.40384856057145
+        ],
+        [
+          527.0209749383031,
+          177.40768225625146
+        ],
+        [
+          527.0253760356287,
+          177.40950573222236
+        ],
+        [
+          527.0424799067738,
+          177.41680943270663
+        ],
+        [
+          527.0541108579009,
+          177.42208488468464
+        ],
+        [
+          527.0613429379601,
+          177.4251697070115
+        ],
+        [
+          527.0653012881481,
+          177.426359033728
+        ],
+        [
+          527.0718184529555,
+          177.4283021608449
+        ],
+        [
+          527.0774587893892,
+          177.4297449232192
+        ],
+        [
+          527.0783342244298,
+          177.43002271579763
+        ],
+        [
+          527.0793868571446,
+          177.4304384618011
+        ],
+        [
+          527.0803417253757,
+          177.43087402081605
+        ],
+        [
+          527.0856193262678,
+          177.43404359089502
+        ],
+        [
+          527.0889155318871,
+          177.43615109079792
+        ],
+        [
+          527.0910019061788,
+          177.43718240706278
+        ],
+        [
+          527.0923947660436,
+          177.43788483668118
+        ],
+        [
+          527.0963572644599,
+          177.43946374730655
+        ],
+        [
+          527.1019509185477,
+          177.4416620278029
+        ],
+        [
+          527.1057609343281,
+          177.4429478271146
+        ],
+        [
+          527.109211276897,
+          177.44416900743147
+        ],
+        [
+          527.1132270887762,
+          177.44611646438128
+        ],
+        [
+          527.1153923328798,
+          177.44704961573962
+        ],
+        [
+          527.1179769624157,
+          177.44788197292849
+        ],
+        [
+          527.1196658866742,
+          177.44841377035638
+        ],
+        [
+          527.1218366854793,
+          177.4491245173242
+        ],
+        [
+          527.1247068285139,
+          177.44993062959722
+        ],
+        [
+          527.1331533975226,
+          177.45139906139434
+        ],
+        [
+          527.1351953274394,
+          177.45170601131085
+        ],
+        [
+          527.1392017039975,
+          177.45180612158478
+        ],
+        [
+          527.1463393070132,
+          177.4517174266933
+        ],
+        [
+          527.1507286856342,
+          177.45178260789737
+        ],
+        [
+          527.1533010966713,
+          177.45199154905544
+        ],
+        [
+          527.1566270097119,
+          177.45235285029827
+        ],
+        [
+          527.1581965050493,
+          177.45265912995993
+        ],
+        [
+          527.161569627327,
+          177.4533554334208
+        ],
+        [
+          527.1623678424005,
+          177.45366469280148
+        ],
+        [
+          527.1642539519535,
+          177.45436834305286
+        ],
+        [
+          527.1680853253748,
+          177.4559106518667
+        ],
+        [
+          527.1725393784416,
+          177.4578357283868
+        ],
+        [
+          527.1761993788178,
+          177.45956292428858
+        ],
+        [
+          527.1875876325563,
+          177.46508855298168
+        ],
+        [
+          527.1883075205607,
+          177.46547374972167
+        ],
+        [
+          527.2004081354521,
+          177.47140667160525
+        ],
+        [
+          527.2078977897437,
+          177.47502113182807
+        ],
+        [
+          527.2115863742467,
+          177.4767156869506
+        ],
+        [
+          527.2146195092841,
+          177.4779487641321
+        ],
+        [
+          527.2197217754458,
+          177.47951176243495
+        ],
+        [
+          527.221857005265,
+          177.4799768630233
+        ],
+        [
+          527.2313808020574,
+          177.48281880143034
+        ],
+        [
+          527.237337655361,
+          177.48438093351245
+        ],
+        [
+          527.2496093788155,
+          177.48680202511406
+        ],
+        [
+          527.2543586547511,
+          177.48747717294574
+        ],
+        [
+          527.2567607778119,
+          177.4881047461208
+        ],
+        [
+          527.261664990941,
+          177.48980748890003
+        ],
+        [
+          527.2662542863164,
+          177.4904897738134
+        ],
+        [
+          527.2687644628106,
+          177.49068609031795
+        ],
+        [
+          527.2736917802533,
+          177.49090949007572
+        ],
+        [
+          527.2770004484942,
+          177.49112578491423
+        ],
+        [
+          527.2798952825726,
+          177.49149863909733
+        ],
+        [
+          527.2844215044773,
+          177.49275798309966
+        ],
+        [
+          527.2888771656021,
+          177.49433825809356
+        ],
+        [
+          527.2980083567804,
+          177.49954062014342
+        ],
+        [
+          527.3012535812476,
+          177.50229237195552
+        ],
+        [
+          527.3057705684973,
+          177.50475325480434
+        ],
+        [
+          527.3088167178864,
+          177.50602009738003
+        ],
+        [
+          527.3150101817773,
+          177.50700962241118
+        ],
+        [
+          527.3222798412593,
+          177.50858245226462
+        ],
+        [
+          527.3348503461345,
+          177.51044373707893
+        ],
+        [
+          527.3435972661379,
+          177.51212033352047
+        ],
+        [
+          527.3506699913055,
+          177.51378842145863
+        ],
+        [
+          527.3571533133403,
+          177.5162429329421
+        ],
+        [
+          527.3707484454749,
+          177.52130124303775
+        ],
+        [
+          527.3809400300374,
+          177.5243827321347
+        ],
+        [
+          527.3881685271763,
+          177.5262105559155
+        ],
+        [
+          527.3940103315813,
+          177.52736941122245
+        ],
+        [
+          527.3965682378448,
+          177.52787855193864
+        ],
+        [
+          527.4109327535382,
+          177.53106459164206
+        ],
+        [
+          527.4232378810347,
+          177.53380963905576
+        ],
+        [
+          527.4626779316608,
+          177.54387745749415
+        ],
+        [
+          527.4846223829289,
+          177.5492787857397
+        ],
+        [
+          527.4996430647335,
+          177.55261505017685
+        ],
+        [
+          527.503165722742,
+          177.55399409958477
+        ],
+        [
+          527.5062507184313,
+          177.5548169436913
+        ],
+        [
+          527.511276500181,
+          177.55582195763574
+        ],
+        [
+          527.5212730444285,
+          177.55808655041903
+        ],
+        [
+          527.5282554185678,
+          177.55947444221405
+        ],
+        [
+          527.5375607350686,
+          177.56104297396254
+        ],
+        [
+          527.5477439972973,
+          177.5622329481861
+        ],
+        [
+          527.5687433521377,
+          177.56292634225247
+        ],
+        [
+          527.5774397605176,
+          177.5655033958006
+        ],
+        [
+          527.5817844899456,
+          177.56679184115316
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 856936819,
+      "xy_km": [
+        [
+          527.5817844899456,
+          177.56679184115316
+        ],
+        [
+          527.5911928076029,
+          177.57117827314795
+        ],
+        [
+          527.5936453533249,
+          177.5722857490208
+        ],
+        [
+          527.6083242750746,
+          177.57844011504721
+        ],
+        [
+          527.6147028539305,
+          177.58201619819377
+        ],
+        [
+          527.6211986230521,
+          177.58562861136429
+        ],
+        [
+          527.6321716221074,
+          177.58746169869184
+        ],
+        [
+          527.634939482295,
+          177.58763128060684
+        ],
+        [
+          527.6430570198681,
+          177.58780154744483
+        ],
+        [
+          527.669391995779,
+          177.59375893534272
+        ],
+        [
+          527.694691839723,
+          177.5972202090551
+        ],
+        [
+          527.7129011133288,
+          177.59890127717622
+        ],
+        [
+          527.7405592406185,
+          177.60362373445165
+        ],
+        [
+          527.751331038175,
+          177.6037829265101
+        ],
+        [
+          527.7787029245329,
+          177.6093885951418
+        ],
+        [
+          527.7852671010547,
+          177.61137834722268
+        ],
+        [
+          527.7951941219702,
+          177.61474335044232
+        ],
+        [
+          527.8203099746517,
+          177.61611981752026
+        ],
+        [
+          527.8495931669177,
+          177.6211396323183
+        ],
+        [
+          527.8607355209773,
+          177.62424599488614
+        ],
+        [
+          527.8716168290426,
+          177.6288925258746
+        ],
+        [
+          527.9108351139595,
+          177.63915860402275
+        ],
+        [
+          527.9313428619394,
+          177.64309034333203
+        ],
+        [
+          527.9362351627713,
+          177.64580604358775
+        ],
+        [
+          527.9460411380018,
+          177.65121574164397
+        ],
+        [
+          527.9564945640782,
+          177.6529808356539
+        ],
+        [
+          527.9575652157845,
+          177.65295212629164
+        ],
+        [
+          527.9676439496919,
+          177.65331689731457
+        ],
+        [
+          527.9786544707824,
+          177.65364949034063
+        ],
+        [
+          527.9907214526171,
+          177.65562215509166
+        ],
+        [
+          527.9995268018839,
+          177.65744602411118
+        ],
+        [
+          528.030360795214,
+          177.6665340266612
+        ],
+        [
+          528.1705911183697,
+          177.7009990438819
+        ],
+        [
+          528.2109942383943,
+          177.70997317258136
+        ],
+        [
+          528.2282600835712,
+          177.71185488114628
+        ],
+        [
+          528.2378219153985,
+          177.71315299402497
+        ],
+        [
+          528.2443479153035,
+          177.7144413625467
+        ],
+        [
+          528.2677252019303,
+          177.71944828256278
+        ],
+        [
+          528.2766768731908,
+          177.72179931718176
+        ],
+        [
+          528.2922992070232,
+          177.72658857002045
+        ],
+        [
+          528.32061591444,
+          177.7376623363518
+        ],
+        [
+          528.3244339900806,
+          177.73916069437243
+        ],
+        [
+          528.3577951704104,
+          177.7491045180331
+        ],
+        [
+          528.3606313809033,
+          177.7498659768058
+        ],
+        [
+          528.4217803429268,
+          177.7642947348228
+        ],
+        [
+          528.4396894224647,
+          177.76930908747838
+        ],
+        [
+          528.4733123579845,
+          177.77932705922257
+        ],
+        [
+          528.4921049147345,
+          177.78484239087499
+        ],
+        [
+          528.4993898521558,
+          177.78688467184628
+        ],
+        [
+          528.5056517894229,
+          177.78844489816757
+        ],
+        [
+          528.5202893432711,
+          177.79177455485052
+        ],
+        [
+          528.5332670163637,
+          177.79480638617713
+        ],
+        [
+          528.5509479084575,
+          177.79784581841778
+        ],
+        [
+          528.5641508678627,
+          177.7996594046506
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 857284754,
+      "xy_km": [
+        [
+          528.5641508678627,
+          177.7996594046506
+        ],
+        [
+          528.5756103628238,
+          177.80118415822665
+        ],
+        [
+          528.5928319900283,
+          177.80287683813117
+        ],
+        [
+          528.6323953936196,
+          177.8059912450018
+        ],
+        [
+          528.6374845324941,
+          177.80639811081986
+        ],
+        [
+          528.7078900394274,
+          177.8105156138967
+        ],
+        [
+          528.7616211055681,
+          177.81355551581538
+        ],
+        [
+          528.7988036921433,
+          177.81438547418995
+        ],
+        [
+          528.8129224806814,
+          177.81377485693002
+        ],
+        [
+          528.8325409879883,
+          177.81244673668965
+        ],
+        [
+          528.8630210202924,
+          177.81019203729463
+        ],
+        [
+          528.8784159583398,
+          177.8088461309962
+        ],
+        [
+          528.8892689488703,
+          177.80770789421845
+        ],
+        [
+          528.9001933476525,
+          177.8064935974158
+        ],
+        [
+          528.9075543961092,
+          177.80497760976002
+        ],
+        [
+          528.9218245699179,
+          177.80141122239752
+        ],
+        [
+          528.9478555217777,
+          177.79488260818943
+        ],
+        [
+          528.9553656861445,
+          177.79351512514688
+        ],
+        [
+          528.9635710041767,
+          177.792131892492
+        ],
+        [
+          528.9919224845983,
+          177.78916747908124
+        ],
+        [
+          529.0026708426067,
+          177.78804908335027
+        ],
+        [
+          529.0343668397458,
+          177.78196500001243
+        ],
+        [
+          529.0400422846825,
+          177.78089605740226
+        ],
+        [
+          529.0662667459064,
+          177.77524089024448
+        ],
+        [
+          529.083481837589,
+          177.77171627847542
+        ],
+        [
+          529.092691602222,
+          177.76935726371886
+        ],
+        [
+          529.1099171198227,
+          177.7648760407248
+        ],
+        [
+          529.1197410063936,
+          177.7624102569606
+        ],
+        [
+          529.1434507497115,
+          177.7556568005307
+        ],
+        [
+          529.1630790210817,
+          177.75040218599827
+        ],
+        [
+          529.1746442206287,
+          177.74749110625444
+        ],
+        [
+          529.1917883696966,
+          177.74403181767255
+        ],
+        [
+          529.2078307788588,
+          177.74127901905717
+        ],
+        [
+          529.2215922857641,
+          177.7397034866882
+        ],
+        [
+          529.2476583715564,
+          177.73783969094814
+        ],
+        [
+          529.2730954434697,
+          177.73721745190582
+        ],
+        [
+          529.3081161316256,
+          177.73648283752223
+        ],
+        [
+          529.3248469099096,
+          177.73671894386655
+        ],
+        [
+          529.3465570684945,
+          177.7375824391947
+        ],
+        [
+          529.3636211776266,
+          177.73891764369515
+        ],
+        [
+          529.3799765168116,
+          177.74025713589805
+        ],
+        [
+          529.3902050397094,
+          177.74128506767866
+        ],
+        [
+          529.4038052381554,
+          177.74277711595192
+        ],
+        [
+          529.4179668691538,
+          177.7451403013839
+        ],
+        [
+          529.4308583361711,
+          177.74772714486812
+        ],
+        [
+          529.4574463922972,
+          177.75402304298896
+        ],
+        [
+          529.4764635343137,
+          177.758601925129
+        ],
+        [
+          529.5001744859359,
+          177.76437972795802
+        ],
+        [
+          529.5123412856998,
+          177.7686842285376
+        ],
+        [
+          529.5259397416071,
+          177.77242432286758
+        ],
+        [
+          529.545526421186,
+          177.77918783636125
+        ],
+        [
+          529.5603869396961,
+          177.78492973441473
+        ],
+        [
+          529.5863380655352,
+          177.79412551259273
+        ],
+        [
+          529.5957761025819,
+          177.79727021401055
+        ],
+        [
+          529.6058521733862,
+          177.79964113337027
+        ],
+        [
+          529.6257568963573,
+          177.80591232828604
+        ],
+        [
+          529.637064263312,
+          177.80849272495473
+        ],
+        [
+          529.6536529892945,
+          177.81402300923386
+        ],
+        [
+          529.6617631392382,
+          177.81611026126012
+        ],
+        [
+          529.686462075881,
+          177.8250854817435
+        ],
+        [
+          529.6994873789345,
+          177.83085890798202
+        ],
+        [
+          529.7280960454954,
+          177.84180344293523
+        ],
+        [
+          529.7306671994347,
+          177.84287048801977
+        ],
+        [
+          529.7352298635004,
+          177.84348758193514
+        ],
+        [
+          529.7385517181636,
+          177.84399514323002
+        ],
+        [
+          529.7402633679267,
+          177.84443938650068
+        ],
+        [
+          529.7419001991404,
+          177.84509314556396
+        ],
+        [
+          529.7525172920277,
+          177.85185128495806
+        ],
+        [
+          529.7625816470892,
+          177.85712651283976
+        ],
+        [
+          529.7710763338823,
+          177.8612934760431
+        ],
+        [
+          529.7779131943349,
+          177.86562958522794
+        ],
+        [
+          529.7846586501678,
+          177.87000788240468
+        ],
+        [
+          529.789889280637,
+          177.87357974040776
+        ],
+        [
+          529.792707065119,
+          177.87559895197703
+        ],
+        [
+          529.7952263011009,
+          177.87761054803838
+        ],
+        [
+          529.7992515672765,
+          177.88022807624813
+        ],
+        [
+          529.8010177419767,
+          177.88098530327505
+        ],
+        [
+          529.8105700682439,
+          177.8859026122621
+        ],
+        [
+          529.8181938535108,
+          177.8893463994332
+        ],
+        [
+          529.826181742169,
+          177.89376758745104
+        ],
+        [
+          529.850016704287,
+          177.90962066534954
+        ],
+        [
+          529.8584978462244,
+          177.9154009312202
+        ],
+        [
+          529.8733628084939,
+          177.92583971797407
+        ],
+        [
+          529.8881111281687,
+          177.93567468452406
+        ],
+        [
+          529.9011332350782,
+          177.94427496771274
+        ],
+        [
+          529.9125631381369,
+          177.94993033140582
+        ],
+        [
+          529.9237475877467,
+          177.95594666255957
+        ],
+        [
+          529.9356027831875,
+          177.96181323834037
+        ],
+        [
+          529.9463733603185,
+          177.96689546248805
+        ],
+        [
+          529.9485884948974,
+          177.9677532319661
+        ],
+        [
+          529.9515069667206,
+          177.96881813806354
+        ],
+        [
+          529.9551841583174,
+          177.97036978596182
+        ],
+        [
+          529.957748225224,
+          177.97198202033712
+        ],
+        [
+          529.9627847312258,
+          177.97661735314614
+        ],
+        [
+          529.9724950218746,
+          177.98540028215638
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 857284757,
+      "xy_km": [
+        [
+          529.9724950218746,
+          177.98540028215638
+        ],
+        [
+          529.9759506445904,
+          177.98828159290943
+        ],
+        [
+          529.979762297253,
+          177.99163936101039
+        ],
+        [
+          529.9817241518521,
+          177.99343651728944
+        ],
+        [
+          529.983794778748,
+          177.99587072512176
+        ],
+        [
+          529.9847977123425,
+          177.99713151228346
+        ],
+        [
+          529.9871631814877,
+          177.99971791391087
+        ],
+        [
+          529.9964960072878,
+          178.01130652246596
+        ],
+        [
+          530.0002150204639,
+          178.01584146234265
+        ],
+        [
+          530.0195068902124,
+          178.04114899647487
+        ],
+        [
+          530.044892953773,
+          178.07019548418938
+        ],
+        [
+          530.0713221942667,
+          178.11114191201824
+        ],
+        [
+          530.0831165516482,
+          178.12588710798707
+        ],
+        [
+          530.0952528994935,
+          178.14029612594913
+        ],
+        [
+          530.0985368372388,
+          178.14390755749488
+        ],
+        [
+          530.1097839322749,
+          178.15777087438403
+        ],
+        [
+          530.1196826269887,
+          178.170843050774
+        ],
+        [
+          530.1256258243725,
+          178.17858409505925
+        ],
+        [
+          530.1296679934969,
+          178.18378393507442
+        ],
+        [
+          530.1395509386921,
+          178.19882533478585
+        ],
+        [
+          530.1526130220617,
+          178.21966768034704
+        ],
+        [
+          530.1557987020177,
+          178.22440052544763
+        ],
+        [
+          530.1657022437975,
+          178.24270289423842
+        ],
+        [
+          530.1886950345232,
+          178.2861993229405
+        ],
+        [
+          530.2404980393036,
+          178.38089714621967
+        ],
+        [
+          530.2711005640043,
+          178.43859852331994
+        ],
+        [
+          530.2829959337004,
+          178.46209313090156
+        ],
+        [
+          530.2927008467243,
+          178.48160361399275
+        ],
+        [
+          530.3018985937324,
+          178.50029993867386
+        ],
+        [
+          530.3260978400826,
+          178.5605973218025
+        ],
+        [
+          530.3358734409718,
+          178.58438271949515
+        ],
+        [
+          530.3386425710752,
+          178.59613767495176
+        ],
+        [
+          530.3415207117222,
+          178.6131254042968
+        ],
+        [
+          530.3413971152858,
+          178.62120088370122
+        ],
+        [
+          530.3399026277759,
+          178.63262402510514
+        ],
+        [
+          530.3393664711441,
+          178.64270302984463
+        ],
+        [
+          530.3394622686395,
+          178.65116247088574
+        ],
+        [
+          530.3398211191223,
+          178.65694689862778
+        ],
+        [
+          530.3430393617381,
+          178.67773786466296
+        ],
+        [
+          530.3447038015564,
+          178.68570338313043
+        ],
+        [
+          530.3456036156832,
+          178.69097867834924
+        ],
+        [
+          530.347369486428,
+          178.69796756768326
+        ],
+        [
+          530.349787066732,
+          178.706631175784
+        ],
+        [
+          530.3541989871314,
+          178.71770495625842
+        ],
+        [
+          530.3629967392648,
+          178.7321960624749
+        ],
+        [
+          530.3675984982042,
+          178.7429075119001
+        ],
+        [
+          530.371693488481,
+          178.75360597567203
+        ],
+        [
+          530.3832385225044,
+          178.7966765109132
+        ],
+        [
+          530.3929597794696,
+          178.83284570775135
+        ],
+        [
+          530.394377191486,
+          178.8387908167793
+        ],
+        [
+          530.4014042554983,
+          178.87383383635665
+        ],
+        [
+          530.4028014621036,
+          178.88625470786087
+        ],
+        [
+          530.4053767752487,
+          178.9123260017113
+        ],
+        [
+          530.405903624449,
+          178.91751385685347
+        ],
+        [
+          530.4067108297269,
+          178.9261250820547
+        ],
+        [
+          530.4087256823329,
+          178.94696315287206
+        ],
+        [
+          530.4095065200491,
+          178.95389343173954
+        ],
+        [
+          530.4099101079047,
+          178.95738672804896
+        ],
+        [
+          530.4100395341031,
+          178.95856957534951
+        ],
+        [
+          530.4100791939711,
+          178.95946080243635
+        ],
+        [
+          530.4105946164431,
+          178.96428115421784
+        ],
+        [
+          530.4109880473827,
+          178.97006648123119
+        ],
+        [
+          530.4118485838978,
+          178.97984747714452
+        ],
+        [
+          530.4122025267712,
+          178.9828387576464
+        ],
+        [
+          530.4135571111308,
+          178.98960570945212
+        ],
+        [
+          530.4147042981186,
+          178.99552164348785
+        ],
+        [
+          530.4155877934959,
+          179.00007324501132
+        ],
+        [
+          530.4157818854774,
+          179.0025263005045
+        ],
+        [
+          530.4175833180562,
+          179.0157030994082
+        ],
+        [
+          530.4188118132038,
+          179.0249482809971
+        ],
+        [
+          530.4202562631646,
+          179.03714782314154
+        ],
+        [
+          530.4220596751646,
+          179.05268373345805
+        ],
+        [
+          530.4242574024497,
+          179.06936477665923
+        ],
+        [
+          530.428562163616,
+          179.12575873798707
+        ],
+        [
+          530.430136934787,
+          179.1491226438954
+        ],
+        [
+          530.4344827644959,
+          179.19876320402236
+        ],
+        [
+          530.4336008930626,
+          179.24559904606676
+        ],
+        [
+          530.4354981609927,
+          179.30999882173805
+        ],
+        [
+          530.4365268191044,
+          179.33921299596312
+        ],
+        [
+          530.4384202085142,
+          179.37180990124162
+        ],
+        [
+          530.4395425011985,
+          179.38870818843216
+        ],
+        [
+          530.4419023912303,
+          179.42071617434775
+        ],
+        [
+          530.4440282584596,
+          179.45020331435046
+        ],
+        [
+          530.4471755364401,
+          179.4945609333703
+        ],
+        [
+          530.4506518970547,
+          179.52419400708186
+        ],
+        [
+          530.4521134059485,
+          179.54221377190413
+        ],
+        [
+          530.4590906237971,
+          179.60268235572318
+        ],
+        [
+          530.4610085058584,
+          179.63187486414233
+        ],
+        [
+          530.4643664824149,
+          179.69290713722592
+        ],
+        [
+          530.4655031285411,
+          179.70680135028135
+        ],
+        [
+          530.4711253625212,
+          179.77756167008187
+        ],
+        [
+          530.4826985051834,
+          179.92329706215202
+        ],
+        [
+          530.4848912561147,
+          179.9463653254013
+        ],
+        [
+          530.4870701509395,
+          179.9764659121025
+        ],
+        [
+          530.4898740981811,
+          180.0106218845297
+        ],
+        [
+          530.491574477828,
+          180.0385291759798
+        ],
+        [
+          530.4926825776381,
+          180.04811627479842
+        ],
+        [
+          530.4940319806135,
+          180.06507607583404
+        ],
+        [
+          530.4972327182885,
+          180.0902622288987
+        ],
+        [
+          530.49993000272,
+          180.11287610122906
+        ],
+        [
+          530.5022987077094,
+          180.12394216141146
+        ],
+        [
+          530.5191993323601,
+          180.2003000738569
+        ],
+        [
+          530.5221447363417,
+          180.21026818954303
+        ],
+        [
+          530.5238193568703,
+          180.2150960817646
+        ],
+        [
+          530.526174988129,
+          180.22098746116302
+        ],
+        [
+          530.5287206686257,
+          180.2262383176001
+        ],
+        [
+          530.534706042706,
+          180.23843214160118
+        ],
+        [
+          530.5400366245274,
+          180.24935173306417
+        ],
+        [
+          530.5438816285871,
+          180.25700615773425
+        ],
+        [
+          530.5497057142535,
+          180.26871737148258
+        ],
+        [
+          530.5597333572564,
+          180.28926064603834
+        ],
+        [
+          530.5666304588582,
+          180.30299129499377
+        ],
+        [
+          530.5794005271387,
+          180.3281451461381
+        ],
+        [
+          530.5888150963742,
+          180.34551248307142
+        ],
+        [
+          530.594503060598,
+          180.35440496100597
+        ],
+        [
+          530.6226988349586,
+          180.3970028678179
+        ],
+        [
+          530.6346116181487,
+          180.41442337441222
+        ],
+        [
+          530.6831962139792,
+          180.4745042752184
+        ],
+        [
+          530.7020042307668,
+          180.4938047765161
+        ],
+        [
+          530.7194942061842,
+          180.50899872457697
+        ],
+        [
+          530.7307976534282,
+          180.5157991297965
+        ],
+        [
+          530.7432011427597,
+          180.52329551818775
+        ],
+        [
+          530.7818000460919,
+          180.54659953739156
+        ],
+        [
+          530.8211983179286,
+          180.57309583247272
+        ],
+        [
+          530.8556988359489,
+          180.5904974308439
+        ],
+        [
+          530.8727005939113,
+          180.59900275229353
+        ],
+        [
+          530.8911049676328,
+          180.60669854789572
+        ],
+        [
+          530.9144047848404,
+          180.61519929095118
+        ],
+        [
+          530.9403965590551,
+          180.62459294384195
+        ],
+        [
+          530.9864982544734,
+          180.63799905058679
+        ],
+        [
+          531.0684942201561,
+          180.6585959852551
+        ],
+        [
+          531.1150939534605,
+          180.66720895234675
+        ],
+        [
+          531.1336314430057,
+          180.66972356629267
+        ],
+        [
+          531.1441630428948,
+          180.67141964553682
+        ],
+        [
+          531.1509557662677,
+          180.67242949867273
+        ],
+        [
+          531.1551598464476,
+          180.67311662356045
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 860421850,
+      "xy_km": [
+        [
+          518.9534060346137,
+          177.83988073058538
+        ],
+        [
+          518.9580293650336,
+          177.83912095618132
+        ],
+        [
+          518.9597483870311,
+          177.8389831250129
+        ],
+        [
+          518.9699333909903,
+          177.8383311562506
+        ],
+        [
+          518.9804385455923,
+          177.83765331512433
+        ],
+        [
+          518.9838804143221,
+          177.83751127715624
+        ],
+        [
+          518.9904082510831,
+          177.83729677048402
+        ],
+        [
+          518.9970084774387,
+          177.83755128287618
+        ],
+        [
+          519.002171031432,
+          177.83779442870048
+        ],
+        [
+          519.0075080152764,
+          177.8377078617331
+        ],
+        [
+          519.0082732799322,
+          177.83765900301515
+        ],
+        [
+          519.0145134248396,
+          177.83727089844294
+        ],
+        [
+          519.0198538733922,
+          177.8367393610492
+        ],
+        [
+          519.0380617478913,
+          177.83402764740637
+        ],
+        [
+          519.055833374017,
+          177.83096086443734
+        ],
+        [
+          519.0692277750383,
+          177.82763592448632
+        ],
+        [
+          519.0948791461176,
+          177.82150472655664
+        ],
+        [
+          519.1136077482521,
+          177.81643549984827
+        ],
+        [
+          519.1347056277726,
+          177.80986409384087
+        ],
+        [
+          519.148453279618,
+          177.80540158853435
+        ],
+        [
+          519.1706864205677,
+          177.79752172078932
+        ],
+        [
+          519.1985294861078,
+          177.78710298955772
+        ],
+        [
+          519.2099063643111,
+          177.78272974800376
+        ],
+        [
+          519.2203234932055,
+          177.7787012197607
+        ],
+        [
+          519.226463895836,
+          177.77605232942327
+        ],
+        [
+          519.2314784264124,
+          177.77372198638406
+        ],
+        [
+          519.2360380272322,
+          177.77153675904782
+        ],
+        [
+          519.2418095272794,
+          177.76862332853977
+        ],
+        [
+          519.2441373274507,
+          177.76740945095062
+        ],
+        [
+          519.2550759922799,
+          177.76098986370977
+        ],
+        [
+          519.2678046982484,
+          177.7528876339108
+        ],
+        [
+          519.2805019557845,
+          177.7443507586539
+        ],
+        [
+          519.2959173854712,
+          177.73395274061033
+        ],
+        [
+          519.3056698302224,
+          177.72717164436798
+        ],
+        [
+          519.3120922010054,
+          177.72287159737223
+        ],
+        [
+          519.3187626391608,
+          177.7180655506899
+        ],
+        [
+          519.325572569403,
+          177.71294011150889
+        ],
+        [
+          519.3296195691835,
+          177.70980830524326
+        ],
+        [
+          519.3309141237881,
+          177.7088150178066
+        ],
+        [
+          519.3328906901237,
+          177.70688083658
+        ],
+        [
+          519.3347998155612,
+          177.70515648027248
+        ],
+        [
+          519.337545625456,
+          177.7021165534904
+        ],
+        [
+          519.33991374935,
+          177.69888974288838
+        ],
+        [
+          519.3417993596689,
+          177.69520654985374
+        ],
+        [
+          519.351293509434,
+          177.6745668176026
+        ],
+        [
+          519.3583175996002,
+          177.65528223681898
+        ],
+        [
+          519.3601119764927,
+          177.65075128520425
+        ],
+        [
+          519.3620172429794,
+          177.6468237738916
+        ],
+        [
+          519.3639751444902,
+          177.64391002182052
+        ],
+        [
+          519.3659417163282,
+          177.6412190065463
+        ],
+        [
+          519.3729989615833,
+          177.63444155927456
+        ],
+        [
+          519.3800557606538,
+          177.62827607566135
+        ],
+        [
+          519.3905338209069,
+          177.6195983752263
+        ],
+        [
+          519.4031450570237,
+          177.610013864928
+        ],
+        [
+          519.4169272177309,
+          177.60026771341626
+        ],
+        [
+          519.424934956894,
+          177.59443615352794
+        ],
+        [
+          519.4423022099807,
+          177.581714392085
+        ],
+        [
+          519.4511022583723,
+          177.57527837919903
+        ],
+        [
+          519.4588351164173,
+          177.5696184428013
+        ],
+        [
+          519.4636496051999,
+          177.56664940228774
+        ],
+        [
+          519.468472763688,
+          177.5639031025414
+        ],
+        [
+          519.4785528593144,
+          177.55857647530473
+        ],
+        [
+          519.4881350951478,
+          177.55403929378215
+        ],
+        [
+          519.4975516926417,
+          177.550343864472
+        ],
+        [
+          519.5047166049972,
+          177.54816442238726
+        ],
+        [
+          519.5071865015723,
+          177.5477106086763
+        ],
+        [
+          519.5132928582632,
+          177.54652996669878
+        ],
+        [
+          519.5171011795126,
+          177.5455846438711
+        ],
+        [
+          519.5225924314093,
+          177.5436774588722
+        ],
+        [
+          519.5301550250907,
+          177.54053937546547
+        ],
+        [
+          519.5376677912664,
+          177.53656563376433
+        ],
+        [
+          519.5498205938553,
+          177.52877321661123
+        ],
+        [
+          519.5593469977455,
+          177.5218871300769
+        ],
+        [
+          519.5718989228682,
+          177.51219035800494
+        ],
+        [
+          519.5813654431154,
+          177.50401221182105
+        ],
+        [
+          519.5861632378229,
+          177.49998585827538
+        ],
+        [
+          519.5996738778417,
+          177.48645073564538
+        ],
+        [
+          519.6112164532872,
+          177.47448274590542
+        ],
+        [
+          519.6196887329166,
+          177.4654579219154
+        ],
+        [
+          519.6327662777693,
+          177.45114496019383
+        ],
+        [
+          519.6671009263873,
+          177.40941513953038
+        ],
+        [
+          519.6749146679462,
+          177.39945140050264
+        ],
+        [
+          519.6796296211248,
+          177.3933424960075
+        ],
+        [
+          519.6819079781492,
+          177.39040301418373
+        ],
+        [
+          519.68693093043,
+          177.38390080070613
+        ],
+        [
+          519.6919719674122,
+          177.37722099065496
+        ],
+        [
+          519.6992283800486,
+          177.36762248219065
+        ],
+        [
+          519.7188271712204,
+          177.34102353211242
+        ],
+        [
+          519.7299407849969,
+          177.32546291441696
+        ],
+        [
+          519.7404093823543,
+          177.31015418012842
+        ],
+        [
+          519.7502713373996,
+          177.29494245537032
+        ],
+        [
+          519.7559722349692,
+          177.285618960223
+        ],
+        [
+          519.7608860688209,
+          177.27726721950108
+        ],
+        [
+          519.7691604382522,
+          177.262507736018
+        ],
+        [
+          519.7701734934411,
+          177.26049540154355
+        ],
+        [
+          519.7717714890806,
+          177.25753994246392
+        ],
+        [
+          519.7723371687773,
+          177.2565296044125
+        ],
+        [
+          519.7730740680322,
+          177.25503372345364
+        ],
+        [
+          519.7744222360112,
+          177.25236167789484
+        ],
+        [
+          519.7770928957475,
+          177.24692797004252
+        ],
+        [
+          519.7810766182431,
+          177.23854322652042
+        ],
+        [
+          519.7829364869392,
+          177.2342031021102
+        ],
+        [
+          519.789118597303,
+          177.2194945364878
+        ],
+        [
+          519.7923100112174,
+          177.2117142421936
+        ],
+        [
+          519.7958956153303,
+          177.20224085027235
+        ],
+        [
+          519.8067685534996,
+          177.17243258870351
+        ],
+        [
+          519.8114150862529,
+          177.15921224592552
+        ],
+        [
+          519.8162889411898,
+          177.14548543268828
+        ],
+        [
+          519.8179723861044,
+          177.14067384546826
+        ],
+        [
+          519.8206281616314,
+          177.13233574787319
+        ],
+        [
+          519.8259299212883,
+          177.11637143210316
+        ],
+        [
+          519.829555592426,
+          177.1060867574981
+        ],
+        [
+          519.8329250239977,
+          177.0966528041386
+        ],
+        [
+          519.8374455034876,
+          177.0825950134549
+        ],
+        [
+          519.8410967557976,
+          177.07152095513243
+        ],
+        [
+          519.8425727152692,
+          177.0666711085819
+        ],
+        [
+          519.8439658749929,
+          177.06179705909383
+        ],
+        [
+          519.8458719398385,
+          177.05491003634705
+        ],
+        [
+          519.84833361042,
+          177.04478711343398
+        ],
+        [
+          519.8503265449299,
+          177.0374570714017
+        ],
+        [
+          519.8509758371514,
+          177.03525815708488
+        ],
+        [
+          519.8520539313004,
+          177.03166738219443
+        ],
+        [
+          519.8532272801801,
+          177.02845715750712
+        ],
+        [
+          519.8545493331401,
+          177.02512804205833
+        ],
+        [
+          519.8550580577327,
+          177.02388271062077
+        ],
+        [
+          519.8554624963732,
+          177.02293534297712
+        ],
+        [
+          519.8557714262383,
+          177.02220825918158
+        ],
+        [
+          519.85626390635,
+          177.02106268522715
+        ],
+        [
+          519.8567998834678,
+          177.0198402491337
+        ],
+        [
+          519.8574097524187,
+          177.01843040015223
+        ],
+        [
+          519.8580553888672,
+          177.0169768870006
+        ],
+        [
+          519.8589823087289,
+          177.01449521920276
+        ],
+        [
+          519.8628081881386,
+          177.00604005320923
+        ],
+        [
+          519.8643853220613,
+          177.00043598184857
+        ],
+        [
+          519.864592286411,
+          176.99577878427272
+        ],
+        [
+          519.8646446397311,
+          176.9900164052584
+        ],
+        [
+          519.8706006668662,
+          176.9698839136442
+        ],
+        [
+          519.8776056485847,
+          176.94651602440723
+        ],
+        [
+          519.8788247439118,
+          176.9416601359718
+        ],
+        [
+          519.8890806225072,
+          176.9130169146258
+        ],
+        [
+          519.9032421701698,
+          176.87637664401095
+        ],
+        [
+          519.9089093066717,
+          176.8623236698442
+        ],
+        [
+          519.9119582846621,
+          176.8552966969949
+        ],
+        [
+          519.9147135199958,
+          176.8477621043976
+        ],
+        [
+          519.9171938809822,
+          176.8418677827179
+        ],
+        [
+          519.9318032424497,
+          176.80481531916652
+        ],
+        [
+          519.9472586861278,
+          176.7684281792441
+        ],
+        [
+          519.9577949507905,
+          176.74472079859603
+        ],
+        [
+          519.9764415812302,
+          176.70944373469928
+        ],
+        [
+          519.9838815760825,
+          176.69683458651352
+        ],
+        [
+          519.9975361652499,
+          176.67320079418954
+        ],
+        [
+          520.0160956240691,
+          176.6395796778585
+        ],
+        [
+          520.0272312705121,
+          176.62141651303565
+        ],
+        [
+          520.0388340428091,
+          176.59994863924257
+        ],
+        [
+          520.0476880433797,
+          176.58543688339927
+        ],
+        [
+          520.0575381953315,
+          176.56993611198087
+        ],
+        [
+          520.0628075860293,
+          176.56158188796223
+        ],
+        [
+          520.0662878522447,
+          176.55602276420558
+        ],
+        [
+          520.0737800197533,
+          176.54387115795154
+        ],
+        [
+          520.0802008731098,
+          176.53354131397367
+        ],
+        [
+          520.0867820016216,
+          176.52319300547282
+        ],
+        [
+          520.090144382872,
+          176.5179204085244
+        ],
+        [
+          520.0938169336458,
+          176.51216555846173
+        ],
+        [
+          520.0948846176608,
+          176.51049949645386
+        ],
+        [
+          520.1014254479745,
+          176.5000946207706
+        ],
+        [
+          520.1094701388398,
+          176.4898587610475
+        ],
+        [
+          520.1101457647259,
+          176.48890668394475
+        ],
+        [
+          520.1196093573271,
+          176.4768461681158
+        ],
+        [
+          520.1263153123194,
+          176.46828111995924
+        ],
+        [
+          520.1392251490897,
+          176.45181792434067
+        ],
+        [
+          520.148705390554,
+          176.43964658427512
+        ],
+        [
+          520.1575177659402,
+          176.42839413480996
+        ],
+        [
+          520.1602770644212,
+          176.42483197788965
+        ],
+        [
+          520.1671054140078,
+          176.4160918415648
+        ],
+        [
+          520.1691933981732,
+          176.41359312785235
+        ],
+        [
+          520.1745648519349,
+          176.40711070024415
+        ],
+        [
+          520.1822346140143,
+          176.39834594204382
+        ],
+        [
+          520.1906181651157,
+          176.38907509553096
+        ],
+        [
+          520.214311866657,
+          176.364410453256
+        ],
+        [
+          520.2432534345147,
+          176.33586427732104
+        ],
+        [
+          520.2505908647115,
+          176.32911682021543
+        ],
+        [
+          520.2565158106131,
+          176.3236266969804
+        ],
+        [
+          520.2591354765008,
+          176.32127409911465
+        ],
+        [
+          520.2669069461061,
+          176.3143922719657
+        ],
+        [
+          520.2694777446206,
+          176.31204965114756
+        ],
+        [
+          520.276451219017,
+          176.30541602281855
+        ],
+        [
+          520.2813269405887,
+          176.30110281593628
+        ],
+        [
+          520.2860957184873,
+          176.29719877359184
+        ],
+        [
+          520.2910762670925,
+          176.2931550931937
+        ],
+        [
+          520.2989114893071,
+          176.28651960567146
+        ],
+        [
+          520.3189775121384,
+          176.27102708672643
+        ],
+        [
+          520.3280833555051,
+          176.26414350920084
+        ],
+        [
+          520.3377295055449,
+          176.25703906017227
+        ],
+        [
+          520.3497398425961,
+          176.24839940924093
+        ],
+        [
+          520.3756295701845,
+          176.2302519994846
+        ],
+        [
+          520.4175316845792,
+          176.20350424691767
+        ],
+        [
+          520.4543924742336,
+          176.17985314036022
+        ],
+        [
+          520.4719978785969,
+          176.17030025749136
+        ],
+        [
+          520.4970944074774,
+          176.15780928094452
+        ],
+        [
+          520.5070720050746,
+          176.1531608577242
+        ],
+        [
+          520.5212472240505,
+          176.14732113963686
+        ],
+        [
+          520.5335139207323,
+          176.14225964368438
+        ],
+        [
+          520.54280088868,
+          176.1386074649539
+        ],
+        [
+          520.5522660733017,
+          176.13505966366355
+        ],
+        [
+          520.5578243844805,
+          176.13304384786065
+        ],
+        [
+          520.5644238452694,
+          176.1307856565179
+        ],
+        [
+          520.5732118883966,
+          176.12795621772872
+        ],
+        [
+          520.5846052289367,
+          176.1245654140885
+        ],
+        [
+          520.6066635083337,
+          176.1177332432515
+        ],
+        [
+          520.6288392037272,
+          176.11034761265643
+        ],
+        [
+          520.6451091532559,
+          176.10526997971897
+        ],
+        [
+          520.662869712402,
+          176.10033899807044
+        ],
+        [
+          520.6730125317434,
+          176.09782000935763
+        ],
+        [
+          520.6767682799535,
+          176.09709679461008
+        ],
+        [
+          520.6874663808655,
+          176.0951918408568
+        ],
+        [
+          520.7004091021166,
+          176.09328449837508
+        ],
+        [
+          520.7103242649412,
+          176.09216215120384
+        ],
+        [
+          520.7282016901609,
+          176.08992683081433
+        ],
+        [
+          520.7451207843552,
+          176.08795813546794
+        ],
+        [
+          520.7608658008944,
+          176.08656248575926
+        ],
+        [
+          520.776156837107,
+          176.08555667518172
+        ],
+        [
+          520.7894357064918,
+          176.08471457121865
+        ],
+        [
+          520.8110923340454,
+          176.08399343813775
+        ],
+        [
+          520.8373370245515,
+          176.08320327994232
+        ],
+        [
+          520.8604468037676,
+          176.08245009142573
+        ],
+        [
+          520.9147367118165,
+          176.08610937148106
+        ],
+        [
+          520.9203030592209,
+          176.08639736917243
+        ],
+        [
+          520.921433804996,
+          176.08647986340873
+        ],
+        [
+          520.9302017747284,
+          176.08743364404066
+        ],
+        [
+          520.93587263863,
+          176.0880023102297
+        ],
+        [
+          520.9438124653574,
+          176.08871390504686
+        ],
+        [
+          520.951090043971,
+          176.08922062226128
+        ],
+        [
+          520.9548741159066,
+          176.0893550427861
+        ],
+        [
+          520.9633096155264,
+          176.08967788349617
+        ],
+        [
+          520.9653619564491,
+          176.08987130150112
+        ],
+        [
+          520.9715277735834,
+          176.0903738823273
+        ],
+        [
+          520.9776942657588,
+          176.09143282375288
+        ],
+        [
+          520.9819482597343,
+          176.09284688114724
+        ],
+        [
+          520.9851104627077,
+          176.0940013314496
+        ],
+        [
+          520.9893399167302,
+          176.09557058632268
+        ],
+        [
+          520.9936801540516,
+          176.09686430947815
+        ],
+        [
+          520.9999557153048,
+          176.0983041800958
+        ],
+        [
+          521.0049395903936,
+          176.09912363589962
+        ],
+        [
+          521.0115320297984,
+          176.0998033083302
+        ],
+        [
+          521.0215739122576,
+          176.10095443350576
+        ],
+        [
+          521.0327044735569,
+          176.10278794187627
+        ],
+        [
+          521.0383171778514,
+          176.10375590330025
+        ],
+        [
+          521.0462069782046,
+          176.10540111653373
+        ],
+        [
+          521.0513039533803,
+          176.10672401138518
+        ],
+        [
+          521.0606953041458,
+          176.10980692559178
+        ],
+        [
+          521.072493116614,
+          176.11397075499966
+        ],
+        [
+          521.083462253559,
+          176.11791461930034
+        ],
+        [
+          521.1090976099651,
+          176.12783756232588
+        ],
+        [
+          521.1228016829295,
+          176.13278123161174
+        ],
+        [
+          521.1382634989337,
+          176.13949141614285
+        ],
+        [
+          521.1669893072916,
+          176.15357172692526
+        ],
+        [
+          521.1913322224196,
+          176.16698038942104
+        ],
+        [
+          521.209470342132,
+          176.17743747602748
+        ],
+        [
+          521.2280086127828,
+          176.1883047237642
+        ],
+        [
+          521.235893255192,
+          176.19307673665082
+        ],
+        [
+          521.2476585676724,
+          176.2006338750709
+        ],
+        [
+          521.2574080239505,
+          176.20734189316536
+        ],
+        [
+          521.2659801304903,
+          176.21329864232428
+        ],
+        [
+          521.2750921866765,
+          176.21992475057283
+        ],
+        [
+          521.2841233196514,
+          176.2267381030278
+        ],
+        [
+          521.29499115454,
+          176.23520862141274
+        ],
+        [
+          521.3097982615851,
+          176.2475005138669
+        ],
+        [
+          521.3196229385894,
+          176.25600186143996
+        ],
+        [
+          521.3288412506339,
+          176.2645777900312
+        ],
+        [
+          521.3444055540326,
+          176.27891291226615
+        ],
+        [
+          521.3568094188014,
+          176.2908583640654
+        ],
+        [
+          521.3637315506971,
+          176.29810003666125
+        ],
+        [
+          521.3672049842487,
+          176.3022218767061
+        ],
+        [
+          521.3785423269914,
+          176.31663435445847
+        ],
+        [
+          521.3894372045506,
+          176.33065799753084
+        ],
+        [
+          521.397578089563,
+          176.34127794758916
+        ],
+        [
+          521.4016643979742,
+          176.34650485562491
+        ],
+        [
+          521.4065432305873,
+          176.35346419518697
+        ],
+        [
+          521.4086221734781,
+          176.35690745171644
+        ],
+        [
+          521.4093053474325,
+          176.3579807916337
+        ],
+        [
+          521.4167615629981,
+          176.37516037385387
+        ],
+        [
+          521.421428061051,
+          176.3857753767111
+        ],
+        [
+          521.4274847439759,
+          176.39753622831464
+        ],
+        [
+          521.431396137088,
+          176.40514012280957
+        ],
+        [
+          521.4394988915728,
+          176.4208441808942
+        ],
+        [
+          521.4455188139486,
+          176.43210347540764
+        ],
+        [
+          521.4524807636827,
+          176.44494300713296
+        ],
+        [
+          521.4580301087909,
+          176.45524531317847
+        ],
+        [
+          521.458622446251,
+          176.45633874674618
+        ],
+        [
+          521.4596085982663,
+          176.4581091854905
+        ],
+        [
+          521.4697810412564,
+          176.4761770628289
+        ],
+        [
+          521.4827235583609,
+          176.4998744758093
+        ],
+        [
+          521.4907932672083,
+          176.51287403080724
+        ],
+        [
+          521.4949999011006,
+          176.52061855174975
+        ],
+        [
+          521.499307239567,
+          176.528510129089
+        ],
+        [
+          521.5035077826536,
+          176.53679972578212
+        ],
+        [
+          521.5057513354809,
+          176.54178245582017
+        ],
+        [
+          521.5091124009967,
+          176.55030793343565
+        ],
+        [
+          521.513090260142,
+          176.5612292737788
+        ],
+        [
+          521.5142144578527,
+          176.56856641846855
+        ],
+        [
+          521.5159530705898,
+          176.58218261907948
+        ],
+        [
+          521.516960510494,
+          176.59120825033244
+        ],
+        [
+          521.5181331443449,
+          176.6011724771431
+        ],
+        [
+          521.5197598797073,
+          176.60957866856654
+        ],
+        [
+          521.5236276720865,
+          176.62656149747602
+        ],
+        [
+          521.5294891132737,
+          176.64996759148508
+        ],
+        [
+          521.5328983524712,
+          176.66199918267426
+        ],
+        [
+          521.553773819769,
+          176.73025994034
+        ],
+        [
+          521.5591920108035,
+          176.7466122299289
+        ],
+        [
+          521.5612360702227,
+          176.75295882374513
+        ],
+        [
+          521.5637788986813,
+          176.76024085704418
+        ],
+        [
+          521.5694090292918,
+          176.77615315116117
+        ],
+        [
+          521.5724613410938,
+          176.78479370369269
+        ],
+        [
+          521.5736757426038,
+          176.78863920770195
+        ],
+        [
+          521.5742489228015,
+          176.79082262706268
+        ],
+        [
+          521.5783035135274,
+          176.8072425105486
+        ],
+        [
+          521.57891068719,
+          176.81003871705698
+        ],
+        [
+          521.5793751457054,
+          176.81211939868138
+        ],
+        [
+          521.5796328344787,
+          176.8138390828906
+        ],
+        [
+          521.5796992731115,
+          176.81542067651625
+        ],
+        [
+          521.5802033500158,
+          176.8266040320043
+        ],
+        [
+          521.5806698415114,
+          176.83208956513343
+        ],
+        [
+          521.5812423258707,
+          176.83517424043634
+        ],
+        [
+          521.5836761833547,
+          176.85573909132847
+        ],
+        [
+          521.5842169370167,
+          176.85927920827856
+        ],
+        [
+          521.5863616362208,
+          176.88293040639988
+        ],
+        [
+          521.5870711677336,
+          176.89278345642984
+        ],
+        [
+          521.5893421927943,
+          176.91027342453773
+        ],
+        [
+          521.5912672313913,
+          176.92479539696896
+        ],
+        [
+          521.5908519199313,
+          176.9398511733017
+        ],
+        [
+          521.5921771698572,
+          176.95941038817733
+        ],
+        [
+          521.5951259694984,
+          176.97470232197182
+        ],
+        [
+          521.5956792208648,
+          176.98237078690704
+        ],
+        [
+          521.5964960711251,
+          176.998780096972
+        ],
+        [
+          521.5958122410889,
+          177.0175124334696
+        ],
+        [
+          521.5950325121904,
+          177.02949963139125
+        ],
+        [
+          521.5951151962388,
+          177.03737938946193
+        ],
+        [
+          521.5954696053951,
+          177.0527873650812
+        ],
+        [
+          521.5970989608154,
+          177.08549461880705
+        ],
+        [
+          521.5978317723096,
+          177.10076698977855
+        ],
+        [
+          521.5980083419422,
+          177.10995082965977
+        ],
+        [
+          521.5977450117849,
+          177.11660949820512
+        ],
+        [
+          521.5966921521327,
+          177.13595612124138
+        ],
+        [
+          521.5957278757818,
+          177.15014202006773
+        ],
+        [
+          521.5947703595117,
+          177.1605560908978
+        ],
+        [
+          521.5936322044594,
+          177.17009795404516
+        ],
+        [
+          521.588477844012,
+          177.20321058397153
+        ],
+        [
+          521.5880227084394,
+          177.20713860087523
+        ],
+        [
+          521.5865909458937,
+          177.22228136416473
+        ],
+        [
+          521.5862646234189,
+          177.2269245752496
+        ],
+        [
+          521.5859775162015,
+          177.23341577456506
+        ],
+        [
+          521.5859422749711,
+          177.2401244015777
+        ],
+        [
+          521.5862997411515,
+          177.26557996829996
+        ],
+        [
+          521.5864075289343,
+          177.2735715970621
+        ],
+        [
+          521.587049432452,
+          177.29264716992503
+        ],
+        [
+          521.5883411996804,
+          177.31272855899914
+        ],
+        [
+          521.5897401107135,
+          177.32890699717845
+        ],
+        [
+          521.5902076435449,
+          177.33492665020796
+        ],
+        [
+          521.5908885378033,
+          177.3430654970865
+        ],
+        [
+          521.5917885771088,
+          177.35482579657727
+        ],
+        [
+          521.5939737641162,
+          177.37182415814272
+        ],
+        [
+          521.5947240717538,
+          177.37763916031486
+        ],
+        [
+          521.5958032858422,
+          177.38713387268038
+        ],
+        [
+          521.5970229576801,
+          177.39656518129345
+        ],
+        [
+          521.5979556116353,
+          177.40201735712668
+        ],
+        [
+          521.5992827757246,
+          177.4081131900177
+        ],
+        [
+          521.6018611153746,
+          177.42144910374557
+        ],
+        [
+          521.6056976495338,
+          177.44056765585492
+        ],
+        [
+          521.6076688937544,
+          177.4487818545597
+        ],
+        [
+          521.6098933789527,
+          177.4577364771879
+        ],
+        [
+          521.611973010602,
+          177.46577523973136
+        ],
+        [
+          521.6175176508965,
+          177.48376631501188
+        ],
+        [
+          521.6203031126674,
+          177.49221139212122
+        ],
+        [
+          521.628998512197,
+          177.5144058485746
+        ],
+        [
+          521.6381747869665,
+          177.5391487359071
+        ],
+        [
+          521.6429189518717,
+          177.5525475856962
+        ],
+        [
+          521.6446736788286,
+          177.55731843875034
+        ],
+        [
+          521.6473632263271,
+          177.56366939863895
+        ],
+        [
+          521.6505532980256,
+          177.57087796637654
+        ],
+        [
+          521.6569485094957,
+          177.58408264530846
+        ],
+        [
+          521.6626989211534,
+          177.5934554133232
+        ],
+        [
+          521.6660274012409,
+          177.59923194151966
+        ],
+        [
+          521.6747790835353,
+          177.61411751423572
+        ],
+        [
+          521.6803842653759,
+          177.6246217688329
+        ],
+        [
+          521.6838842371519,
+          177.6313593193816
+        ],
+        [
+          521.6879118740435,
+          177.63810949315499
+        ],
+        [
+          521.6918499644546,
+          177.6468603584384
+        ],
+        [
+          521.6971909690444,
+          177.65736944306474
+        ],
+        [
+          521.7033241757196,
+          177.66699621088028
+        ],
+        [
+          521.7128643365529,
+          177.68056550068357
+        ],
+        [
+          521.7250315026263,
+          177.69641190175253
+        ],
+        [
+          521.7363668800842,
+          177.71043588507933
+        ],
+        [
+          521.7523596652768,
+          177.72868827979926
+        ],
+        [
+          521.7597147851835,
+          177.73688674991968
+        ],
+        [
+          521.7675312863922,
+          177.74467345445487
+        ],
+        [
+          521.7992965463434,
+          177.77410769472877
+        ],
+        [
+          521.8257974983544,
+          177.79679561492526
+        ],
+        [
+          521.8672929037186,
+          177.8292005207789
+        ],
+        [
+          521.9369023277268,
+          177.88620229225
+        ],
+        [
+          521.9704998497386,
+          177.91360087525734
+        ],
+        [
+          521.9822369238603,
+          177.92559887193295
+        ],
+        [
+          521.9969428914587,
+          177.94240813650885
+        ],
+        [
+          522.0122645720952,
+          177.96105702071637
+        ],
+        [
+          522.0256584063135,
+          177.97637728785614
+        ],
+        [
+          522.0323940035962,
+          177.98372681156616
+        ],
+        [
+          522.0487682508633,
+          178.000186819211
+        ],
+        [
+          522.0593626046009,
+          178.01173477429955
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 860421854,
+      "xy_km": [
+        [
+          522.0593626046009,
+          178.01173477429955
+        ],
+        [
+          522.0878359657445,
+          178.0502605198354
+        ],
+        [
+          522.1091710795014,
+          178.07186914695944
+        ],
+        [
+          522.1298256304663,
+          178.08883275160665
+        ],
+        [
+          522.1570460022259,
+          178.10949245677503
+        ],
+        [
+          522.1796182352218,
+          178.1243993467543
+        ],
+        [
+          522.2220220070169,
+          178.1491516218608
+        ],
+        [
+          522.2562215227358,
+          178.1663967185986
+        ],
+        [
+          522.2823478193947,
+          178.1773393159422
+        ],
+        [
+          522.284912995228,
+          178.17841352684678
+        ],
+        [
+          522.3082233468756,
+          178.18628430853727
+        ],
+        [
+          522.3355265362785,
+          178.1944960143781
+        ],
+        [
+          522.3637470877575,
+          178.20297472890863
+        ],
+        [
+          522.3799978409731,
+          178.20717106275197
+        ],
+        [
+          522.403000712601,
+          178.21279838511126
+        ],
+        [
+          522.4311964531403,
+          178.21739359537943
+        ],
+        [
+          522.4381002914903,
+          178.21800483878062
+        ],
+        [
+          522.4469004332251,
+          178.2189065295604
+        ],
+        [
+          522.4696964835493,
+          178.22100194999936
+        ],
+        [
+          522.4879832917296,
+          178.22198746979348
+        ],
+        [
+          522.5007603744951,
+          178.22187232689373
+        ],
+        [
+          522.507253061661,
+          178.22167262576568
+        ],
+        [
+          522.5264296623582,
+          178.22118870676076
+        ],
+        [
+          522.5480972432589,
+          178.22053120463335
+        ],
+        [
+          522.5572830178653,
+          178.22041870132543
+        ],
+        [
+          522.5751840759792,
+          178.22040494556992
+        ],
+        [
+          522.5882780823056,
+          178.22068710112234
+        ],
+        [
+          522.5978448314906,
+          178.22119583274687
+        ],
+        [
+          522.6106231627269,
+          178.22218256080725
+        ],
+        [
+          522.6206635940365,
+          178.2226359914092
+        ],
+        [
+          522.6299844646627,
+          178.22268265290447
+        ],
+        [
+          522.6415490428697,
+          178.22272779115144
+        ],
+        [
+          522.6496139505012,
+          178.22214335416018
+        ],
+        [
+          522.6553985347493,
+          178.22192676874315
+        ],
+        [
+          522.6587848334641,
+          178.22149658266892
+        ],
+        [
+          522.6673996197268,
+          178.22000189809722
+        ],
+        [
+          522.6696967517847,
+          178.21980137377832
+        ],
+        [
+          522.6813955124504,
+          178.2186036223562
+        ],
+        [
+          522.6918465710265,
+          178.21700861502072
+        ],
+        [
+          522.7134947582365,
+          178.21370313870116
+        ],
+        [
+          522.7324957364348,
+          178.2086982237153
+        ],
+        [
+          522.75049897066,
+          178.20330211299367
+        ],
+        [
+          522.7631962504859,
+          178.19699912628147
+        ],
+        [
+          522.7961959660176,
+          178.18070465098393
+        ],
+        [
+          522.8486003115951,
+          178.15220537862118
+        ],
+        [
+          522.8684011764815,
+          178.13739518520987
+        ],
+        [
+          522.873897518329,
+          178.13329970626864
+        ],
+        [
+          522.9171952703005,
+          178.09620256121772
+        ],
+        [
+          522.9438962049519,
+          178.077297754876
+        ],
+        [
+          522.957464787732,
+          178.06773384055268
+        ],
+        [
+          522.9686961575494,
+          178.05830262157158
+        ],
+        [
+          523.0156988971006,
+          178.00679740879957
+        ],
+        [
+          523.0808005969152,
+          177.93339864865376
+        ],
+        [
+          523.0998004152525,
+          177.91070316246845
+        ],
+        [
+          523.1255982763056,
+          177.87780193884893
+        ],
+        [
+          523.1413004844243,
+          177.8558946891688
+        ],
+        [
+          523.1530868621043,
+          177.83763134940656
+        ],
+        [
+          523.1576997141968,
+          177.83160093349235
+        ],
+        [
+          523.1729952901376,
+          177.80670190300035
+        ],
+        [
+          523.1828994335995,
+          177.7890050378713
+        ],
+        [
+          523.1986976478457,
+          177.7556951360653
+        ],
+        [
+          523.2066998870142,
+          177.7365057512411
+        ],
+        [
+          523.2184992137242,
+          177.703099063144
+        ],
+        [
+          523.2422959194546,
+          177.61579468677508
+        ],
+        [
+          523.258800699737,
+          177.53500105137536
+        ],
+        [
+          523.2590987575626,
+          177.53359514766635
+        ],
+        [
+          523.2697972492499,
+          177.4862976935063
+        ],
+        [
+          523.2893984977101,
+          177.42769956397115
+        ],
+        [
+          523.3010992878525,
+          177.40069977948605
+        ],
+        [
+          523.3019999523761,
+          177.39879664041166
+        ],
+        [
+          523.3082962460262,
+          177.36030527445925
+        ],
+        [
+          523.2984973733505,
+          177.33289577402726
+        ],
+        [
+          523.299695194164,
+          177.269701399157
+        ],
+        [
+          523.3041945398135,
+          177.23340300831634
+        ],
+        [
+          523.3138977907895,
+          177.18219820408424
+        ],
+        [
+          523.3159947697192,
+          177.11860280567052
+        ],
+        [
+          523.3133959877673,
+          177.04779462062206
+        ],
+        [
+          523.3149960320061,
+          176.97230360230745
+        ],
+        [
+          523.3203998032277,
+          176.89209792072205
+        ],
+        [
+          523.3276981237102,
+          176.82919606864434
+        ],
+        [
+          523.3327975361487,
+          176.80370539612056
+        ],
+        [
+          523.3396955850595,
+          176.77080325825577
+        ],
+        [
+          523.3427966358631,
+          176.76039682256751
+        ],
+        [
+          523.3508952621809,
+          176.73530153676705
+        ],
+        [
+          523.3530008645994,
+          176.7286986520224
+        ],
+        [
+          523.3633966765808,
+          176.70200114595121
+        ],
+        [
+          523.3985953191822,
+          176.6295945761036
+        ],
+        [
+          523.4233995498146,
+          176.58269505035534
+        ],
+        [
+          523.4346966905862,
+          176.5626957037707
+        ],
+        [
+          523.4467945691085,
+          176.54320538741723
+        ],
+        [
+          523.4660957511522,
+          176.5137976787769
+        ],
+        [
+          523.503001272757,
+          176.46050476641122
+        ],
+        [
+          523.5300964965725,
+          176.42149467849015
+        ],
+        [
+          523.6029803033935,
+          176.3177470490366
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1021966442,
+      "xy_km": [
+        [
+          531.6630511486242,
+          180.69584014257427
+        ],
+        [
+          531.7000990777209,
+          180.69599879805145
+        ],
+        [
+          531.7219046743701,
+          180.69270253455477
+        ],
+        [
+          531.8408028737194,
+          180.6945946659125
+        ],
+        [
+          531.9366015603542,
+          180.6881004357111
+        ],
+        [
+          531.9546007725866,
+          180.68699868229893
+        ],
+        [
+          531.9592826552147,
+          180.68666399632983
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1021966443,
+      "xy_km": [
+        [
+          531.9592826552147,
+          180.68666399632983
+        ],
+        [
+          531.9988047376773,
+          180.68380666075927
+        ],
+        [
+          532.0219979007644,
+          180.68110410056252
+        ],
+        [
+          532.0478623751677,
+          180.6782151066338
+        ],
+        [
+          532.0525003242238,
+          180.67770131951653
+        ],
+        [
+          532.1090948979634,
+          180.67120452254778
+        ],
+        [
+          532.1705991201446,
+          180.6631000798582
+        ],
+        [
+          532.2288022926627,
+          180.65190597909998
+        ],
+        [
+          532.2488005910077,
+          180.64710718930408
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1163297502,
+      "xy_km": [
+        [
+          531.3131949056087,
+          180.68810231164412
+        ],
+        [
+          531.3613027031932,
+          180.6910034816626
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1163297504,
+      "xy_km": [
+        [
+          532.7150049916801,
+          180.51960435448663
+        ],
+        [
+          532.7215987228429,
+          180.51839666823625
+        ],
+        [
+          532.7457010883613,
+          180.51549854473618
+        ],
+        [
+          532.7822997084462,
+          180.5098000337362
+        ],
+        [
+          532.8061001587224,
+          180.5057036234213
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1163297505,
+      "xy_km": [
+        [
+          532.4850001652615,
+          180.55990701297665
+        ],
+        [
+          532.5152956620044,
+          180.5509042621616
+        ],
+        [
+          532.5726990782737,
+          180.54170730431565
+        ],
+        [
+          532.6142006872785,
+          180.5341102140593
+        ],
+        [
+          532.6270058110684,
+          180.53170687141218
+        ],
+        [
+          532.6843958608493,
+          180.5249032992752
+        ],
+        [
+          532.7150049916801,
+          180.51960435448663
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1163297507,
+      "xy_km": [
+        [
+          533.2733037308755,
+          180.42520339362045
+        ],
+        [
+          533.3033670030894,
+          180.41667765791394
+        ],
+        [
+          533.3328682926611,
+          180.4068131313309
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1163297508,
+      "xy_km": [
+        [
+          532.8061001587224,
+          180.5057036234213
+        ],
+        [
+          532.8065957625885,
+          180.50560529394266
+        ],
+        [
+          532.8129072443303,
+          180.50510253386298
+        ],
+        [
+          532.8749945701462,
+          180.4998036869961
+        ],
+        [
+          532.9214003566815,
+          180.49430691258917
+        ],
+        [
+          532.9440012485281,
+          180.49280595248175
+        ],
+        [
+          532.9466937900012,
+          180.49260930806608
+        ],
+        [
+          532.9510026796381,
+          180.4922101295198
+        ],
+        [
+          532.9603037259125,
+          180.49130724968447
+        ]
+      ]
+    },
+    {
+      "osm_way_id": 1218234438,
+      "xy_km": [
+        [
+          533.6657950329065,
+          180.26682086456876
+        ],
+        [
+          533.6801466716076,
+          180.26058826355217
+        ],
+        [
+          533.6928836928857,
+          180.25528136782214
+        ],
+        [
+          533.7081137984741,
+          180.25024038273685
+        ],
+        [
+          533.7211305346826,
+          180.2467102581814
+        ],
+        [
+          533.7386823918581,
+          180.24158577583805
+        ],
+        [
+          533.7442695841854,
+          180.23959620758657
+        ],
+        [
+          533.751435709558,
+          180.2372475835126
+        ],
+        [
+          533.7593503362243,
+          180.23442903472548
+        ],
+        [
+          533.7685840787165,
+          180.23083286962327
+        ],
+        [
+          533.7805100253502,
+          180.22600560112076
+        ],
+        [
+          533.7888635281455,
+          180.22260886506504
+        ],
+        [
+          533.8040772486008,
+          180.21608770887576
+        ],
+        [
+          533.8120578754526,
+          180.21234735573893
+        ],
+        [
+          533.8154250034255,
+          180.21106725273916
+        ],
+        [
+          533.8182124067251,
+          180.20964948300173
+        ],
+        [
+          533.8219148720823,
+          180.20776617380446
+        ],
+        [
+          533.827214056727,
+          180.20511256180586
+        ],
+        [
+          533.8325991601923,
+          180.20236106545414
+        ],
+        [
+          533.8369919894121,
+          180.2001064637258
+        ],
+        [
+          533.8414261689713,
+          180.19786408233585
+        ],
+        [
+          533.8432742765634,
+          180.1967776896542
+        ],
+        [
+          533.8483297982136,
+          180.19388399582223
+        ],
+        [
+          533.8659952833748,
+          180.18366632191064
+        ],
+        [
+          533.8803132028207,
+          180.17425077851408
+        ],
+        [
+          533.9047877059088,
+          180.15917159493634
+        ],
+        [
+          533.9148303817046,
+          180.15334914357152
+        ],
+        [
+          533.9207966548125,
+          180.1493667134755
+        ],
+        [
+          533.9379657567533,
+          180.13717767683417
+        ],
+        [
+          533.9554178926695,
+          180.1237386918217
+        ],
+        [
+          533.9748842625181,
+          180.10924004994945
+        ],
+        [
+          533.9887036921176,
+          180.0992552586996
+        ],
+        [
+          533.993355306546,
+          180.09588368066545
+        ],
+        [
+          534.0002358332441,
+          180.09173626137041
+        ],
+        [
+          534.0082005810744,
+          180.08808480754797
+        ],
+        [
+          534.0094078432758,
+          180.08733767408918
+        ],
+        [
+          534.0379510934742,
+          180.0733790054882
+        ],
+        [
+          534.0598470061786,
+          180.06262809505918
+        ],
+        [
+          534.0821651844743,
+          180.05193292456173
+        ],
+        [
+          534.101183087498,
+          180.04366571372694
+        ],
+        [
+          534.1132597593306,
+          180.03842030708398
+        ],
+        [
+          534.1383007343873,
+          180.0277193102935
+        ],
+        [
+          534.15222600304,
+          180.0221666754324
+        ],
+        [
+          534.1668624230965,
+          180.0165104381469
+        ],
+        [
+          534.1874682376258,
+          180.008085143179
+        ],
+        [
+          534.203999043271,
+          180.00117703815107
+        ],
+        [
+          534.2365678567492,
+          179.98709202715312
+        ],
+        [
+          534.2899489594712,
+          179.96519981689121
+        ],
+        [
+          534.3314075833891,
+          179.94771137305756
+        ],
+        [
+          534.3461777667959,
+          179.9420035292017
+        ],
+        [
+          534.3805499464062,
+          179.93171720567403
+        ],
+        [
+          534.4010852248632,
+          179.92625093473458
+        ],
+        [
+          534.4082502446614,
+          179.92423701660357
+        ],
+        [
+          534.4309677669904,
+          179.91871727969072
+        ],
+        [
+          534.4468343045269,
+          179.91463001774443
+        ],
+        [
+          534.4617992802434,
+          179.9110197195201
+        ],
+        [
+          534.4737914271783,
+          179.90820994157815
+        ],
+        [
+          534.4920997163437,
+          179.9044989910587
+        ],
+        [
+          534.5018651782126,
+          179.902375949035
+        ],
+        [
+          534.5120572425346,
+          179.9001418045707
+        ],
+        [
+          534.5153424185116,
+          179.899349613902
+        ],
+        [
+          534.5260083226952,
+          179.89679419372465
+        ],
+        [
+          534.5447971245243,
+          179.89225041461847
+        ],
+        [
+          534.5602142960716,
+          179.8891420010209
+        ],
+        [
+          534.587941049072,
+          179.8843564534848
+        ],
+        [
+          534.6252248405974,
+          179.8782439451234
+        ],
+        [
+          534.6370455077168,
+          179.87640927120262
+        ],
+        [
+          534.6496117437466,
+          179.8744830909403
+        ],
+        [
+          534.6620099501167,
+          179.87260813070165
+        ],
+        [
+          534.6716546615788,
+          179.87111650883074
+        ],
+        [
+          534.6815827543877,
+          179.8696769245019
+        ],
+        [
+          534.6903118142731,
+          179.86840589704207
+        ],
+        [
+          534.7007701995527,
+          179.86713619175117
+        ],
+        [
+          534.7109549714467,
+          179.86597053801168
+        ],
+        [
+          534.7143557022035,
+          179.86553763295274
+        ],
+        [
+          534.7184922715575,
+          179.86538017425914
+        ],
+        [
+          534.7261345929836,
+          179.86528223868342
+        ],
+        [
+          534.7363972517516,
+          179.86510909554252
+        ],
+        [
+          534.7471521141165,
+          179.86549429311341
+        ],
+        [
+          534.7573378686288,
+          179.86586442817259
+        ],
+        [
+          534.7648634381268,
+          179.86676498033998
+        ],
+        [
+          534.783746859342,
+          179.8696692434092
+        ],
+        [
+          534.79916926304,
+          179.87265985558932
+        ],
+        [
+          534.8082099151171,
+          179.87456878612895
+        ],
+        [
+          534.818580921144,
+          179.8773810007223
+        ],
+        [
+          534.8408159708686,
+          179.8835347296342
+        ],
+        [
+          534.8577111746713,
+          179.88807800243427
+        ],
+        [
+          534.8670818414166,
+          179.8908971667391
+        ],
+        [
+          534.8778608027502,
+          179.8942989867383
+        ],
+        [
+          534.8991382639804,
+          179.9009394622445
+        ],
+        [
+          534.9189969246527,
+          179.90869969392784
+        ]
+      ]
+    }
+  ],
+  "coverage_bounds_lat_lon": [
+    51.45,
+    -0.25,
+    51.57,
+    0.05
+  ],
+  "elevation": {
+    "x": [
+      522.4200064564756,
+      523.3718402844444,
+      524.3236741124131,
+      525.2755079403819,
+      526.2273417683506,
+      527.1791755963194,
+      528.1310094242881,
+      529.0828432522569,
+      530.0346770802256,
+      530.9865109081944,
+      531.9383447361632,
+      532.8901785641319,
+      533.8420123921007,
+      534.7938462200694,
+      535.7456800480383,
+      536.697513876007,
+      537.6493477039758,
+      538.6011815319445,
+      539.5530153599133
+    ],
+    "y": [
+      175.47313315526333,
+      176.3032193904273,
+      177.1333056255913,
+      177.96339186075528,
+      178.79347809591926,
+      179.62356433108326,
+      180.45365056624723,
+      181.2837368014112,
+      182.1138230365752,
+      182.9439092717392,
+      183.77399550690316,
+      184.60408174206717,
+      185.43416797723114
+    ],
+    "metres": [
+      [
+        11.0,
+        11.0,
+        12.0,
+        7.0,
+        5.0,
+        11.0,
+        20.0,
+        22.0,
+        17.0,
+        15.0,
+        17.0,
+        45.0,
+        19.0,
+        24.0,
+        33.0,
+        35.0,
+        22.0,
+        11.0,
+        32.0
+      ],
+      [
+        5.0,
+        3.0,
+        8.0,
+        6.0,
+        7.0,
+        7.0,
+        4.0,
+        3.0,
+        10.0,
+        10.0,
+        12.0,
+        13.0,
+        13.0,
+        14.0,
+        20.0,
+        18.0,
+        9.0,
+        45.0,
+        37.0
+      ],
+      [
+        7.0,
+        1.0,
+        7.0,
+        8.0,
+        7.0,
+        8.0,
+        8.0,
+        4.0,
+        8.0,
+        8.0,
+        6.0,
+        5.0,
+        6.0,
+        4.0,
+        7.0,
+        8.0,
+        7.0,
+        28.0,
+        46.0
+      ],
+      [
+        7.0,
+        5.0,
+        5.0,
+        7.0,
+        11.0,
+        13.0,
+        7.0,
+        9.0,
+        1.0,
+        7.0,
+        6.0,
+        5.0,
+        5.0,
+        6.0,
+        7.0,
+        5.0,
+        1.0,
+        1.0,
+        7.0
+      ],
+      [
+        9.0,
+        6.0,
+        10.0,
+        12.0,
+        10.0,
+        10.0,
+        14.0,
+        19.0,
+        8.0,
+        6.0,
+        5.0,
+        5.0,
+        5.0,
+        6.0,
+        4.0,
+        6.0,
+        5.0,
+        6.0,
+        5.0
+      ],
+      [
+        7.0,
+        7.0,
+        11.0,
+        25.0,
+        25.0,
+        24.0,
+        15.0,
+        21.0,
+        17.0,
+        15.0,
+        8.0,
+        7.0,
+        6.0,
+        6.0,
+        8.0,
+        4.0,
+        7.0,
+        1.0,
+        7.0
+      ],
+      [
+        9.0,
+        9.0,
+        15.0,
+        31.0,
+        32.0,
+        28.0,
+        29.0,
+        36.0,
+        16.0,
+        1.0,
+        5.0,
+        1.0,
+        2.0,
+        8.0,
+        1.0,
+        1.0,
+        5.0,
+        10.0,
+        1.0
+      ],
+      [
+        16.0,
+        13.0,
+        19.0,
+        25.0,
+        26.0,
+        33.0,
+        31.0,
+        45.0,
+        31.0,
+        26.0,
+        38.0,
+        36.0,
+        20.0,
+        15.0,
+        12.0,
+        10.0,
+        5.0,
+        3.0,
+        3.0
+      ],
+      [
+        26.0,
+        25.0,
+        28.0,
+        37.0,
+        32.0,
+        38.0,
+        34.0,
+        33.0,
+        31.0,
+        22.0,
+        29.0,
+        33.0,
+        14.0,
+        15.0,
+        13.0,
+        12.0,
+        9.0,
+        6.0,
+        2.0
+      ],
+      [
+        41.0,
+        50.0,
+        35.0,
+        28.0,
+        45.0,
+        53.0,
+        33.0,
+        32.0,
+        23.0,
+        34.0,
+        23.0,
+        23.0,
+        17.0,
+        17.0,
+        15.0,
+        14.0,
+        17.0,
+        6.0,
+        1.0
+      ],
+      [
+        45.0,
+        61.0,
+        51.0,
+        38.0,
+        42.0,
+        49.0,
+        37.0,
+        35.0,
+        27.0,
+        33.0,
+        33.0,
+        23.0,
+        20.0,
+        19.0,
+        17.0,
+        13.0,
+        6.0,
+        6.0,
+        7.0
+      ],
+      [
+        46.0,
+        53.0,
+        55.0,
+        52.0,
+        51.0,
+        64.0,
+        38.0,
+        34.0,
+        48.0,
+        42.0,
+        37.0,
+        23.0,
+        18.0,
+        22.0,
+        14.0,
+        12.0,
+        12.0,
+        12.0,
+        13.0
+      ],
+      [
+        38.0,
+        43.0,
+        56.0,
+        78.0,
+        93.0,
+        73.0,
+        48.0,
+        46.0,
+        49.0,
+        32.0,
+        48.0,
+        29.0,
+        26.0,
+        25.0,
+        19.0,
+        13.0,
+        8.0,
+        12.0,
+        12.0
+      ]
+    ],
+    "role": "visual_context_only",
+    "sample_spacing_km": [
+      0.9518338279688123,
+      0.8300862351639751
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://api.tfl.gov.uk/StopPoint/Mode/tube",
+      "raw_sha256": "84c84fd6c1583ef994a4d04686cf5b32ef8db51b2d34142cdf88531bf471d138",
+      "attribution": "Contains Transport for London data",
+      "licence": "TfL Transport Data Service terms: https://tfl.gov.uk/corporate/terms-and-conditions/transport-data-service",
+      "retrieved_utc": "2026-11-17T22:01:32.120425+00:00"
+    },
+    {
+      "url": "https://ovp.dresel.systems/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A20%5D%3Bway%5B%22waterway%22%3D%22river%22%5D%5B%22name%22~%22Thames%22%5D%2851.45%2C-0.25%2C51.57%2C0.05%29%3Bout+geom%3B",
+      "raw_sha256": "5feb0835f21f3a9da22494343f590d5288f4f8795ee9e5c9cc185974de6c44e9",
+      "attribution": "© OpenStreetMap contributors",
+      "licence": "ODbL 1.0: https://www.openstreetmap.org/copyright",
+      "retrieved_utc": "2026-11-17T22:05:07.967322+00:00"
+    },
+    {
+      "url": "https://api.open-meteo.com/v1/elevation?latitude=51.464998%2C51.464791%2C51.464583%2C51.464374%2C51.464162%2C51.463950%2C51.463735%2C51.463519%2C51.463301%2C51.463082%2C51.462861%2C51.462639%2C51.462415%2C51.462189%2C51.461962%2C51.461733%2C51.461502%2C51.461270%2C51.461037%2C51.472458%2C51.472252%2C51.472043%2C51.471834%2C51.471622%2C51.471409%2C51.471195%2C51.470979%2C51.470761%2C51.470542%2C51.470321%2C51.470098%2C51.469874%2C51.469648%2C51.469421%2C51.469192%2C51.468962%2C51.468729%2C51.468496%2C51.479918%2C51.479712%2C51.479504%2C51.479294%2C51.479082%2C51.478869%2C51.478655%2C51.478439%2C51.478221%2C51.478001%2C51.477780%2C51.477558%2C51.477334%2C51.477108%2C51.476880%2C51.476651%2C51.476421%2C51.476189%2C51.475955%2C51.487379%2C51.487172%2C51.486964%2C51.486754%2C51.486542%2C51.486329%2C51.486115%2C51.485898%2C51.485681%2C51.485461%2C51.485240%2C51.485017%2C51.484793%2C51.484567%2C51.484340%2C51.484111%2C51.483880%2C51.483648%2C51.483414%2C51.494839%2C51.494632%2C51.494424%2C51.494214%2C51.494002%2C51.493789%2C51.493574%2C51.493358%2C51.493140%2C51.492921%2C51.492700%2C51.492477%2C51.492253%2C51.492027%2C51.491799%2C51.491570%2C51.491339%2C51.491107%2C51.490873%2C51.502299%2C51.502092%2C51.501884%2C51.501674%2C51.501462&longitude=-0.239077%2C-0.225382%2C-0.211687%2C-0.197992%2C-0.184297%2C-0.170603%2C-0.156908%2C-0.143214%2C-0.129520%2C-0.115826%2C-0.102132%2C-0.088439%2C-0.074746%2C-0.061052%2C-0.047359%2C-0.033667%2C-0.019974%2C-0.006282%2C0.007411%2C-0.238790%2C-0.225092%2C-0.211395%2C-0.197698%2C-0.184001%2C-0.170304%2C-0.156608%2C-0.142911%2C-0.129215%2C-0.115519%2C-0.101823%2C-0.088127%2C-0.074432%2C-0.060736%2C-0.047041%2C-0.033346%2C-0.019651%2C-0.005956%2C0.007738%2C-0.238502%2C-0.224803%2C-0.211103%2C-0.197404%2C-0.183705%2C-0.170006%2C-0.156307%2C-0.142608%2C-0.128910%2C-0.115211%2C-0.101513%2C-0.087815%2C-0.074117%2C-0.060420%2C-0.046722%2C-0.033025%2C-0.019328%2C-0.005631%2C0.008066%2C-0.238215%2C-0.224513%2C-0.210811%2C-0.197110%2C-0.183408%2C-0.169707%2C-0.156006%2C-0.142305%2C-0.128604%2C-0.114904%2C-0.101203%2C-0.087503%2C-0.073803%2C-0.060103%2C-0.046404%2C-0.032704%2C-0.019005%2C-0.005306%2C0.008393%2C-0.237927%2C-0.224223%2C-0.210519%2C-0.196815%2C-0.183112%2C-0.169408%2C-0.155705%2C-0.142002%2C-0.128299%2C-0.114596%2C-0.100893%2C-0.087191%2C-0.073489%2C-0.059787%2C-0.046085%2C-0.032383%2C-0.018681%2C-0.004980%2C0.008721%2C-0.237640%2C-0.223933%2C-0.210227%2C-0.196521%2C-0.182815",
+      "raw_sha256": "ade1a97ae4f4de79dd695a514390fc9ee2e3f429a9215dfddcedd968a7deddad",
+      "attribution": "Copernicus DEM GLO-90, distributed by Open-Meteo",
+      "licence": "Open-Meteo CC BY 4.0; see https://open-meteo.com/en/docs/elevation-api",
+      "retrieved_utc": "2026-11-17T22:10:36.901069+00:00"
+    },
+    {
+      "url": "https://api.open-meteo.com/v1/elevation?latitude=51.501249%2C51.501034%2C51.500818%2C51.500600%2C51.500380%2C51.500159%2C51.499936%2C51.499712%2C51.499486%2C51.499259%2C51.499029%2C51.498799%2C51.498566%2C51.498332%2C51.509759%2C51.509552%2C51.509344%2C51.509134%2C51.508922%2C51.508709%2C51.508494%2C51.508278%2C51.508060%2C51.507840%2C51.507619%2C51.507396%2C51.507172%2C51.506946%2C51.506718%2C51.506489%2C51.506258%2C51.506025%2C51.505791%2C51.517219%2C51.517012%2C51.516804%2C51.516594%2C51.516382%2C51.516169%2C51.515954%2C51.515737%2C51.515519%2C51.515300%2C51.515078%2C51.514855%2C51.514631%2C51.514405%2C51.514177%2C51.513948%2C51.513717%2C51.513485%2C51.513250%2C51.524679%2C51.524472%2C51.524264%2C51.524054%2C51.523842%2C51.523629%2C51.523414%2C51.523197%2C51.522979%2C51.522759%2C51.522538%2C51.522315%2C51.522090%2C51.521864%2C51.521637%2C51.521407%2C51.521176%2C51.520944%2C51.520710%2C51.532139%2C51.531932%2C51.531724%2C51.531514%2C51.531302%2C51.531088%2C51.530873%2C51.530657%2C51.530439%2C51.530219%2C51.529997%2C51.529774%2C51.529550%2C51.529324%2C51.529096%2C51.528866%2C51.528635%2C51.528403%2C51.528169%2C51.539600%2C51.539392%2C51.539184%2C51.538974%2C51.538762%2C51.538548%2C51.538333%2C51.538117%2C51.537898%2C51.537678&longitude=-0.169109%2C-0.155404%2C-0.141698%2C-0.127993%2C-0.114288%2C-0.100583%2C-0.086879%2C-0.073174%2C-0.059470%2C-0.045766%2C-0.032062%2C-0.018358%2C-0.004654%2C0.009049%2C-0.237352%2C-0.223643%2C-0.209935%2C-0.196226%2C-0.182518%2C-0.168810%2C-0.155103%2C-0.141395%2C-0.127687%2C-0.113980%2C-0.100273%2C-0.086566%2C-0.072859%2C-0.059153%2C-0.045447%2C-0.031740%2C-0.018034%2C-0.004328%2C0.009377%2C-0.237064%2C-0.223353%2C-0.209642%2C-0.195932%2C-0.182221%2C-0.168511%2C-0.154801%2C-0.141091%2C-0.127382%2C-0.113672%2C-0.099963%2C-0.086254%2C-0.072545%2C-0.058836%2C-0.045127%2C-0.031419%2C-0.017711%2C-0.004002%2C0.009705%2C-0.236776%2C-0.223063%2C-0.209350%2C-0.195637%2C-0.181924%2C-0.168212%2C-0.154500%2C-0.140788%2C-0.127076%2C-0.113364%2C-0.099652%2C-0.085941%2C-0.072230%2C-0.058519%2C-0.044808%2C-0.031097%2C-0.017387%2C-0.003676%2C0.010034%2C-0.236487%2C-0.222772%2C-0.209057%2C-0.195342%2C-0.181627%2C-0.167912%2C-0.154198%2C-0.140484%2C-0.126769%2C-0.113055%2C-0.099342%2C-0.085628%2C-0.071915%2C-0.058201%2C-0.044488%2C-0.030775%2C-0.017063%2C-0.003350%2C0.010362%2C-0.236199%2C-0.222482%2C-0.208764%2C-0.195047%2C-0.181330%2C-0.167613%2C-0.153896%2C-0.140180%2C-0.126463%2C-0.112747",
+      "raw_sha256": "a808c879412b3d121daeb253dc0daa584a69ba85a0b7ba721d4a394324c9db80",
+      "attribution": "Copernicus DEM GLO-90, distributed by Open-Meteo",
+      "licence": "Open-Meteo CC BY 4.0; see https://open-meteo.com/en/docs/elevation-api",
+      "retrieved_utc": "2026-11-17T22:10:37.005431+00:00"
+    },
+    {
+      "url": "https://api.open-meteo.com/v1/elevation?latitude=51.537457%2C51.537234%2C51.537009%2C51.536783%2C51.536555%2C51.536326%2C51.536095%2C51.535862%2C51.535628%2C51.547060%2C51.546853%2C51.546644%2C51.546434%2C51.546222%2C51.546008%2C51.545793%2C51.545576%2C51.545358%2C51.545138%2C51.544917%2C51.544693%2C51.544469%2C51.544242%2C51.544014%2C51.543785%2C51.543554%2C51.543321%2C51.543087%2C51.554520%2C51.554313%2C51.554104%2C51.553893%2C51.553681%2C51.553468%2C51.553253%2C51.553036%2C51.552818%2C51.552598%2C51.552376%2C51.552153%2C51.551928%2C51.551702%2C51.551474%2C51.551244%2C51.551013%2C51.550780%2C51.550546&longitude=-0.099031%2C-0.085315%2C-0.071599%2C-0.057884%2C-0.044169%2C-0.030453%2C-0.016738%2C-0.003024%2C0.010691%2C-0.235911%2C-0.222191%2C-0.208471%2C-0.194752%2C-0.181032%2C-0.167313%2C-0.153594%2C-0.139875%2C-0.126157%2C-0.112438%2C-0.098720%2C-0.085002%2C-0.071284%2C-0.057566%2C-0.043849%2C-0.030131%2C-0.016414%2C-0.002697%2C0.011020%2C-0.235622%2C-0.221900%2C-0.208178%2C-0.194456%2C-0.180735%2C-0.167013%2C-0.153292%2C-0.139571%2C-0.125850%2C-0.112130%2C-0.098409%2C-0.084689%2C-0.070968%2C-0.057248%2C-0.043529%2C-0.029809%2C-0.016090%2C-0.002370%2C0.011349",
+      "raw_sha256": "c22fb9494a5e37c753ca0db1b88e0a746f72017dd42509ea3d34e73a5e5ff465",
+      "attribution": "Copernicus DEM GLO-90, distributed by Open-Meteo",
+      "licence": "Open-Meteo CC BY 4.0; see https://open-meteo.com/en/docs/elevation-api",
+      "retrieved_utc": "2026-11-17T22:10:37.136652+00:00"
+    }
+  ],
+  "assumptions": [
+    "Selected station subset, not the complete Tube system.",
+    "No passenger-demand data: station-pair demand is synthetic.",
+    "Elevation is visual context only; underground construction cost is not inferred from surface height.",
+    "Thames is an OSM centreline; its plotted width is symbolic."
+  ]
+}

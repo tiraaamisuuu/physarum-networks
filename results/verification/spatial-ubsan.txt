@@ -1,0 +1,40 @@
+[ 50%] Built target physarum
+[ 75%] Built target physarum_run
+[ 87%] Building CXX object CMakeFiles/physarum_tests.dir/tests/test_main.cpp.o
+[100%] Linking CXX executable physarum_tests
+[100%] Built target physarum_tests
+Test project <project-root>/build-debug
+      Start  1: series
+ 1/15 Test  #1: series ...........................   Passed    0.73 sec
+      Start  2: parallel
+ 2/15 Test  #2: parallel .........................   Passed    0.18 sec
+      Start  3: diamond
+ 3/15 Test  #3: diamond ..........................   Passed    0.07 sec
+      Start  4: reverse
+ 4/15 Test  #4: reverse ..........................   Passed    0.44 sec
+      Start  5: zero
+ 5/15 Test  #5: zero .............................   Passed    0.06 sec
+      Start  6: components
+ 6/15 Test  #6: components .......................   Passed    0.10 sec
+      Start  7: disconnected
+ 7/15 Test  #7: disconnected .....................   Passed    0.06 sec
+      Start  8: near_zero
+ 8/15 Test  #8: near_zero ........................   Passed    0.04 sec
+      Start  9: invalid
+ 9/15 Test  #9: invalid ..........................   Passed    0.05 sec
+      Start 10: euler
+10/15 Test #10: euler ............................   Passed    0.06 sec
+      Start 11: positivity
+11/15 Test #11: positivity .......................   Passed    0.39 sec
+      Start 12: timestep
+12/15 Test #12: timestep .........................   Passed    6.84 sec
+      Start 13: conditioning
+13/15 Test #13: conditioning .....................   Passed    0.12 sec
+      Start 14: terminals
+14/15 Test #14: terminals ........................   Passed    0.16 sec
+      Start 15: cli_smoke
+15/15 Test #15: cli_smoke ........................   Passed    0.70 sec
+
+100% tests passed, 0 tests failed out of 15
+
+Total Test time (real) =  10.12 sec

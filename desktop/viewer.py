@@ -502,15 +502,22 @@ class Viewer(QMainWindow):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run",type=Path,help="Open a recorded C++ run directory or ZIP archive.")
+    parser.add_argument("--fixture",action="store_true",help="Open the validated four-node viewer instead of London.")
     args = parser.parse_args()
     prepare_platform_plugins()
     app = QApplication(sys.argv[:1])
     app.setApplicationName("Physarum Network Viewer")
     app.setApplicationDisplayName("Physarum Network Viewer")
     app.setStyle("Fusion")
-    window = Viewer(auto_run=not args.run)
-    if args.run:
-        window.open_path(args.run)
+    if args.fixture or args.run:
+        window = Viewer(auto_run=not args.run)
+        if args.run:window.open_path(args.run)
+    else:
+        try:
+            from .spatial_viewer import SpatialViewer
+        except ImportError:
+            from spatial_viewer import SpatialViewer
+        window=SpatialViewer()
     window.show()
     sys.exit(app.exec())
 

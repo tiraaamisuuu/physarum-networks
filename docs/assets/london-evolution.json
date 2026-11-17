@@ -1,0 +1,52 @@
+{
+  "settings": {
+    "current": 2.0,
+    "gamma": 1.8,
+    "dt": 0.05,
+    "duration": 20.0,
+    "initial_conductivity": 0.5,
+    "neighbours": 6,
+    "river_penalty": 2.0,
+    "seed": 42,
+    "demand_mode": "uniform_pairs",
+    "source_id": "940GZZLUPAC",
+    "sink_id": "940GZZLUSTD"
+  },
+  "nodes": 46,
+  "edges": 183,
+  "states": 401,
+  "crossing_candidates": 36,
+  "figure_steps": [
+    0,
+    133,
+    267,
+    400
+  ],
+  "max_conservation_residual": 5.493383525845275e-13,
+  "max_backward_error": 2.7470134852018935e-16,
+  "min_scaled_rcond": 5.0162822584580196e-05,
+  "final_D_range": [
+    7.790293084388643e-10,
+    0.3527194640133128
+  ],
+  "history_sha256": "cddc2894f70630c488b9dafdc9cae08dbb3b9537b3a32c124d4b896b34f65a73",
+  "scenario_sha256": "eb630a9a787595b29f306e303e53eb499f0f36028e4801981ac7ce50b741b28c",
+  "geography_sha256": "d86063d3300f03e43bd86e63b6a4a77d6e9e0beb45d7aecec647ac91adff5e16",
+  "software": {
+    "numpy": "2.5.5",
+    "executable_sha256": "570b1607a40d7cfe17a593187c8cd5a559814cb9aa124d7dd4cfdb87e1fdebd4",
+    "source_sha256": {
+      "src/FlowSolver.cpp": "92d03193dd6ae263e1338b6eac76e4c9ff3a6cb723b5fd9bc9ec4bc970a9ddb6",
+      "src/Graph.cpp": "65a5eb3596ef2f767c96a2204a25385b6cea35e853cad77c57bc2112df8c2cf8",
+      "src/PhysarumModel.cpp": "c1a9bd82f216bd2f8202da670f48161a1b8349ee4801f66691056ac41cf2c7a1",
+      "src/main.cpp": "16278e49922e7378992491422fd71450a8cae3bf11a8718ae398ce4ece969c5b",
+      "include/physarum/FlowSolver.hpp": "b0f29a406bd0e6d3eab96019b7b6a2798f67b68a6edb76faee9174dfacdce476",
+      "include/physarum/Graph.hpp": "fb20f7f50dfabc02cf5512f9beafcd71890d3927bcaa7423b3b97bab5f76466a",
+      "include/physarum/PhysarumModel.hpp": "06b6494ad896dae4734456a4d79280c1b9966797471efcfbd2d11efb6f7a8c49",
+      "desktop/spatial_data.py": "33e57c2cf86e8fd41e0c6ecbd4aff8f9c9dbcd0bb076228de1514e13e9e9d0e6",
+      "desktop/spatial_viewer.py": "4d7843454aeb4538367f9148a82badf0c326e65be475c6cba1d2d4c962c00dea"
+    }
+  },
+  "elevation_role": "context only; omitted from this figure",
+  "physical_validation": "No passenger demand or engineering validation."
+}

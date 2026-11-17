@@ -107,6 +107,22 @@ int main(int argc,char** argv) {
             const auto final=integrate(.05,30);
             near(final[0],reinforcement(2,1.8),1e-9); require(final[2]<1e-9,"Shorter route dominates fixture");
         }},
+        {"terminals",[]{
+            PhysarumModel model(two_routes(),{.5,.5,.5,.5},{.05,1.8,2,0,3});
+            const auto initial=model.flow();
+            model.set_terminals(3,0);
+            const auto reversed=model.flow();
+            for(std::size_t i=0;i<4;++i)near(reversed.flows[i],-initial.flows[i]);
+            throws([&]{model.set_terminals(0,0);});
+            throws([&]{model.set_terminals(0,4);});
+            near(model.flow().flows[0],reversed.flows[0]);
+            model.step();
+            const auto adapted=model.conductivities();
+            model.set_terminals(1,2);
+            require(model.conductivities()==adapted,"Terminal changes retain adapted conductivities");
+            require(model.flow().conservation_inf<1e-12,"New OD pair conserves flow");
+            model.step();
+        }},
         {"conditioning",[]{
             // Strongly connected upstream nodes with a tiny bottleneck to grounded sink.
             throws([]{solve_flow(Graph(3,{{0,1,1},{1,2,1}}),{1,1e-18},0,2,1);});

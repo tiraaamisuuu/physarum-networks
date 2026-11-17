@@ -10,6 +10,8 @@ public:
     [[nodiscard]] const Graph& graph() const { return graph_; }
     [[nodiscard]] const std::vector<double>& conductivities() const { return d_; }
     [[nodiscard]] FlowResult flow() const;
+    // Change the imposed terminal pair, retaining the same conductivity state.
+    void set_terminals(std::size_t source, std::size_t sink);
     // Explicit Euler, with simultaneous updates from a single pre-update flow solution.
     void step();
 private:
