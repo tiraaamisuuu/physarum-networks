@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite this repository and the scientific model papers separately."
+type: software
+title: "Physarum Networks: a computational research baseline"
+authors:
+  - family-names: "Corthine"
+    given-names: "Alfie"
+repository-code: "https://github.com/tiraaamisuuu/physarum-networks"
+url: "https://github.com/tiraaamisuuu/physarum-networks"
+abstract: "A C++20 implementation of Physarum-inspired flow adaptation with independent mathematical checks, reproducible experiments and analysis figures."
+keywords:
+  - Physarum
+  - adaptive networks
+  - biological transport
+  - numerical validation

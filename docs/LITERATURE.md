@@ -51,4 +51,4 @@ Describes observed arbuscular mycorrhizal network development with tip-growth wa
 3. Before choosing a dynamic-demand or disruption question, review work specifically on time-dependent demands, damage, budgets and recovery. The current eight-paper set does not establish originality.
 4. For any fungal comparison, choose one organism class and a published, explicit growth/fusion/recycling model before coding.
 
-`references.bib` stores the initial bibliography. The original user brief is preserved verbatim, including its two incorrect DOIs; corrections are recorded here rather than silently rewriting the request. `source_inventory.json` records supplied PDF paths and hashes. Copyrighted source PDFs are not copied into the Git project.
+`references.bib` stores the initial bibliography. The initial planning brief supplied two incorrect DOIs; their corrections are recorded above. `PROJECT_BRIEF.md` is the public research summary. `source_inventory.json` records supplied PDF filenames and hashes without machine-specific paths. Copyrighted source PDFs are not copied into the Git project.

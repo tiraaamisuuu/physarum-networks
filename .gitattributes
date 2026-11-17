@@ -1,0 +1,4 @@
+# Recorded numerical outputs and graphics remain available, but collapse in diffs.
+results/** linguist-generated=true
+docs/assets/*.svg linguist-generated=true
+docs/assets/*.png linguist-generated=true

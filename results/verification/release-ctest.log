@@ -2,8 +2,8 @@ Start testing: Nov 16 21:27 GMT
 ----------------------------------------------------------
 1/14 Testing: series
 1/14 Test: series
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "series"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "series"
+Directory: <PROJECT_ROOT>/build
 "series" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -18,8 +18,8 @@ Test Passed.
 
 2/14 Testing: parallel
 2/14 Test: parallel
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "parallel"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "parallel"
+Directory: <PROJECT_ROOT>/build
 "parallel" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -34,8 +34,8 @@ Test Passed.
 
 3/14 Testing: diamond
 3/14 Test: diamond
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "diamond"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "diamond"
+Directory: <PROJECT_ROOT>/build
 "diamond" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -50,8 +50,8 @@ Test Passed.
 
 4/14 Testing: reverse
 4/14 Test: reverse
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "reverse"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "reverse"
+Directory: <PROJECT_ROOT>/build
 "reverse" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -66,8 +66,8 @@ Test Passed.
 
 5/14 Testing: zero
 5/14 Test: zero
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "zero"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "zero"
+Directory: <PROJECT_ROOT>/build
 "zero" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -82,8 +82,8 @@ Test Passed.
 
 6/14 Testing: components
 6/14 Test: components
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "components"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "components"
+Directory: <PROJECT_ROOT>/build
 "components" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -98,8 +98,8 @@ Test Passed.
 
 7/14 Testing: disconnected
 7/14 Test: disconnected
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "disconnected"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "disconnected"
+Directory: <PROJECT_ROOT>/build
 "disconnected" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -114,8 +114,8 @@ Test Passed.
 
 8/14 Testing: near_zero
 8/14 Test: near_zero
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "near_zero"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "near_zero"
+Directory: <PROJECT_ROOT>/build
 "near_zero" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -130,8 +130,8 @@ Test Passed.
 
 9/14 Testing: invalid
 9/14 Test: invalid
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "invalid"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "invalid"
+Directory: <PROJECT_ROOT>/build
 "invalid" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -146,8 +146,8 @@ Test Passed.
 
 10/14 Testing: euler
 10/14 Test: euler
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "euler"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "euler"
+Directory: <PROJECT_ROOT>/build
 "euler" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -162,8 +162,8 @@ Test Passed.
 
 11/14 Testing: positivity
 11/14 Test: positivity
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "positivity"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "positivity"
+Directory: <PROJECT_ROOT>/build
 "positivity" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -178,8 +178,8 @@ Test Passed.
 
 12/14 Testing: timestep
 12/14 Test: timestep
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "timestep"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "timestep"
+Directory: <PROJECT_ROOT>/build
 "timestep" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -194,8 +194,8 @@ Test Passed.
 
 13/14 Testing: conditioning
 13/14 Test: conditioning
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "conditioning"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_tests" "conditioning"
+Directory: <PROJECT_ROOT>/build
 "conditioning" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
@@ -210,12 +210,12 @@ Test Passed.
 
 14/14 Testing: cli_smoke
 14/14 Test: cli_smoke
-Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_run" "/Users/alfiecorthine/Documents/ChatGPT/Physarum/experiments/configs/two_routes.cfg" "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/smoke"
-Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+Command: "<PROJECT_ROOT>/build/physarum_run" "<PROJECT_ROOT>/experiments/configs/two_routes.cfg" "<PROJECT_ROOT>/build/smoke"
+Directory: <PROJECT_ROOT>/build
 "cli_smoke" start time: Nov 16 21:27 GMT
 Output:
 ----------------------------------------------------------
-Wrote 601 states to "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/smoke"
+Wrote 601 states to "<PROJECT_ROOT>/build/smoke"
 max conservation residual: 1.776356839e-15
 max backward error: 1.268839653e-16
 <end of output>

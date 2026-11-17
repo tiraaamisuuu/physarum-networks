@@ -1,86 +1,127 @@
-# Physarum networks
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="Physarum Networks — a reproducible C++20 research baseline for adaptive transport networks" width="100%">
+</p>
 
-A Phase 1 research baseline: a C++20 implementation of flow-dependent conductivity adaptation, using the saturating reinforcement law in Tero et al. (2010). This is a validated small synthetic experiment, not a replication of the Tokyo rail-network experiment or a model of all slime-mould biology.
+<p align="center">
+  <a href="https://github.com/tiraaamisuuu/physarum-networks/actions/workflows/ci.yml"><img src="https://github.com/tiraaamisuuu/physarum-networks/actions/workflows/ci.yml/badge.svg" alt="CMake build and mathematical tests"></a>
+  <img src="https://img.shields.io/badge/C%2B%2B-20-155e75" alt="C++20">
+  <img src="https://img.shields.io/badge/model-Physarum--inspired-007f82" alt="Physarum-inspired model">
+  <img src="https://img.shields.io/badge/research-Phase%201-536b78" alt="Research stage: Phase 1">
+</p>
 
-## Build and test
+<p align="center">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#measured-results">Results</a> ·
+  <a href="docs/MATHEMATICAL_MODEL.md">Mathematics</a> ·
+  <a href="docs/LITERATURE.md">Literature</a> ·
+  <a href="docs/RESEARCH_LOG.md">Research log</a>
+</p>
 
-Requires a C++20 compiler, CMake >=3.20 and Eigen with a CMake package (tested with Eigen 5.0.1; Eigen 3.3+ is the intended API baseline, but older versions have not been tested). On macOS, `brew install eigen cmake` supplies the build dependencies if needed. No dependencies are downloaded by CMake.
+# Physarum Networks
 
-From the project root:
+**Investigating how local, flow-dependent adaptation shapes transport networks.**
+
+This research project implements the adaptive tube model of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894) in C++20. Pressure differences drive flow; flow reinforces tube conductivity; the updated conductivities redistribute the next flow.
+
+The current milestone is a small, independently testable numerical baseline: four nodes, two competing routes, a fixed source and sink, and reproducible results. Larger network reproduction, changing transport demand and disruption recovery are future research directions.
+
+## See the adaptation
+
+![Four measured states at model times 0, 2, 6 and 30: the short route gains conductivity while the long route decays.](docs/assets/network-evolution.png)
+
+The source is node **0** and the sink is node **3**. The routes have total lengths **2** and **4**. Every edge begins with the same conductivity. Under this setup, the shorter route gains flow and conductivity while the longer route decays continuously. No edge-deletion rule is used.
+
+*Geometry is schematic. Inner line width represents conductivity; pale outlines retain every original edge. Times are arbitrary model units. See [figure provenance](docs/assets/README.md).*
+
+## Measured results
+
+![Measured conductivity evolution and Euler time-step refinement for the Phase 1 baseline.](docs/assets/validation.png)
+
+| Check | Recorded Phase 1 result |
+| :--- | ---: |
+| Maximum flow-conservation residual | `1.78 × 10⁻¹⁵` |
+| Maximum error against independent analytic flows | `1.78 × 10⁻¹⁵` |
+| Maximum normalized pressure residual | `1.27 × 10⁻¹⁶` |
+| Final short-route conductivity, per edge | `0.776895386795` |
+| Final long-route conductivity, per edge | `1.34 × 10⁻¹³` |
+| Repeated-run output | Byte-identical |
+
+The baseline uses `I₀ = 2`, `γ = 1.8`, `Δt = 0.05`, initial `D = 0.5`, and duration `30`. Tests compare pressures and flows with hand-calculated circuit solutions and compare the update with an exact scalar Euler recurrence. Halving the time step approximately halves the measured transient error for this fixture. The fine-step comparison has finite numerical error.
+
+**Validation scope:** all 14 CTest cases passed locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
+
+## Quick start
+
+Requires a C++20 compiler, CMake ≥3.20 and Eigen. The locally verified configuration uses Apple Clang 17, CMake 4.0.2 and Eigen 5.0.1.
 
 ```sh
+git clone https://github.com/tiraaamisuuu/physarum-networks.git
+cd physarum-networks
+
+# macOS dependencies
+brew install cmake eigen
+
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j 4
+cmake --build build --parallel
 ctest --test-dir build --output-on-failure
+
 ./build/physarum_run experiments/configs/two_routes.cfg results/manual
 ```
 
-If Eigen is installed outside the normal search path, pass `-DEigen3_DIR=/path/to/share/eigen3/cmake` when configuring. Linux should use the same commands after installing its Eigen development package; Linux execution has not been verified.
+On Ubuntu, install `build-essential`, `cmake` and `libeigen3-dev` with your package manager, then use the same configure, build, test and run commands. See [build and experiment instructions](docs/BUILDING.md) for configuration options and solver diagnostics.
 
-## Reproduce the analysis
+### Reproduce the figures
 
-Python is used only to run experiments, validate CSV outputs and plot them. It is not the simulation engine.
+The C++ program performs the simulation. Python validates the exported CSV data and generates the plots. The recorded analysis environment uses Python 3.14; dependency versions are pinned.
 
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r analysis/requirements.txt
 .venv/bin/python analysis/run_validation.py
+.venv/bin/python analysis/make_readme_figures.py
 ```
 
-The analysis reruns the baseline twice, verifies deterministic output, checks every baseline state against independent series/parallel circuit calculations, checks each Euler update, rejects malformed CLI configurations, and performs time-step refinement. It saves configurations, histories, source hashes, binary hash, software versions and measured checks in `results/phase1/`. An existing output directory is overwritten on rerun; use `--output results/another-run` to preserve prior output. The pinned analysis dependencies reproduce the versions used on this Mac; older Python installations may require a compatible environment.
+The validation script records configurations, histories, source hashes and software versions. Rerunning overwrites `results/phase1/`; use `--output results/another-run` to preserve the recorded dataset. The README-figure script reads the recorded `results/phase1/` dataset.
 
-View [the plot](results/phase1/conductivity.png), [the measured report](results/phase1/REPORT.md), and [the complete validation data](results/phase1/validation.json). PNG and SVG versions are available.
+## Model
 
-## What the experiment means
+For an edge connecting nodes $i$ and $j$:
 
-There are four nodes and two routes from source 0 to sink 3:
+$$
+Q_{ij}=\frac{D_{ij}}{L_{ij}}(p_i-p_j),
+\qquad
+\frac{dD_{ij}}{dt}=\frac{|Q_{ij}|^\gamma}{1+|Q_{ij}|^\gamma}-D_{ij}.
+$$
 
-```text
-          1
-       1 / \ 1          Short route: length 2 (edges 0, 1)
-        0   3
-       2 \ / 2          Long route:  length 4 (edges 2, 3)
-          2
-```
+At each iteration, the engine solves a grounded graph Laplacian for pressure, computes signed edge flows and updates all conductivities simultaneously with explicit Euler. Conservation and solver residuals are checked before results are accepted.
 
-Each edge starts at conductivity 0.5. With current 2, the initial short-route flow is 4/3 and the long-route flow is 2/3. The conductivities then change simultaneously using explicit Euler with gamma=1.8 and dt=0.05. The two edges on each route have matching conductivity by symmetry. At t=30, the shorter route carries almost all the flow. This result agrees with the known shorter route for this initial condition; it is not a proof of general shortest-path convergence for the saturating model.
+The core uses a dense, diagonally scaled Eigen LDLT solver. It retains positive conductivities without a floor, handles demand-free disconnected components, and reports an error when terminals disconnect or the pressure system becomes numerically unresolved. The full derivation, tolerances and independent test cases are documented in the [mathematical model](docs/MATHEMATICAL_MODEL.md).
 
-The runner takes exactly `CONFIG OUTPUT_DIRECTORY`. The config contains seven required `key=value` entries: `dt`, `steps`, `gamma`, `current`, `initial_conductivity`, `source`, `sink`. Blank lines and `#` comments are supported; unknown and duplicate keys fail. The CLI fixes the four-node topology; other graphs can be constructed through the C++ API. Edge orientations only set the sign of reported flows. Source and sink must differ, and current must be positive. There is no randomness or seed in this milestone.
+## Research scope
 
-Each run writes:
+| Milestone | Status |
+| :--- | :--- |
+| **Phase 1 — mathematical baseline** | Implemented and locally validated |
+| **Phase 2 — published network behaviour** | Next: resolve and document the reproduction protocol |
+| **Phase 3 — research extensions** | Deferred pending baseline reproduction and literature review |
 
-- `history.csv`: one row per edge per state, including t=0 and the final state. Conductivity, flow and endpoint pressures all refer to that same time, not staggered states. Residuals repeat on each edge row.
-- `edges.csv`: endpoints and lengths; identifies edge IDs in the history.
-- `config.cfg`, `metadata.txt`, `summary.txt`: resolved parameters, compiler/Eigen information and maximum residuals/final conductivities. Times are arbitrary model units, not biological seconds.
+The fixed terminals, uniform initialization and four-node graph are validation choices. The 2010 paper uses random food-source pairs and a fine mesh. This repository does **not** yet reproduce its Tokyo experiment, establish general shortest-path convergence for the sigmoid law, or demonstrate resilience or real transport-system feasibility. The dense solver is intended for small graphs, and Euler step-size accuracy must be checked for each setup. Local AddressSanitizer verification remains inconclusive because its runtime stalled before `main`; the separate UBSan run passed.
 
-## Numerical choices and limits
+The next step is to establish a source-audited replication protocol before adding stochastic network experiments. No originality claim is made for the implemented baseline.
 
-The dense Eigen LDLT solve uses a grounded, diagonally scaled graph Laplacian. This is deliberately simple for small graphs: O(n^3) factorization and O(n^2) memory. Disconnected components with no imposed demand receive independent pressure references and zero flow. Disconnected terminals fail. Positive conductivities are never pruned or floored. Numerically unresolved systems stop with an error rather than changing the model.
+## Explore the project
 
-Restricting `0 < dt <= 1` guarantees nonnegative Euler updates in exact arithmetic. It does **not** establish stability or accuracy of the coupled nonlinear dynamics; the refinement experiment measures accuracy only for this fixture. Default acceptance checks are `max conservation error <= 1e-12 + 1e-10 I0`, grounded backward error <=1e-12, and scaled reciprocal condition estimate >=1e-14. These numerical safeguards are implementation choices, not published biological parameters. See [the mathematical derivation](docs/MATHEMATICAL_MODEL.md).
+| Location | Contents |
+| :--- | :--- |
+| [`include/physarum/`](include/physarum) · [`src/`](src) | Graph, flow solver, adaptation model and CLI |
+| [`tests/`](tests) | Analytic fixtures and numerical checks |
+| [`experiments/configs/`](experiments/configs) | Reproducible experiment parameters |
+| [`analysis/`](analysis) | Independent CSV checks and figure generation |
+| [`results/phase1/`](results/phase1) | Recorded histories, diagnostics and figures |
+| [`docs/`](docs) | [Project brief](docs/PROJECT_BRIEF.md), [literature notes](docs/LITERATURE.md), [bibliography](docs/references.bib) and research record |
 
-The fixed terminal pair, uniform initial conductivities, four-node graph and Euler step size are our validation choices. The paper samples random food sources on a fine mesh, including extra representation of Tokyo. No stochastic selection, geography, topology growth, damage experiment, fungal model, performance metric comparison or Phase 2 reproduction is implemented.
+## References and citation
 
-## Verification on 16 November 2026
+The principal model source is Tero et al., *Rules for Biologically Inspired Adaptive Network Design*, **Science** 327(5964), 439–442 (2010), [doi:10.1126/science.1177894](https://doi.org/10.1126/science.1177894). Related Physarum and fungal-network studies are recorded in the [literature review](docs/LITERATURE.md) and [BibTeX bibliography](docs/references.bib), with differences between their model assumptions noted explicitly.
 
-Built and run locally on macOS ARM64 using Apple Clang 17.0.0, CMake 4.0.2 and Homebrew Eigen 5.0.1. The 14 CTest cases pass in Release and in Debug with UndefinedBehaviorSanitizer. Checks cover analytic pressure/flow fixtures, orientation and terminal reversal, disconnected and near-zero cases, invalid inputs, conditioning rejection, the exact scalar Euler recurrence, positivity, refinement and CLI output. The Python validation additionally confirms byte-identical repeated runs and analytic agreement at every baseline state.
-
-Observed baseline maximum conservation error: 1.77636e-15. Maximum normalized pressure residual: 1.26884e-16. Final short-route D: 0.776895386795; long-route D: 1.33973e-13. Halving dt from 0.05 to 0.025 changes the conductivity trajectory by up to 0.000867554. Full numerical results are in the generated report.
-
-Debug/UndefinedBehaviorSanitizer build:
-
-```sh
-cmake -S . -B build-debug -DCMAKE_BUILD_TYPE=Debug \
-  -DCMAKE_CXX_FLAGS="-fsanitize=undefined -fno-omit-frame-pointer" \
-  -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=undefined"
-cmake --build build-debug -j 4
-ctest --test-dir build-debug --output-on-failure
-```
-
-An AddressSanitizer+UndefinedBehaviorSanitizer build compiled, but its first test hung before `main` in Apple's ASan runtime initialization. A process sample showed recursive allocator initialization and a sanitizer spin lock. The run was stopped. ASan validation is therefore inconclusive, not passed; this does not affect the completed Release tests. The runtime observation is recorded in the research log.
-
-## Research record and next milestone
-
-The [original brief](docs/PROJECT_BRIEF.md), [mathematical model](docs/MATHEMATICAL_MODEL.md), [literature notes](docs/LITERATURE.md), [bibliography](docs/references.bib), and [research log](docs/RESEARCH_LOG.md) document the scope and reasoning.
-
-Next: specify a source-audited Phase 2 replication protocol, resolving the mesh, initial noise, terminal sampling, integration schedule and interpretation of near-zero tubes before comparing with published figures. The inspected supplementary PDF supplies figures S1/S2, not a complete implementation protocol. Further source investigation is needed; no novelty claim or research extension has been made.
+To cite this software, use GitHub’s **Cite this repository** entry or [`CITATION.cff`](CITATION.cff). Cite the scientific model papers separately when discussing their results.

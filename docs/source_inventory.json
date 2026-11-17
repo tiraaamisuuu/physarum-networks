@@ -2,44 +2,44 @@
   "review_date": "2026-11-16",
   "sources": [
     {
-      "path": "/Users/alfiecorthine/Documents/slimemold.pdf",
       "bytes": 417748,
-      "sha256": "bb0c3bab075263e2b95ba6bfc1c9443ee12db12dc41b3e559f28f7ddf427f427"
+      "sha256": "bb0c3bab075263e2b95ba6bfc1c9443ee12db12dc41b3e559f28f7ddf427f427",
+      "filename": "slimemold.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Documents/JTB244-4.pdf",
       "bytes": 4318023,
-      "sha256": "d640f74a023ea5929b2bd97802b0ef39939e871ffbaf222ecc6a471603c944a7"
+      "sha256": "d640f74a023ea5929b2bd97802b0ef39939e871ffbaf222ecc6a471603c944a7",
+      "filename": "JTB244-4.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Documents/physarum-jtb.pdf",
       "bytes": 508996,
-      "sha256": "f96063e1cf0fd46bd380f003532d31f2ae0f92616ebc6a0ca007a267baf8295d"
+      "sha256": "f96063e1cf0fd46bd380f003532d31f2ae0f92616ebc6a0ca007a267baf8295d",
+      "filename": "physarum-jtb.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Documents/rspb.2007.0459.pdf",
       "bytes": 754647,
-      "sha256": "aa4722b893e7574da8311c9ca785e3a71bd9344836f1114ff7dcc36993e4bf4c"
+      "sha256": "aa4722b893e7574da8311c9ca785e3a71bd9344836f1114ff7dcc36993e4bf4c",
+      "filename": "rspb.2007.0459.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Documents/1-s2.0-S0304397522000822-main.pdf",
       "bytes": 2400534,
-      "sha256": "7a96fdaedc573daa743a152160cf308b99b19eb63ff06e4f60b7654ce68eec54"
+      "sha256": "7a96fdaedc573daa743a152160cf308b99b19eb63ff06e4f60b7654ce68eec54",
+      "filename": "1-s2.0-S0304397522000822-main.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Documents/microbiolspec.funk-0033-2017.pdf",
       "bytes": 61965951,
-      "sha256": "726c4534c02040b477eedbc03b013281f919910a8010109f3f28351ad35a2652"
+      "sha256": "726c4534c02040b477eedbc03b013281f919910a8010109f3f28351ad35a2652",
+      "filename": "microbiolspec.funk-0033-2017.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Downloads/s41586-025-08614-x.pdf",
       "bytes": 20434815,
-      "sha256": "15dd83d7712395e577cb0d39b8337127e290b19c8ebbf922a9256fa96c2a8025"
+      "sha256": "15dd83d7712395e577cb0d39b8337127e290b19c8ebbf922a9256fa96c2a8025",
+      "filename": "s41586-025-08614-x.pdf"
     },
     {
-      "path": "/Users/alfiecorthine/Downloads/s41598-026-61965-x.pdf",
       "bytes": 3873754,
-      "sha256": "8792e02da9d2a7bfee89d1a0507efa9b2ab4acfb18f0e80a734a3de61d3f0a8e"
+      "sha256": "8792e02da9d2a7bfee89d1a0507efa9b2ab4acfb18f0e80a734a3de61d3f0a8e",
+      "filename": "s41598-026-61965-x.pdf"
     }
   ]
 }

@@ -39,3 +39,12 @@
 **Known limitations.** Small dense solver; fixed synthetic graph in CLI; double precision; explicit Euler only; acceptance tolerances are appropriate to the dimensionless fixture, not universal error bounds; no adaptive step control; no recovery after exact edge death; only local macOS ARM64 execution verified; ASan inconclusive; source-audited but incomplete literature review.
 
 **Next scientifically justified milestone.** Define a Phase 2 reproduction protocol, resolving the 2010 mesh, initialization, random terminal sampling, integration schedule and topology reporting from sources or explicitly marked assumptions. Add stochastic multi-terminal experiments only once that protocol is recorded, and separate time discretisation from terminal-switching times in any refinement study. Do not begin dynamic-demand, disruption or fungal extensions until the baseline reproduction and related-work review justify a narrower research question.
+
+
+## 17 November 2026 - repository presentation
+
+Added an illustrated README, a code-native SVG header, measured network snapshots, conductivity/refinement plots, citation metadata and a two-platform CMake workflow. The figures read the recorded Phase 1 CSV and validation JSON; the simulation and recorded numerical results are unchanged. Geometry and the visual minimum-width convention are explicitly labelled.
+
+Replaced the initial development brief with a concise public research brief, retaining the original local copy outside the tracked project. Replaced local absolute paths in the source inventory and recorded test logs with filenames or a project-root placeholder. Earlier versions remain in Git history; these presentation edits do not rewrite the research history.
+
+The new CI configuration is intended to test Ubuntu and macOS; hosted outcomes must be read from the actual workflow run, not inferred from its presence.
