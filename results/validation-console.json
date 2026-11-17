@@ -1,0 +1,70 @@
+{
+  "analytic_flow_max_abs_error": 1.7763568394002505e-15,
+  "analytic_pressure_max_abs_error": 3.552713678800501e-15,
+  "euler_update_max_abs_error": 1.1102230246251565e-16,
+  "max_conservation_inf": 1.7763568394002505e-15,
+  "max_backward_error": 1.2688396525366422e-16,
+  "min_scaled_rcond": 0.1268198123073805,
+  "deterministic_outputs_byte_identical": true,
+  "invalid_cli_configurations_rejected": [
+    "unknown",
+    "duplicate",
+    "nan"
+  ],
+  "parameters": {
+    "dt": 0.05,
+    "gamma": 1.8,
+    "current": 2,
+    "duration": 30
+  },
+  "initial_pressures": [
+    5.333333333333333,
+    2.6666666666666665,
+    2.6666666666666665,
+    0
+  ],
+  "final_conductivities": [
+    0.7768953867949309,
+    0.7768953867949308,
+    1.3397304128933922e-13,
+    1.3397304128933922e-13
+  ],
+  "final_signed_flows": [
+    1.999999999999828,
+    1.999999999999827,
+    1.724466943252569e-13,
+    1.724466943252569e-13
+  ],
+  "short_route_length": 2,
+  "long_route_length": 4,
+  "single_route_equilibrium_conductivity": 0.7768953867957377,
+  "final_short_route_limit_error": 8.067990719951013e-13,
+  "max_trajectory_dt_halving_difference": 0.0008675542138246312,
+  "timestep_study_reference_dt": 0.000625,
+  "timestep_study": [
+    {
+      "dt": 0.1,
+      "error_at_t4": 0.0030552032980600413,
+      "error_ratio_to_next": 2.0233947849560647
+    },
+    {
+      "dt": 0.05,
+      "error_at_t4": 0.0015099392964613087,
+      "error_ratio_to_next": 2.0309889747327143
+    },
+    {
+      "dt": 0.025,
+      "error_at_t4": 0.0007434502674540724,
+      "error_ratio_to_next": 2.055327721566526
+    },
+    {
+      "dt": 0.0125,
+      "error_at_t4": 0.0003617186007141629
+    }
+  ],
+  "python": "3.14.3",
+  "numpy": "2.5.5",
+  "matplotlib": "3.11.2",
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "binary_sha256": "a4b12dfc61b66ec1e50f959f17baab9397bb4c89564923aa891ee87e22fe4939"
+}

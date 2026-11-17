@@ -1,0 +1,229 @@
+Start testing: Nov 16 21:27 GMT
+----------------------------------------------------------
+1/14 Testing: series
+1/14 Test: series
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "series"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"series" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS series
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"series" end time: Nov 16 21:27 GMT
+"series" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/14 Testing: parallel
+2/14 Test: parallel
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "parallel"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"parallel" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS parallel
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"parallel" end time: Nov 16 21:27 GMT
+"parallel" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/14 Testing: diamond
+3/14 Test: diamond
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "diamond"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"diamond" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS diamond
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"diamond" end time: Nov 16 21:27 GMT
+"diamond" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/14 Testing: reverse
+4/14 Test: reverse
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "reverse"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"reverse" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS reverse
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"reverse" end time: Nov 16 21:27 GMT
+"reverse" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/14 Testing: zero
+5/14 Test: zero
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "zero"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"zero" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS zero
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"zero" end time: Nov 16 21:27 GMT
+"zero" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/14 Testing: components
+6/14 Test: components
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "components"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"components" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS components
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"components" end time: Nov 16 21:27 GMT
+"components" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/14 Testing: disconnected
+7/14 Test: disconnected
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "disconnected"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"disconnected" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS disconnected
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"disconnected" end time: Nov 16 21:27 GMT
+"disconnected" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/14 Testing: near_zero
+8/14 Test: near_zero
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "near_zero"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"near_zero" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS near_zero
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"near_zero" end time: Nov 16 21:27 GMT
+"near_zero" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/14 Testing: invalid
+9/14 Test: invalid
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "invalid"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"invalid" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS invalid
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"invalid" end time: Nov 16 21:27 GMT
+"invalid" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/14 Testing: euler
+10/14 Test: euler
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "euler"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"euler" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS euler
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"euler" end time: Nov 16 21:27 GMT
+"euler" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/14 Testing: positivity
+11/14 Test: positivity
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "positivity"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"positivity" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS positivity
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"positivity" end time: Nov 16 21:27 GMT
+"positivity" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/14 Testing: timestep
+12/14 Test: timestep
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "timestep"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"timestep" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS timestep
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"timestep" end time: Nov 16 21:27 GMT
+"timestep" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/14 Testing: conditioning
+13/14 Test: conditioning
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_tests" "conditioning"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"conditioning" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+PASS conditioning
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"conditioning" end time: Nov 16 21:27 GMT
+"conditioning" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/14 Testing: cli_smoke
+14/14 Test: cli_smoke
+Command: "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/physarum_run" "/Users/alfiecorthine/Documents/ChatGPT/Physarum/experiments/configs/two_routes.cfg" "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/smoke"
+Directory: /Users/alfiecorthine/Documents/ChatGPT/Physarum/build
+"cli_smoke" start time: Nov 16 21:27 GMT
+Output:
+----------------------------------------------------------
+Wrote 601 states to "/Users/alfiecorthine/Documents/ChatGPT/Physarum/build/smoke"
+max conservation residual: 1.776356839e-15
+max backward error: 1.268839653e-16
+<end of output>
+Test time =   0.26 sec
+----------------------------------------------------------
+Test Passed.
+"cli_smoke" end time: Nov 16 21:27 GMT
+"cli_smoke" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 16 21:27 GMT

@@ -1,0 +1,83 @@
+{
+  "analytic_flow_max_abs_error": 1.7763568394002505e-15,
+  "analytic_pressure_max_abs_error": 3.552713678800501e-15,
+  "euler_update_max_abs_error": 1.1102230246251565e-16,
+  "max_conservation_inf": 1.7763568394002505e-15,
+  "max_backward_error": 1.2688396525366422e-16,
+  "min_scaled_rcond": 0.1268198123073805,
+  "deterministic_outputs_byte_identical": true,
+  "invalid_cli_configurations_rejected": [
+    "unknown",
+    "duplicate",
+    "nan"
+  ],
+  "parameters": {
+    "dt": 0.05,
+    "gamma": 1.8,
+    "current": 2,
+    "duration": 30
+  },
+  "initial_pressures": [
+    5.333333333333333,
+    2.6666666666666665,
+    2.6666666666666665,
+    0
+  ],
+  "final_conductivities": [
+    0.7768953867949309,
+    0.7768953867949308,
+    1.3397304128933922e-13,
+    1.3397304128933922e-13
+  ],
+  "final_signed_flows": [
+    1.999999999999828,
+    1.999999999999827,
+    1.724466943252569e-13,
+    1.724466943252569e-13
+  ],
+  "short_route_length": 2,
+  "long_route_length": 4,
+  "single_route_equilibrium_conductivity": 0.7768953867957377,
+  "final_short_route_limit_error": 8.067990719951013e-13,
+  "max_trajectory_dt_halving_difference": 0.0008675542138246312,
+  "timestep_study_reference_dt": 0.000625,
+  "timestep_study": [
+    {
+      "dt": 0.1,
+      "error_at_t4": 0.0030552032980600413,
+      "error_ratio_to_next": 2.0233947849560647
+    },
+    {
+      "dt": 0.05,
+      "error_at_t4": 0.0015099392964613087,
+      "error_ratio_to_next": 2.0309889747327143
+    },
+    {
+      "dt": 0.025,
+      "error_at_t4": 0.0007434502674540724,
+      "error_ratio_to_next": 2.055327721566526
+    },
+    {
+      "dt": 0.0125,
+      "error_at_t4": 0.0003617186007141629
+    }
+  ],
+  "python": "3.14.3",
+  "numpy": "2.5.5",
+  "matplotlib": "3.11.2",
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "binary_sha256": "a4b12dfc61b66ec1e50f959f17baab9397bb4c89564923aa891ee87e22fe4939",
+  "source_sha256": {
+    "CMakeLists.txt": "ea9cddca01ce6056e7c6a847f0a023b667455e20365facee930d286778879d1a",
+    "analysis/run_validation.py": "1c32efbc8a5ed94c401c65186fdadba054e949788c82cfd4b97631d61bc53cc1",
+    "experiments/configs/two_routes.cfg": "07213db774a475779eb9cceb09284a9243a52f8230f0c0e5c1bcb76f60c5d122",
+    "include/physarum/FlowSolver.hpp": "b0f29a406bd0e6d3eab96019b7b6a2798f67b68a6edb76faee9174dfacdce476",
+    "include/physarum/Graph.hpp": "fb20f7f50dfabc02cf5512f9beafcd71890d3927bcaa7423b3b97bab5f76466a",
+    "include/physarum/PhysarumModel.hpp": "ac7b982ea74b28ed75a81d65ef53759b6d86c642677177acfffc6aceb47a1b6f",
+    "src/FlowSolver.cpp": "92d03193dd6ae263e1338b6eac76e4c9ff3a6cb723b5fd9bc9ec4bc970a9ddb6",
+    "src/Graph.cpp": "65a5eb3596ef2f767c96a2204a25385b6cea35e853cad77c57bc2112df8c2cf8",
+    "src/PhysarumModel.cpp": "106d6229e7cab67e5c6c2c39e98089dc7a45f1a99d677d363bb8ba5eef32f089",
+    "src/main.cpp": "0d3a313e3be7cba101fc271825a4b66292046bcb4264be42627b80c158616fd7",
+    "tests/test_main.cpp": "839fe6ebd7d32333dc942097cab0c7e9c5ffe4fc3b218da306c711a0464966c7"
+  }
+}

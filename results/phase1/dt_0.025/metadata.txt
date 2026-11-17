@@ -1,0 +1,11 @@
+project_version=0.1.0
+compiler=Apple LLVM 17.0.0 (clang-1700.6.3.2)
+cplusplus=202002
+cmake=4.0.2
+eigen=5.0.1
+solver=dense_diagonally_scaled_LDLT
+terminal_selection=fixed
+randomness=none
+integration=explicit_Euler
+pruning=none
+conductivity_floor=none
