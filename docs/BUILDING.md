@@ -13,7 +13,7 @@ ctest --test-dir build --output-on-failure
 ./build/physarum_run experiments/configs/two_routes.cfg results/manual
 ```
 
-If Eigen is installed outside the normal search path, pass `-DEigen3_DIR=/path/to/share/eigen3/cmake` when configuring. Linux should use the same commands after installing its Eigen development package; Linux execution has not been verified.
+If Eigen is installed outside the normal search path, pass `-DEigen3_DIR=/path/to/share/eigen3/cmake` when configuring. Linux uses the same commands after installing its Eigen development package. The Ubuntu Release build and all 14 tests also passed in GitHub Actions on 17 November 2026; the README badge links to current hosted results.
 
 ## Reproduce the analysis
 
@@ -76,4 +76,3 @@ ctest --test-dir build-debug --output-on-failure
 ```
 
 An AddressSanitizer+UndefinedBehaviorSanitizer build compiled, but its first test hung before `main` in Apple's ASan runtime initialization. A process sample showed recursive allocator initialization and a sanitizer spin lock. The run was stopped. ASan validation is therefore inconclusive, not passed; this does not affect the completed Release tests. The runtime observation is recorded in the research log.
-

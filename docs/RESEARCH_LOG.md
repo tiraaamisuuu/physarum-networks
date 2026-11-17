@@ -48,3 +48,5 @@ Added an illustrated README, a code-native SVG header, measured network snapshot
 Replaced the initial development brief with a concise public research brief, retaining the original local copy outside the tracked project. Replaced local absolute paths in the source inventory and recorded test logs with filenames or a project-root placeholder. Earlier versions remain in Git history; these presentation edits do not rewrite the research history.
 
 The new CI configuration is intended to test Ubuntu and macOS; hosted outcomes must be read from the actual workflow run, not inferred from its presence.
+
+The first hosted Ubuntu Release build completed successfully on 17 November 2026, including all 14 CTest cases. This verifies Linux compilation and the mathematical tests in addition to the initial local macOS checks. Run: https://github.com/tiraaamisuuu/physarum-networks/actions/runs/44124562834 .
