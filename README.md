@@ -55,10 +55,10 @@ The baseline uses `I₀ = 2`, `γ = 1.8`, `Δt = 0.05`, initial `D = 0.5`, and d
 
 The native Qt viewer runs the same C++ engine and displays its exact recorded states. Network conductivity, flow trajectories, pressure values and solver diagnostics remain synchronized when playing, stepping or scrubbing through a run.
 
-After building the C++ project, install the viewer dependencies and launch:
+After building the C++ project, install the viewer dependencies and launch. The pinned viewer stack supports Python 3.12–3.14 and is tested with 3.14:
 
 ```sh
-python3 -m venv .venv
+python3.14 -m venv .venv
 .venv/bin/python -m pip install -r desktop/requirements.txt -r analysis/requirements.txt
 .venv/bin/python desktop/viewer.py
 ```

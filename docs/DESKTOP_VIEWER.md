@@ -4,10 +4,10 @@ The viewer is a Qt desktop application using PySide6 and Matplotlib. Python prov
 
 ## Start
 
-Build the engine using the README commands. Then:
+Build the engine using the README commands. Use Python 3.12–3.14 (3.14 is the tested version); the pinned Qt release does not support Python 3.15. Then:
 
 ```sh
-python3 -m venv .venv
+python3.14 -m venv .venv
 .venv/bin/python -m pip install -r desktop/requirements.txt -r analysis/requirements.txt
 .venv/bin/python desktop/viewer.py
 ```
