@@ -63,3 +63,15 @@ The user's request to watch a local inoculum expand concerns the laboratory sequ
 
 
 The food-recovery correction also consulted Jones and Adamatzky, *Towards Physarum Binary Adders*, [primary author manuscript](https://arxiv.org/abs/1005.2303). Its methods on manuscript p. 8 describe suppressing food projection when particles occupy a surrounding neighbourhood. That supports distinguishing current coverage from a permanent historical-visit flag. Our Gaussian stimulus, suppression factor 0.05, radius-4 cell-centre neighbourhood and ten-update refresh differ from that paper's values and diffusion scheme, and remain explicit implementation choices.
+
+## Mechanistic exploratory migration — 18 November 2026
+
+**Schenz, Shima, Kuroda, Nakagaki & Ueda (2017). A mathematical model for adaptive vein formation during exploratory migration of Physarum polycephalum: routing while scouting. J. Phys. D 50, 434001.** [DOI](https://doi.org/10.1088/1361-6463/aa88e9), [author-hosted PDF](https://labkuroda.web.fc2.com/myarticles/SchenzD_ETAL_2017_print.pdf).
+
+Obtained the author-hosted primary article and visually checked its governing equations, coupling definitions, parameter table, initial conditions and corridor comparisons. Its linked RD front, oscillatory contraction and compliant dynamic vein network directly address the expanding-body behaviour absent from the Tero numerical transport experiment. The author's [doctoral thesis](https://eprints.lib.hokudai.ac.jp/repo/huscap/all/74323/Daniel_Thorsten_Schenz.pdf) supplied further oscillator context. This was a targeted model audit, not a complete review of all experiments and references.
+
+Two reproduction ambiguities are explicit. The printed calcium activation lacks the Hill power appearing in the underlying oscillator; under the listed coefficients our isolated calculation settles. The summary vein equation also writes Γ(v), whereas the explicit definition and preceding derivation gate by w. The implementation retains a printed-expression control, an explicitly identified cooperative variant and the defined body-thickness gate. It does not quietly assert an exact reconstruction. Quantitative vein morphology remains unmatched; feedback is weak and discretisation sensitivity substantial in the tested variant. [Detailed audit](BIOLOGICAL_GROWTH.md), [controlled results](../results/biology_validation/REPORT.md).
+
+**Smith & Saldana (1992). Model of the Ca²⁺ oscillator for shuttle streaming in Physarum polycephalum. Biophysical Journal 61, 368–380.** [DOI](https://doi.org/10.1016/S0006-3495(92)81843-X), [primary full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC1260253/).
+
+Visually checked the original scanned Eq. (5) and Table 1 on page 371: activation is the ratio raised to β, with β = 4 in the table. The default cooperative variant uses that exponent with the later fitted calcium relation and later coefficients. It does not implement the original model's complete binding-state equations. The original article's biological and biochemical interpretation therefore cannot be transferred wholesale to this hybrid variant.

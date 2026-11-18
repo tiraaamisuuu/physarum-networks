@@ -2,7 +2,7 @@
 
 ## Build and test
 
-Requires a C++20 compiler, CMake >=3.20 and Eigen with a CMake package (tested with Eigen 5.0.1; Eigen 3.3+ is the intended API baseline, but older versions have not been tested). On macOS, `brew install eigen cmake` supplies the build dependencies if needed. No dependencies are downloaded by CMake.
+Requires a C++20 compiler, CMake >=3.20 and Eigen with a CMake package (tested locally with Eigen 5.0.1; hosted Ubuntu/macOS builds check their installed packages, while other versions are not assumed compatible). On macOS, `brew install eigen cmake` supplies the build dependencies if needed. No dependencies are downloaded by CMake.
 
 From the project root:
 
@@ -112,3 +112,17 @@ The default laboratory uses `build/physarum_mesh`, built by the same CMake comma
 The config requires `dt`, `gamma`, `current`, `steps`, with optional `integrator=euler|heun` (legacy four-key files imply Euler). Edge CSV header: `edge,from,to,length`; initial CSV: `edge,conductivity`; demand CSV: `step,source,sink` with steps + 1 rows. IDs are consecutive from zero. Lengths and initial D must be positive and finite; the graph must be connected. The Python bridge prepares exact geographic food vertices and records all inputs. Its stricter limits cap runs at 5,500 nodes, 17,000 edges, 6,000 updates, 25 million recorded edge-states and 512 MB of raw states.
 
 D/Q/P outputs are state-major little-endian float64 arrays, accompanied by per-state diagnostics and compiler/Eigen metadata. Heun also records predictor Q/P and diagnostics. The output directory must be new or empty, preserving existing records. CMake embeds an engine-source fingerprint; the Python bridge binds it to a preserved code snapshot. Unlike the original dense CLI, this solver requires strictly positive D on a fixed graph and reports a Hager-style reciprocal-condition **estimate**. It never floors or prunes conductivities. See [the tube guide](TUBE_EXPERIMENT.md) for equations, format, assumptions and exports. `analysis/replay_mesh_case.py` demonstrates direct CLI replay using archived exact inputs without rebuilding a triangulation.
+
+## Coupled biological migration engine
+
+The launcher now opens this separate benchmark by default. Use `desktop/viewer.py --tubes` for the fine-mesh London transport tool, and `--biology-run PATH` to reopen a complete biological record.
+
+CMake builds `physarum_biology`. Its direct CLI takes exact finite-element inputs:
+
+```text
+physarum_biology NODES_CSV EDGES_CSV DURATION DT HILL FEEDBACK TAU_FRONT SAVE_INTERVAL PROBE_NODE OUTPUT
+```
+
+Nodes have `id,x,y,mass,inoculum`; edges have `id,from,to,length,weight`. IDs must be consecutive, values finite, masses/lengths positive, weights nonnegative and the inoculum nonempty. The desktop generator additionally verifies complete corridor coverage and diffusion connectivity. The CLI checks numeric/storage bounds and refuses a nonempty output directory. It writes little-endian float64 arrays for all eight fields, slow area/vein histories, a full-rate calcium/flow probe and engine metadata. The experiment wrapper preserves exact input CSVs, source and checksums; source-built replay reconstructs the compact public reference.
+
+Full model, discretisation, source ambiguities and parameter interpretation: [biological growth](BIOLOGICAL_GROWTH.md). Repeat the controlled study with `analysis/validate_biology.py`. It creates new complete local records under ignored `results/biology_runs/` and updates the public compact references; preserve the previous study if needed.

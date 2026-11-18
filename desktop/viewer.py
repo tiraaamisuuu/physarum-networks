@@ -507,6 +507,8 @@ def main():
     parser.add_argument("--network",action="store_true",help="Open the London station-connection experiment instead of growth.")
     parser.add_argument("--particles",action="store_true",help="Open the experimental particle foraging model.")
     parser.add_argument("--mesh-run",type=Path,help="Open a recorded fine-mesh tube experiment.")
+    parser.add_argument("--tubes",action="store_true",help="Open the London fine-mesh tube-adaptation laboratory.")
+    parser.add_argument("--biology-run",type=Path,help="Open a recorded mechanistic growth benchmark.")
     args = parser.parse_args()
     prepare_platform_plugins()
     app = QApplication(sys.argv[:1])
@@ -528,7 +530,7 @@ def main():
         except ImportError:
             from growth_viewer import GrowthViewer
         window=GrowthViewer()
-    else:
+    elif args.tubes or args.mesh_run:
         try:
             from .mesh_viewer import MeshViewer
             from .mesh_data import load_mesh_run
@@ -544,6 +546,15 @@ def main():
             window.accept_run(run)
             window.display(0)
             window.draft()
+    else:
+        try:
+            from .biology_viewer import BiologyViewer
+            from .biology_data import load_biology
+        except ImportError:
+            from biology_viewer import BiologyViewer
+            from biology_data import load_biology
+        window=BiologyViewer(auto_run=not args.biology_run)
+        if args.biology_run:window.accept(load_biology(args.biology_run))
     window.show()
     sys.exit(app.exec())
 

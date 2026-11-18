@@ -3,31 +3,45 @@
 
 # Physarum Networks
 
-**Experiment with flow-driven tube adaptation on real London station coordinates.**
+**Mechanistic growth experiments first; London transport networks second.**
 
-The native laboratory implements the pressure–flow and sigmoid conductivity equations from [Tero et al., Science (2010)](https://doi.org/10.1126/science.1177894). A fine candidate mesh adapts into thin, branching routes. Every food source is an exact mesh vertex. The interface measures the resulting network, exposes numerical diagnostics and exports figures with the underlying data.
+The native laboratory now couples an advancing colony margin, calcium oscillations, dynamic pressure, compliant internal flow and adaptive veins. It follows the exploratory-migration framework of [Schenz et al. (2017)](https://doi.org/10.1088/1361-6463/aa88e9), with an explicitly identified cooperative calcium variant. The separate London laboratory retains the numerically checked pressure–flow and tube-adaptation implementation of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894).
 
-![Computed tube network joining all 46 food sources at the stated conductivity cutoff.](docs/assets/tube-network.png)
+![Four recorded states of the cooperative growth variant exploring a bent corridor.](docs/assets/biology-growth.png)
 
-*Actual C++ output, not an illustration. Width ∝ D¼ on a fixed scale; tubes below D = 10⁻⁴ are omitted from the displayed/measured graph. Raw conductivities remain unchanged. TfL coordinates · © OpenStreetMap contributors.*
+*Actual C++ fields. Fine gold strokes are conductivity, with a fixed fourth-root width scale; body colour is a model proxy. These are not microscopy images. Time and length are uncalibrated.*
+
+The growth model is a **research prototype**, not a quantitative paper reproduction or a validated digital organism. The printed calcium expression settles under the listed coefficients, so the default makes its cooperative exponent and faster front timescale explicit. Food uptake, finite biomass and body retraction are not yet implemented. [Equations, source audit and limitations](docs/BIOLOGICAL_GROWTH.md).
 
 ## Run it
 
-On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It builds the engine and opens the **Tube-network laboratory**. Then:
+On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It builds the C++ engines and opens the **Biological growth laboratory**. A complete matching local run opens immediately; otherwise it computes and saves one.
 
-1. Press **Play adaptation** to watch the fine mesh thin into routes, or **Final state** to inspect the result.
-2. Click a tube for its conductivity, signed flow and full trajectory. The **Food sources** tab lists the exact vertices and incident tubes.
-3. Use **Layout** to choose stations on the map or draw geographic exclusions. Change parameters, then **Compute tube experiment**. **Compare runs** compares final states at the same cutoff.
-4. Use **Parameter study** to vary one parameter across matched random seeds, inspect individual outcomes and save an incremental CSV summary.
-5. Use **Export figure + data** for SVG, PNG, per-tube/per-node CSV and a JSON summary. Complete runs save automatically under `results/mesh_runs/`.
+1. Press **Play growth**. **Follow colony** keeps the advancing footprint in view; turn it off to see the full arena.
+2. Switch between **Body + veins**, **Advancing margin** and **Calcium**. The adjustable D cutoff changes the drawing, never the underlying simulation.
+3. Choose a control preset, then **Compute biological experiment**. Compare the source front timescale, printed calcium response or disabled vein-to-front feedback. Change dt and mesh spacing to test numerical sensitivity.
+4. Inspect **Equations and interpretation** and **Recorded experiment**. The lower plots show accumulated occupied area and the separately sampled fast calcium/flow probe.
+5. **Export figure / fields** saves PNG, SVG, node/edge CSV and a JSON reference. Complete numerical records save under `results/biology_runs/` with checksums and source snapshots.
 
-Optional CSV imports define documented relative food-pair frequencies. The surface-elevation overlay is attributed context; it does not stand in for underground geology.
+The study reproduces its own frozen numerical records, including a source-built replay with zero sampled-field differences and byte-identical full-rate probe/history files on the development platform. It does **not** yet reproduce the paper's surviving-vein morphology. Halving dt changes final retained length from 25.47 to 33.44 model units; finer mesh changes it to 49.20. Those substantial differences remain visible in the evidence.
 
-The **Equations & record** tab explains the model and suggests controlled experiments. **File** saves/opens experiment designs and recorded runs. Normal use works offline with the frozen geographic data.
+![Controlled comparisons of growth, calcium response, numerical sensitivity and reversing flow.](docs/assets/biology-controls.png)
 
-**This model begins with a pre-existing mesh, as in the paper’s numerical experiment. It does not simulate the biological expanding colony margin shown in its photographs.** The previous particle foraging experiment remains available through **Other models** or `--particles`; its glowing trail field is not tube conductivity. The four-node analytic fixture remains available through `--fixture`.
+[Six-case growth study and replay instructions](results/biology_validation/REPORT.md).
 
-## What happens
+## London tube-adaptation experiment
+
+Open **Other models → London tube adaptation**, or launch with `--tubes`. This is a separate pre-existing-mesh experiment: every food source is an exact mesh vertex, and measured connectivity concerns the actual surviving tubes.
+
+![Computed tube network joining all 46 food sources at the stated conductivity cutoff.](docs/assets/tube-network.png)
+
+*Width ∝ D¼ on a fixed scale; tubes below D = 10⁻⁴ are omitted from the displayed/measured graph. Raw conductivities remain unchanged. TfL coordinates · © OpenStreetMap contributors.*
+
+Press **Play adaptation**, click tubes for D/Q trajectories and inspect the **Food sources** table. **Layout** edits station food sites and geographic exclusions. **Parameter study** runs matched-seed comparisons; **Export figure + data** preserves figures and underlying data. Surface elevation is attributed context, not underground geology. Optional CSV weights specify relative food-pair frequencies, not calibrated passenger demand.
+
+The earlier particle foraging model remains available through **Other models** or `--particles`; its trail field is not vein conductivity. The four-node analytic fixture remains available through `--fixture`.
+
+## Tube-adaptation equations
 
 ![Four actual states of the fine mesh adapting into a tube network.](docs/assets/tube-evolution.png)
 
@@ -81,10 +95,15 @@ python3.14 -m venv .venv
 .venv/bin/python desktop/viewer.py
 ```
 
-Other modes: `--fixture` for the analytic circuit, `--network` for the older coarse station graph, `--particles` for the separate particle experiment. `--mesh-run PATH` reopens a tube run. [Build details](docs/BUILDING.md).
+Other modes: `--tubes` for the London tube laboratory, `--biology-run PATH` to reopen a growth run, `--fixture` for the analytic circuit, `--network` for the older coarse station graph, `--particles` for the separate particle experiment. `--mesh-run PATH` reopens a tube run. [Build details](docs/BUILDING.md).
 
 ```sh
-# Recompute current integration evidence and the default figures.
+# Recompute biological controls and their figures.
+.venv/bin/python analysis/validate_biology.py
+.venv/bin/python analysis/plot_biology.py
+# Replay preserved growth source and compare the frozen reference.
+.venv/bin/python analysis/replay_biology_case.py results/biology_validation/replay/default --build-source
+# Recompute tube integration evidence and figures.
 .venv/bin/python analysis/compare_integrators.py
 # Recompute the earlier nine-case Euler baseline separately.
 .venv/bin/python analysis/run_mesh_validation.py
@@ -98,19 +117,20 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'tes
 
 The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every integration transition, exact food attachment and file checksums. Source snapshots and a compiled C++ fingerprint bind new records to their engine source. Metric fixtures test trees, cycles and disconnections.
 
-Locally, **27 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **70 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
+Locally, **33 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **78 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
 
-The paper’s numerical equations are implemented, but mesh construction, initial fluctuations, demand timing and integration are documented choices. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
+The tube experiment implements its stated numerical equations; mesh construction, initial fluctuations, demand timing and integration are documented choices. The growth experiment has additional source-equation ambiguities and explicitly labelled variants. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
 
 ## Project map
 
 | Location | Contents |
 | :--- | :--- |
-| [`src/`](src) · [`include/physarum/`](include/physarum) | Dense/sparse pressure solvers, tube adaptation, particle model, CLIs |
+| [`src/`](src) · [`include/physarum/`](include/physarum) | Dense/sparse pressure solvers, coupled growth/flow, tube adaptation, particle model, CLIs |
 | [`desktop/`](desktop) | Native laboratory, quantitative plots, record validation and exports |
 | [`tests/`](tests) | Independent mathematical, topology, integrity and UI checks |
 | [`analysis/`](analysis) | Repeatable studies and scientific figure generation |
 | [`data/london/`](data/london) | Frozen geographic inputs, attribution and licences |
+| [`results/biology_validation/`](results/biology_validation) | Growth controls, source-complete replays and reference fields |
 | [`results/integration_validation/`](results/integration_validation) | Current Heun/default evidence, source snapshots and replay inputs |
 | [`results/mesh_validation/`](results/mesh_validation) | Earlier Euler sensitivity study and frozen replay inputs |
 | [`docs/`](docs) | [Project brief](docs/PROJECT_BRIEF.md), [literature](docs/LITERATURE.md), [bibliography](docs/references.bib), research history |

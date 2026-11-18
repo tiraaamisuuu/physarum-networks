@@ -1,0 +1,71 @@
+Test project /Users/alfiecorthine/Desktop/physarum/build
+      Start  1: biology_oscillator
+ 1/33 Test  #1: biology_oscillator ...............   Passed    0.41 sec
+      Start  2: biology_symmetry
+ 2/33 Test  #2: biology_symmetry .................   Passed    0.01 sec
+      Start  3: biology_mass
+ 3/33 Test  #3: biology_mass .....................   Passed    0.00 sec
+      Start  4: biology_fluid
+ 4/33 Test  #4: biology_fluid ....................   Passed    0.00 sec
+      Start  5: biology_refinement
+ 5/33 Test  #5: biology_refinement ...............   Passed    0.00 sec
+      Start  6: biology_invalid
+ 6/33 Test  #6: biology_invalid ..................   Passed    0.00 sec
+      Start  7: series
+ 7/33 Test  #7: series ...........................   Passed    0.23 sec
+      Start  8: parallel
+ 8/33 Test  #8: parallel .........................   Passed    0.00 sec
+      Start  9: diamond
+ 9/33 Test  #9: diamond ..........................   Passed    0.00 sec
+      Start 10: reverse
+10/33 Test #10: reverse ..........................   Passed    0.00 sec
+      Start 11: zero
+11/33 Test #11: zero .............................   Passed    0.00 sec
+      Start 12: components
+12/33 Test #12: components .......................   Passed    0.00 sec
+      Start 13: disconnected
+13/33 Test #13: disconnected .....................   Passed    0.00 sec
+      Start 14: near_zero
+14/33 Test #14: near_zero ........................   Passed    0.00 sec
+      Start 15: invalid
+15/33 Test #15: invalid ..........................   Passed    0.00 sec
+      Start 16: euler
+16/33 Test #16: euler ............................   Passed    0.00 sec
+      Start 17: positivity
+17/33 Test #17: positivity .......................   Passed    0.00 sec
+      Start 18: timestep
+18/33 Test #18: timestep .........................   Passed    0.01 sec
+      Start 19: conditioning
+19/33 Test #19: conditioning .....................   Passed    0.00 sec
+      Start 20: terminals
+20/33 Test #20: terminals ........................   Passed    0.00 sec
+      Start 21: cli_smoke
+21/33 Test #21: cli_smoke ........................   Passed    0.24 sec
+      Start 22: growth_diffusion
+22/33 Test #22: growth_diffusion .................   Passed    0.23 sec
+      Start 23: growth_determinism
+23/33 Test #23: growth_determinism ...............   Passed    0.02 sec
+      Start 24: growth_barrier
+24/33 Test #24: growth_barrier ...................   Passed    0.01 sec
+      Start 25: growth_invalid
+25/33 Test #25: growth_invalid ...................   Passed    0.00 sec
+      Start 26: growth_food_recovery
+26/33 Test #26: growth_food_recovery .............   Passed    0.01 sec
+      Start 27: sparse_analytic
+27/33 Test #27: sparse_analytic ..................   Passed    0.24 sec
+      Start 28: sparse_dense
+28/33 Test #28: sparse_dense .....................   Passed    0.00 sec
+      Start 29: sparse_history
+29/33 Test #29: sparse_history ...................   Passed    0.00 sec
+      Start 30: sparse_scale
+30/33 Test #30: sparse_scale .....................   Passed    0.00 sec
+      Start 31: sparse_invalid
+31/33 Test #31: sparse_invalid ...................   Passed    0.00 sec
+      Start 32: sparse_conditioning
+32/33 Test #32: sparse_conditioning ..............   Passed    0.00 sec
+      Start 33: sparse_timestep
+33/33 Test #33: sparse_timestep ..................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 33
+
+Total Test time (real) =   1.46 sec

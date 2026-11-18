@@ -1,0 +1,262 @@
+{
+  "scope": "Exploratory numerical controls; not quantitative reproduction of Schenz et al. 2017 or biological validation.",
+  "cases": {
+    "source_front": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 20.0,
+        "save_interval": 8.0
+      },
+      "record": "results/biology_runs/20261118T205204-297394ee",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 61.022670044396406,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 61.02267004439639,
+      "target_first_contact_time": null,
+      "retained_length_D1": 9.943694713042747,
+      "max_conductivity": 247.94397382899515,
+      "late_probe_calcium_range": [
+        6.40237981903462,
+        7.6459304196629905
+      ],
+      "late_probe_flow_range": [
+        -0.0132035439294832,
+        0.005899756650885232
+      ],
+      "late_calcium_period": 1.0199999999999818,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 3.700595385680572e-12,
+      "max_energy_defect": 1.6220873274220313e-10,
+      "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb"
+    },
+    "default": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0
+      },
+      "record": "results/biology_runs/20261118T205204-60f2667a",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 25.46897180944994,
+      "max_conductivity": 284.9595111701069,
+      "late_probe_calcium_range": [
+        6.40237981903462,
+        7.6459304196629905
+      ],
+      "late_probe_flow_range": [
+        -0.013911619479762223,
+        0.003943679231442939
+      ],
+      "late_calcium_period": 1.0199999999999818,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 4.621844573726719e-12,
+      "max_energy_defect": 6.906823839086547e-11,
+      "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb"
+    },
+    "finer_mesh": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.4,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0
+      },
+      "record": "results/biology_runs/20261118T205255-4ece6a81",
+      "nodes": 2515,
+      "edges": 7163,
+      "occupied_area": 349.99999999999994,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999996,
+      "target_first_contact_time": 536.0,
+      "retained_length_D1": 49.20035525323081,
+      "max_conductivity": 517.7776429269053,
+      "late_probe_calcium_range": [
+        6.4057098053850385,
+        7.640249981297065
+      ],
+      "late_probe_flow_range": [
+        -0.013617398675183807,
+        0.009703161608283595
+      ],
+      "late_calcium_period": 1.0199999999999818,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 3.8358500403790075e-12,
+      "max_energy_defect": 8.102512978687672e-11,
+      "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb"
+    },
+    "half_dt": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.01,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0
+      },
+      "record": "results/biology_runs/20261118T205253-1099cd86",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 33.43867485523303,
+      "max_conductivity": 409.5011051718687,
+      "late_probe_calcium_range": [
+        6.422511569598389,
+        7.643637191566623
+      ],
+      "late_probe_flow_range": [
+        -0.01679954068019293,
+        0.001481441330285901
+      ],
+      "late_calcium_period": 1.009999999999991,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 6.162122895281286e-12,
+      "max_energy_defect": 5.24049795348529e-11,
+      "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb"
+    },
+    "no_feedback": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 4,
+        "feedback": 0.0,
+        "tau_front": 2.0,
+        "save_interval": 8.0
+      },
+      "record": "results/biology_runs/20261118T205426-e0ecc362",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 25.46897180944994,
+      "max_conductivity": 284.95074470958315,
+      "late_probe_calcium_range": [
+        6.40237981903462,
+        7.6459304196629905
+      ],
+      "late_probe_flow_range": [
+        -0.0139115764033247,
+        0.003943742578797147
+      ],
+      "late_calcium_period": 1.0199999999999818,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 4.1507283721209376e-12,
+      "max_energy_defect": 5.193160444481597e-11,
+      "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb"
+    },
+    "printed_control": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 1,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0
+      },
+      "record": "results/biology_runs/20261118T205429-ddbdda18",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 0.0,
+      "max_conductivity": 6.993146234212398e-14,
+      "late_probe_calcium_range": [
+        3.4884697125841844,
+        3.4884697125841844
+      ],
+      "late_probe_flow_range": [
+        -1.763552785681143e-11,
+        1.2970674845314445e-11
+      ],
+      "late_calcium_period": null,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 6.637230045791144e-10,
+      "max_energy_defect": 2.4486236529398562e-12,
+      "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb"
+    }
+  },
+  "comparisons_at_common_saved_times": {
+    "half_dt": {
+      "maximum_saved_field_absolute_difference": {
+        "c": 1.0083615359636404,
+        "phi": 0.3656977978942937,
+        "u": 0.056813985686579915,
+        "v": 0.13257686763876397,
+        "w": 0.04453025678474276,
+        "p": 2.44928305694469,
+        "q": 49.05033074608688,
+        "d": 407.3952654819574
+      },
+      "retained_length_relative_change": 0.312918130555472
+    },
+    "no_feedback": {
+      "maximum_saved_field_absolute_difference": {
+        "c": 0.0,
+        "phi": 0.0,
+        "u": 0.010942451056563107,
+        "v": 0.04032726500451478,
+        "w": 0.07616812367433567,
+        "p": 0.00016390102731200784,
+        "q": 0.01586773596130797,
+        "d": 0.18951669748304312
+      },
+      "retained_length_relative_change": 0.0
+    },
+    "printed_control": {
+      "maximum_saved_field_absolute_difference": {
+        "c": 4.372126129254453,
+        "phi": 0.678731235535424,
+        "u": 0.01052388171851426,
+        "v": 0.03868682510201715,
+        "w": 0.027586620914899385,
+        "p": 4464.455463805508,
+        "q": 27.449711696257324,
+        "d": 284.9595111701069
+      },
+      "retained_length_relative_change": -1.0
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "case": "default",
+  "output": "/Users/alfiecorthine/Desktop/physarum/results/biology_runs/replay-default-d95fe1b8",
+  "source_fingerprint": "3a47e4fb98289fe15084db9c26c43d5b67c497d25f246d3d1b6f9d17df88d7cb",
+  "maximum_snapshot_absolute_differences": {
+    "c": 0.0,
+    "phi": 0.0,
+    "u": 0.0,
+    "v": 0.0,
+    "w": 0.0,
+    "p": 0.0,
+    "q": 0.0,
+    "d": 0.0
+  },
+  "full_history_and_probe_byte_equal": {
+    "history.csv": true,
+    "probe.csv": true
+  }
+}
