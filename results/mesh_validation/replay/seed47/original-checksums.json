@@ -1,0 +1,12 @@
+{
+  "inputs/initial.csv": "09bd888081d16d7ec0d19c1a5bf47e6b9a55806abeeadf188d13e210cba64126",
+  "inputs/input.cfg": "5772bda2d7afdc1adbdd32aa99c4d294971fbc1ab7a18b1d03bc91c98c21c475",
+  "inputs/edges.csv": "525b5210f77fe646c50a8e48eaea302131619914063c32b24231c7b4f01bb5eb",
+  "inputs/demands.csv": "1e7fb792e11caa253f7e459f5affaa1fd810fcab641f77e1e005828c2f1abfe8",
+  "output/metadata.txt": "3a8ce5d6b9d1da7cc3e9379d4760a3c4226fad9572cabe81e43ca2f3a8a5415e",
+  "output/D.f64": "3694db1b3e087bae9d4950679375d70b644c3a71115018cb2ae93ff69e25dc38",
+  "output/diagnostics.csv": "87b4e5576cea08dcfee5aed2b02839cafd94bfc060d362c786db7407851d1ba8",
+  "output/P.f64": "f74e059ba5b2d66006054dce44677dc40123a2dbf89b226b91614fa5112e2e38",
+  "output/Q.f64": "3dd66e7bd085ac0bb4a271075374baaf46b90be6587f34a98c3236776885e615",
+  "scenario.json": "348653dcc9e0b93e3fff8cee167fc5f36159e14299b1fa8ae2171dce7ca2136d"
+}

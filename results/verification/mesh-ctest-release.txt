@@ -1,0 +1,59 @@
+Test project <project-root>/build
+      Start  1: series
+ 1/27 Test  #1: series ...........................   Passed    0.23 sec
+      Start  2: parallel
+ 2/27 Test  #2: parallel .........................   Passed    0.00 sec
+      Start  3: diamond
+ 3/27 Test  #3: diamond ..........................   Passed    0.00 sec
+      Start  4: reverse
+ 4/27 Test  #4: reverse ..........................   Passed    0.00 sec
+      Start  5: zero
+ 5/27 Test  #5: zero .............................   Passed    0.00 sec
+      Start  6: components
+ 6/27 Test  #6: components .......................   Passed    0.00 sec
+      Start  7: disconnected
+ 7/27 Test  #7: disconnected .....................   Passed    0.00 sec
+      Start  8: near_zero
+ 8/27 Test  #8: near_zero ........................   Passed    0.00 sec
+      Start  9: invalid
+ 9/27 Test  #9: invalid ..........................   Passed    0.00 sec
+      Start 10: euler
+10/27 Test #10: euler ............................   Passed    0.00 sec
+      Start 11: positivity
+11/27 Test #11: positivity .......................   Passed    0.00 sec
+      Start 12: timestep
+12/27 Test #12: timestep .........................   Passed    0.01 sec
+      Start 13: conditioning
+13/27 Test #13: conditioning .....................   Passed    0.00 sec
+      Start 14: terminals
+14/27 Test #14: terminals ........................   Passed    0.00 sec
+      Start 15: cli_smoke
+15/27 Test #15: cli_smoke ........................   Passed    0.22 sec
+      Start 16: growth_diffusion
+16/27 Test #16: growth_diffusion .................   Passed    0.21 sec
+      Start 17: growth_determinism
+17/27 Test #17: growth_determinism ...............   Passed    0.01 sec
+      Start 18: growth_barrier
+18/27 Test #18: growth_barrier ...................   Passed    0.01 sec
+      Start 19: growth_invalid
+19/27 Test #19: growth_invalid ...................   Passed    0.00 sec
+      Start 20: growth_food_recovery
+20/27 Test #20: growth_food_recovery .............   Passed    0.00 sec
+      Start 21: sparse_analytic
+21/27 Test #21: sparse_analytic ..................   Passed    0.22 sec
+      Start 22: sparse_dense
+22/27 Test #22: sparse_dense .....................   Passed    0.00 sec
+      Start 23: sparse_history
+23/27 Test #23: sparse_history ...................   Passed    0.00 sec
+      Start 24: sparse_scale
+24/27 Test #24: sparse_scale .....................   Passed    0.00 sec
+      Start 25: sparse_invalid
+25/27 Test #25: sparse_invalid ...................   Passed    0.00 sec
+      Start 26: sparse_conditioning
+26/27 Test #26: sparse_conditioning ..............   Passed    0.00 sec
+      Start 27: sparse_timestep
+27/27 Test #27: sparse_timestep ..................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 27
+
+Total Test time (real) =   0.96 sec

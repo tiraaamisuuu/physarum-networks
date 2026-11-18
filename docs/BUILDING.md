@@ -100,3 +100,15 @@ CMake also builds `physarum_growth` and its independent tests. The native defaul
 ```
 
 Inputs include station food coordinates, accessible-cell mask and optional synthetic river repellent. This engine is a separate chemotactic particle model; it does not call the pressure-flow solver. To create a complete reproducible example and recorded fields, use `.venv/bin/python analysis/make_growth_figure.py --gif` after installing the desktop/analysis dependencies. See [the growth protocol](GROWTH_EXPERIMENT.md) for every update rule, binary format, assumptions and checks.
+
+## Fine-mesh tube CLI
+
+The default laboratory uses `build/physarum_mesh`, built by the same CMake command:
+
+```sh
+./build/physarum_mesh INPUT_CFG EDGES_CSV NODE_COUNT INITIAL_D_CSV DEMANDS_CSV OUTPUT_DIRECTORY
+```
+
+The config has exactly `dt`, `gamma`, `current`, `steps`. Edge CSV header: `edge,from,to,length`; initial CSV: `edge,conductivity`; demand CSV: `step,source,sink` with steps + 1 rows. IDs are consecutive from zero. Lengths and initial D must be positive and finite; the graph must be connected. The Python bridge prepares exact geographic food vertices and records all inputs. Its stricter limits cap runs at 5,500 nodes, 17,000 edges, 3,000 updates and 25 million recorded edge-states.
+
+D/Q/P outputs are state-major little-endian float64 arrays, accompanied by per-state diagnostics and compiler/Eigen metadata. Unlike the original dense CLI, this solver requires strictly positive D on a fixed graph and reports a Hager-style reciprocal-condition **estimate**. It never floors or prunes conductivities. See [the tube guide](TUBE_EXPERIMENT.md) for equations, format, assumptions and exports. `analysis/replay_mesh_case.py` demonstrates direct CLI replay using archived exact inputs without rebuilding a triangulation.

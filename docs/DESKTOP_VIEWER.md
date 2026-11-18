@@ -2,7 +2,7 @@
 
 The viewer is a Qt desktop application using PySide6 and Matplotlib. Python provides the interface and plotting; the existing C++20/Eigen executable remains responsible for all simulation steps. There is no web server or browser component.
 
-The default application opens the **Growth laboratory**. Start with the [growth guide](GROWTH_EXPERIMENT.md) for the one-patch/food-site model, plain-language explanations and saved field data. The [London connection tutorial](LONDON_EXPERIMENT.md) describes the previous geographic pressure-flow experiment, available from the growth File menu or `--network`. The rest of this document describes the original **four-node validation viewer**, available through File → Open four-node validation or `--fixture`. Its schematic geometry and archive format remain separate from the spatial and growth experiments.
+The default application opens the **Tube-network laboratory**: a fine spatial mesh, exact food vertices and the Tero pressure–flow/sigmoid equations. Start with the [tube experiment guide](TUBE_EXPERIMENT.md). The previous [particle growth model](GROWTH_EXPERIMENT.md) remains available through Other models or `--particles`; the [coarse London experiment](LONDON_EXPERIMENT.md) uses `--network`. The rest of this document describes the original **four-node validation viewer**, available through Other models → Four-node mathematical fixture or `--fixture`. Its schematic geometry and archive format remain separate.
 
 ## Start the four-node viewer
 
@@ -14,7 +14,7 @@ python3.14 -m venv .venv
 .venv/bin/python desktop/viewer.py --fixture
 ```
 
-On macOS, `Launch Physarum.command` supplies the same setup/build/launch sequence. Keep its terminal open while using the viewer. The launcher opens the growth laboratory. Use File → Open four-node validation to inspect the baseline, which pauses at step zero. Press **Play** to animate.
+On macOS, `Launch Physarum.command` supplies the same setup/build/launch sequence. Keep its terminal open while using the viewer. The launcher opens the tube laboratory. Use Other models → Four-node mathematical fixture to inspect the baseline, which pauses at step zero. Press **Play** to animate.
 
 To open an existing experiment directly:
 

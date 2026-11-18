@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Native Qt viewer for discrete states produced by the C++ Phase 1 model."""
 import argparse
+import copy
 import math
 from pathlib import Path
 import sys
@@ -504,6 +505,8 @@ def main():
     parser.add_argument("--run",type=Path,help="Open a recorded C++ run directory or ZIP archive.")
     parser.add_argument("--fixture",action="store_true",help="Open the validated four-node viewer instead of London.")
     parser.add_argument("--network",action="store_true",help="Open the London station-connection experiment instead of growth.")
+    parser.add_argument("--particles",action="store_true",help="Open the experimental particle foraging model.")
+    parser.add_argument("--mesh-run",type=Path,help="Open a recorded fine-mesh tube experiment.")
     args = parser.parse_args()
     prepare_platform_plugins()
     app = QApplication(sys.argv[:1])
@@ -519,12 +522,28 @@ def main():
         except ImportError:
             from spatial_viewer import SpatialViewer
         window=SpatialViewer()
-    else:
+    elif args.particles:
         try:
             from .growth_viewer import GrowthViewer
         except ImportError:
             from growth_viewer import GrowthViewer
         window=GrowthViewer()
+    else:
+        try:
+            from .mesh_viewer import MeshViewer
+            from .mesh_data import load_mesh_run
+        except ImportError:
+            from mesh_viewer import MeshViewer
+            from mesh_data import load_mesh_run
+        window=MeshViewer(auto_run=not args.mesh_run)
+        if args.mesh_run:
+            run=load_mesh_run(args.mesh_run)
+            window.scene=copy.deepcopy(run.scene)
+            window.refresh_pairs()
+            window.set_settings(run.settings)
+            window.accept_run(run)
+            window.display(0)
+            window.draft()
     window.show()
     sys.exit(app.exec())
 
