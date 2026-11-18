@@ -1,0 +1,24 @@
+Completed 600 heun updates, 991 nodes, 2949 edges
+d max absolute snapshot difference 0.0
+q max absolute snapshot difference 0.0
+p max absolute snapshot difference 0.0
+Byte-identical numeric output: True
+Source-verified heun-0.05 <project-root>/results/mesh_runs/source-verified-ecd2l2y0
+Completed 1200 heun updates, 991 nodes, 2949 edges
+d max absolute snapshot difference 0.0
+q max absolute snapshot difference 0.0
+p max absolute snapshot difference 0.0
+Byte-identical numeric output: True
+Source-verified heun-0.025 <project-root>/results/mesh_runs/source-verified-8m29lxb1
+Completed 2400 heun updates, 991 nodes, 2949 edges
+d max absolute snapshot difference 0.0
+q max absolute snapshot difference 0.0
+p max absolute snapshot difference 0.0
+Byte-identical numeric output: True
+Source-verified heun-0.0125 <project-root>/results/mesh_runs/source-verified-vfj9emzb
+Completed 4800 heun updates, 991 nodes, 2949 edges
+d max absolute snapshot difference 0.0
+q max absolute snapshot difference 0.0
+p max absolute snapshot difference 0.0
+Byte-identical numeric output: True
+Source-verified heun-0.00625 <project-root>/results/mesh_runs/source-verified-a7maxrw4

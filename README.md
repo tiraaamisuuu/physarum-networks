@@ -36,29 +36,33 @@ For each tube, pressure differences drive flow:
 $$Q_{ij}=\frac{D_{ij}}{L_{ij}}(p_i-p_j),\qquad
 \frac{dD_{ij}}{dt}=\frac{|Q_{ij}|^\gamma}{1+|Q_{ij}|^\gamma}-D_{ij}.$$
 
-At every vertex, net outflow equals the imposed food-to-food current. All conductivities update simultaneously with explicit Euler. Demand switches among recorded food pairs at a fixed model-time interval, independent of integration step size. The mesh solver uses scaled sparse LDLT and iterative refinement; it applies no conductivity floor or edge pruning.
+At every vertex, net outflow equals the imposed food-to-food current. All conductivities update simultaneously with Euler or two-stage Heun. The default uses Heun at Δt = 0.0125; every predictor pressure/flow and solver diagnostic is recorded and independently checked. Demand switches among recorded food pairs at a fixed model-time interval, independent of integration step size. The mesh solver uses scaled sparse LDLT and iterative refinement; it applies no conductivity floor or edge pruning.
 
 The map follows the actual mesh geometry, including intermediate junctions. It does not use cosmetic curve smoothing. Tube width follows the fourth-root conductivity relationship associated with Poiseuille radius scaling at fixed viscosity; it is a display scale, not a calibrated biological radius.
 
 ## Measured London example
 
-Default: 46 food sites, seed 42, mesh spacing 0.45 km, I₀ = 2, γ = 1.8, Δt = 0.05, duration 30. All measurements below use D ≥ 10⁻⁴.
+Default: 46 food sites, seed 42, mesh spacing 0.45 km, I₀ = 2, γ = 1.8, Heun Δt = 0.0125, duration 30. All measurements below use D ≥ 10⁻⁴.
 
 | Measurement | Recorded result |
 | :--- | ---: |
 | Food sources in one connected component | 46 / 46 |
-| Retained physical tube length | 71.85 km |
-| Mean route / direct distance, across all food pairs | 1.421 |
-| Maximum flow-conservation residual, all states | 2.73 × 10⁻¹³ |
-| Maximum normalized pressure residual, all states | 2.17 × 10⁻¹⁶ |
+| Retained physical tube length | 65.89 km |
+| Mean route / direct distance, across all food pairs | 1.401 |
+| Maximum flow-conservation residual, all states | 3.66 × 10⁻¹³ |
+| Maximum normalized pressure residual, all states | 3.08 × 10⁻¹⁶ |
+
+At Heun Δt = 0.00625, the final retained edge set is identical at this cutoff. Maximum transient D difference is 0.00885; final maximum difference is 0.00132. This finite check applies to this setup, not every parameter or cutoff. [Integration evidence and source-complete replay inputs](results/integration_validation/REPORT.md).
+
+![Recorded Euler/Heun integration comparison under matched forcing.](docs/assets/integration-sensitivity.png)
 
 These are measurements of this exploratory network, not evidence of an optimal railway. Station coordinates are real; demand is synthetic. River crossing penalties are explicit assumed resistance costs. Ground conditions, tunnelling, capacity, service patterns, curvature limits and passenger journey times are not modelled.
 
 ![Measured final-state sensitivity to integration, mesh, seed, current, response and river assumptions.](docs/assets/tube-sensitivity.png)
 
-The nine-case study includes time-step refinement, a finer mesh, three seeds and parameter contrasts. Lower current retained a shorter network with fewer alternatives. Lower γ retained a much denser mesh. **Time-step refinement changes final geometry**: maximum transient conductivity differences decrease from 0.1903 to 0.08759 as Δt is halved twice, but that is not a general convergence proof. The experiment needs seed, mesh, integration and cutoff studies before stronger conclusions.
+The archived **Euler baseline** nine-case study includes time-step refinement, a finer mesh, three seeds and parameter contrasts. Lower current retained a shorter network with fewer alternatives. Lower γ retained a much denser mesh. **Time-step refinement changes final geometry**: maximum transient conductivity differences decrease from 0.1903 to 0.08759 as Δt is halved twice, but that is not a general convergence proof. The experiment needs seed, mesh, integration and cutoff studies before stronger conclusions.
 
-[Study report](results/mesh_validation/REPORT.md) · [Measured JSON](results/mesh_validation/validation.json) · [Frozen replay inputs and reference snapshots](results/mesh_validation/replay/) · [Model and interpretation guide](docs/TUBE_EXPERIMENT.md)
+[Earlier Euler study](results/mesh_validation/REPORT.md) · [Measured JSON](results/mesh_validation/validation.json) · [Frozen replay inputs and reference snapshots](results/mesh_validation/replay/) · [Model and interpretation guide](docs/TUBE_EXPERIMENT.md)
 
 ## Build from source
 
@@ -80,7 +84,9 @@ python3.14 -m venv .venv
 Other modes: `--fixture` for the analytic circuit, `--network` for the older coarse station graph, `--particles` for the separate particle experiment. `--mesh-run PATH` reopens a tube run. [Build details](docs/BUILDING.md).
 
 ```sh
-# Recompute the nine-case study and figures; overwrites its recorded report inputs.
+# Recompute current integration evidence and the default figures.
+.venv/bin/python analysis/compare_integrators.py
+# Recompute the earlier nine-case Euler baseline separately.
 .venv/bin/python analysis/run_mesh_validation.py
 # Replay the archived exact graph, initial values and demand schedule independently.
 .venv/bin/python analysis/replay_mesh_case.py results/mesh_validation/replay/default
@@ -90,9 +96,9 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'tes
 
 ## Validation and research scope
 
-The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every Euler transition, exact food attachment and file checksums. Metric fixtures test trees, cycles and disconnections.
+The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every integration transition, exact food attachment and file checksums. Source snapshots and a compiled C++ fingerprint bind new records to their engine source. Metric fixtures test trees, cycles and disconnections.
 
-Locally, **27 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **61 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
+Locally, **27 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **70 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
 
 The paper’s numerical equations are implemented, but mesh construction, initial fluctuations, demand timing and integration are documented choices. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
 
@@ -105,7 +111,8 @@ The paper’s numerical equations are implemented, but mesh construction, initia
 | [`tests/`](tests) | Independent mathematical, topology, integrity and UI checks |
 | [`analysis/`](analysis) | Repeatable studies and scientific figure generation |
 | [`data/london/`](data/london) | Frozen geographic inputs, attribution and licences |
-| [`results/mesh_validation/`](results/mesh_validation) | Measured study, frozen inputs and numerical snapshots |
+| [`results/integration_validation/`](results/integration_validation) | Current Heun/default evidence, source snapshots and replay inputs |
+| [`results/mesh_validation/`](results/mesh_validation) | Earlier Euler sensitivity study and frozen replay inputs |
 | [`docs/`](docs) | [Project brief](docs/PROJECT_BRIEF.md), [literature](docs/LITERATURE.md), [bibliography](docs/references.bib), research history |
 
 Principal source: Tero et al., *Rules for Biologically Inspired Adaptive Network Design*, **Science** 327, 439–442 (2010), [doi:10.1126/science.1177894](https://doi.org/10.1126/science.1177894).

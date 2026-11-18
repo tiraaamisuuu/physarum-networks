@@ -1,0 +1,78 @@
+test_activity_corruption_rejected_independently_of_checksums (test_growth.GrowthIntegrationTest.test_activity_corruption_rejected_independently_of_checksums) ... ok
+test_exact_seeded_replay (test_growth.GrowthIntegrationTest.test_exact_seeded_replay) ... ok
+test_missing_checksum_and_nonfinite_trail_rejected (test_growth.GrowthIntegrationTest.test_missing_checksum_and_nonfinite_trail_rejected) ... ok
+test_population_and_contact_semantics (test_growth.GrowthIntegrationTest.test_population_and_contact_semantics) ... ok
+test_truncated_field_and_population_corruption_rejected (test_growth.GrowthIntegrationTest.test_truncated_field_and_population_corruption_rejected) ... ok
+test_v1_remains_readable_and_distinct (test_growth.GrowthIntegrationTest.test_v1_remains_readable_and_distinct) ... ok
+test_foods_are_real_coordinates_and_start_is_selected (test_growth.GrowthPreparationTest.test_foods_are_real_coordinates_and_start_is_selected) ... ok
+test_invalid_start_masks_and_schedule (test_growth.GrowthPreparationTest.test_invalid_start_masks_and_schedule) ... ok
+test_surface_elevation_does_not_change_growth_inputs (test_growth.GrowthPreparationTest.test_surface_elevation_does_not_change_growth_inputs) ... ok
+test_close_cancels_worker_without_destroying_a_running_thread (test_growth.GrowthViewerTest.test_close_cancels_worker_without_destroying_a_running_thread) ... qt.qpa.fonts: Populating font family aliases took 81 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost.
+<project-root>/.venv/lib/python3.14/site-packages/matplotlib/backends/backend_qt.py:726: DeprecationWarning: Enum value 'Qt::ApplicationAttribute.AA_UseHighDpiPixmaps' is marked as deprecated, please check the documentation for more information.
+  use_high_dpi_pixmaps = app.testAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
+ok
+test_controls_are_drafts_and_particle_overlay_preserves_record (test_growth.GrowthViewerTest.test_controls_are_drafts_and_particle_overlay_preserves_record) ... ok
+test_preview_and_replay_synchronize_fields_and_explanation (test_growth.GrowthViewerTest.test_preview_and_replay_synchronize_fields_and_explanation) ... ok
+test_exact_food_and_barriers (test_mesh.MeshProtocolTests.test_exact_food_and_barriers) ... ok
+test_fixed_pair (test_mesh.MeshProtocolTests.test_fixed_pair) ... ok
+test_imported_weighted_pairs_and_refinement (test_mesh.MeshProtocolTests.test_imported_weighted_pairs_and_refinement) ... ok
+test_invalid_protocol (test_mesh.MeshProtocolTests.test_invalid_protocol) ... ok
+test_invalid_weighted_pairs (test_mesh.MeshProtocolTests.test_invalid_weighted_pairs) ... ok
+test_obstacle_segments_are_removed (test_mesh.MeshProtocolTests.test_obstacle_segments_are_removed) ... ok
+test_refinement_keeps_demands (test_mesh.MeshProtocolTests.test_refinement_keeps_demands) ... ok
+test_compiled_source_fingerprint_binding (test_mesh.MeshRecordTests.test_compiled_source_fingerprint_binding) ... ok
+test_export (test_mesh.MeshRecordTests.test_export) ... ok
+test_food_attachment_detected (test_mesh.MeshRecordTests.test_food_attachment_detected) ... ok
+test_native_view (test_mesh.MeshRecordTests.test_native_view) ... ok
+test_numpy_pressure_solve (test_mesh.MeshRecordTests.test_numpy_pressure_solve) ... ok
+test_source_snapshot_integrity_and_archive (test_mesh.MeshRecordTests.test_source_snapshot_integrity_and_archive) ... ok
+test_tamper_detected (test_mesh.MeshRecordTests.test_tamper_detected) ... ok
+test_weighted_run_reopens (test_mesh.MeshRecordTests.test_weighted_run_reopens) ... ok
+test_cycle_and_cutoff (test_mesh.MetricTests.test_cycle_and_cutoff) ... ok
+test_tree (test_mesh.MetricTests.test_tree) ... ok
+test_width_fixed_radius_scale (test_mesh.MetricTests.test_width_fixed_radius_scale) ... ok
+test_cli_crlf_and_extra_column (test_mesh_integrator.HeunTests.test_cli_crlf_and_extra_column) ... ok
+test_cli_preserves_existing_records (test_mesh_integrator.HeunTests.test_cli_preserves_existing_records) ... ok
+test_euler_legacy_recurrence (test_mesh_integrator.HeunTests.test_euler_legacy_recurrence) ... ok
+test_heun_analytic_and_second_order (test_mesh_integrator.HeunTests.test_heun_analytic_and_second_order) ... ok
+test_heun_record_stages_and_tamper (test_mesh_integrator.HeunTests.test_heun_record_stages_and_tamper) ... ok
+test_matched_refinement_comparison (test_mesh_integrator.HeunTests.test_matched_refinement_comparison) ... ok
+test_predictor_uses_held_pair_at_switch (test_mesh_integrator.HeunTests.test_predictor_uses_held_pair_at_switch) ... ok
+test_cancel_preserves_completed_case (test_mesh_sweep.SweepTests.test_cancel_preserves_completed_case) ... ok
+test_native_study_handoff (test_mesh_sweep.SweepTests.test_native_study_handoff) ... ok
+test_paired_inputs_and_incremental_summary (test_mesh_sweep.SweepTests.test_paired_inputs_and_incremental_summary) ... ok
+test_plan_bounds (test_mesh_sweep.SweepTests.test_plan_bounds) ... ok
+test_display_overlay_does_not_change_geometry (test_spatial.GeographicViewerTest.test_display_overlay_does_not_change_geometry) ... ok
+test_preview_is_distinct_from_a_run (test_spatial.GeographicViewerTest.test_preview_is_distinct_from_a_run) ... ok
+test_real_london_run_and_synchronized_selection (test_spatial.GeographicViewerTest.test_real_london_run_and_synchronized_selection) ... ok
+test_cost_and_overlay_separation (test_spatial.GeometryTest.test_cost_and_overlay_separation) ... ok
+test_demand_schedule_reproducible_and_station_only (test_spatial.GeometryTest.test_demand_schedule_reproducible_and_station_only) ... ok
+test_geography_snapshot (test_spatial.GeometryTest.test_geography_snapshot) ... ok
+test_incomplete_river_coverage_rejected (test_spatial.GeometryTest.test_incomplete_river_coverage_rejected) ... ok
+test_restrictions_do_not_silently_add_links (test_spatial.GeometryTest.test_restrictions_do_not_silently_add_links) ... ok
+test_segments (test_spatial.GeometryTest.test_segments) ... ok
+test_arbitrary_graph_pressure_matches_independent_numpy (test_spatial.SpatialIntegrationTest.test_arbitrary_graph_pressure_matches_independent_numpy) ... ok
+test_euler_corruption_detected_after_physical_flow_checks (test_spatial.SpatialIntegrationTest.test_euler_corruption_detected_after_physical_flow_checks) ... ok
+test_invalid_cli_schedule_rejected (test_spatial.SpatialIntegrationTest.test_invalid_cli_schedule_rejected) ... ok
+test_recorded_schedule_replay_is_byte_identical (test_spatial.SpatialIntegrationTest.test_recorded_schedule_replay_is_byte_identical) ... ok
+test_default_parameters (test_viewer.RunDataTest.test_default_parameters) ... ok
+test_finite_but_inconsistent_flow_rejected (test_viewer.RunDataTest.test_finite_but_inconsistent_flow_rejected) ... ok
+test_fresh_cpp_run (test_viewer.RunDataTest.test_fresh_cpp_run) ... ok
+test_hidden_platform_plugin_can_be_discovered (test_viewer.RunDataTest.test_hidden_platform_plugin_can_be_discovered) ... ok
+test_invalid_configuration_rejected (test_viewer.RunDataTest.test_invalid_configuration_rejected) ... ok
+test_invalid_parameters (test_viewer.RunDataTest.test_invalid_parameters) ... ok
+test_nonfinite_and_reordered_history_rejected (test_viewer.RunDataTest.test_nonfinite_and_reordered_history_rejected) ... ok
+test_recorded_analytic_state (test_viewer.RunDataTest.test_recorded_analytic_state) ... ok
+test_save_load_preserves_original_bytes (test_viewer.RunDataTest.test_save_load_preserves_original_bytes) ... ok
+test_truncated_history_rejected (test_viewer.RunDataTest.test_truncated_history_rejected) ... ok
+test_draft_parameters_do_not_change_loaded_run (test_viewer.ViewerStateTest.test_draft_parameters_do_not_change_loaded_run) ... ok
+test_playback_uses_discrete_frame (test_viewer.ViewerStateTest.test_playback_uses_discrete_frame) ... ok
+test_reverse_flow_visible_without_axis_clipping (test_viewer.ViewerStateTest.test_reverse_flow_visible_without_axis_clipping) ... ok
+test_scrub_synchronizes_tables_and_plot (test_viewer.ViewerStateTest.test_scrub_synchronizes_tables_and_plot) ... ok
+test_step_restart_and_end (test_viewer.ViewerStateTest.test_step_restart_and_end) ... ok
+test_worker_applies_fresh_run (test_viewer.ViewerStateTest.test_worker_applies_fresh_run) ... ok
+
+----------------------------------------------------------------------
+Ran 70 tests in 10.822s
+
+OK

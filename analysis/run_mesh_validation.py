@@ -10,7 +10,7 @@ import time
 import numpy as np
 from matplotlib.figure import Figure
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from desktop.mesh_data import ROOT,DEFAULT_MESH,default_scene,run_mesh_experiment,load_mesh_run,mesh_metrics
+from desktop.mesh_data import ROOT,DEFAULT_MESH,default_scene,run_mesh_experiment,load_mesh_run,mesh_metrics,effective_mesh_settings,solver_extrema,archive_source_snapshot
 from desktop.mesh_plot import draw_tubes,snapshot_figure
 from desktop.growth_data import sha256_file
 
@@ -19,14 +19,17 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,default=ROOT/'results/mesh_validation');parser.add_argument('--refresh',action='store_true',help='Revalidate existing local raw runs and refresh metrics/figures without rerunning the solver.');args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
     scene=default_scene();results={};runs={}
     previous=json.loads((args.output/'validation.json').read_text()) if args.refresh else None
-    configurations={'default':DEFAULT_MESH,'half_dt':dict(DEFAULT_MESH,dt=.025),'quarter_dt':dict(DEFAULT_MESH,dt=.0125),'finer_mesh':dict(DEFAULT_MESH,spacing=.3),'seed43':dict(DEFAULT_MESH,seed=43),'seed47':dict(DEFAULT_MESH,seed=47),'low_current':dict(DEFAULT_MESH,current=.2),'low_gamma':dict(DEFAULT_MESH,gamma=1.15),'river_cost':dict(DEFAULT_MESH,river_penalty=2.)}
+    # Preserve this published Euler baseline even as the interactive default improves.
+    baseline=dict(DEFAULT_MESH,integrator='euler',dt=.05)
+    configurations={'default':baseline,'half_dt':dict(baseline,dt=.025),'quarter_dt':dict(baseline,dt=.0125),'finer_mesh':dict(baseline,spacing=.3),'seed43':dict(baseline,seed=43),'seed47':dict(baseline,seed=47),'low_current':dict(baseline,current=.2),'low_gamma':dict(baseline,gamma=1.15),'river_cost':dict(baseline,river_penalty=2.)}
     for name,settings in configurations.items():
         start=time.monotonic();r=load_mesh_run(ROOT/previous['runs'][name]['run_folder']) if previous else run_mesh_experiment(scene,settings);runs[name]=r
-        if r.settings!=settings or r.scene!=scene:raise ValueError('Configuration or scene changed; recompute the study without --refresh.')
+        if effective_mesh_settings(r.settings)!=effective_mesh_settings(settings) or r.scene!=scene:raise ValueError('Configuration or scene changed; recompute the study without --refresh.')
         elapsed=previous['runs'][name]['seconds'] if previous else time.monotonic()-start
         results[name]=dict(settings=settings,run_folder=str(r.folder.relative_to(ROOT)),nodes=len(r.mesh['nodes']),edges=len(r.mesh['edges']),seconds=elapsed,
             max_conservation=float(r.diagnostics[:,4].max()),max_backward_error=float(r.diagnostics[:,5].max()),min_scaled_rcond_estimate=float(r.diagnostics[:,6].min()),
             final=[mesh_metrics(r,len(r.times)-1,c,True) for c in (1e-5,1e-4,1e-3)])
+        results[name].update(solver_extrema(r))
         # Freeze candidate geometry and forcing, not just seeds; triangulation can vary by library version.
         case=args.output/'replay'/name;case.mkdir(parents=True,exist_ok=True)
         with gzip.open(case/'scenario.json.gz','wb') as stream:stream.write((r.folder/'scenario.json').read_bytes())
@@ -34,6 +37,7 @@ def main():
         states=np.unique(np.linspace(0,len(r.times)-1,4).astype(int))
         np.savez_compressed(case/'reference.npz',states=states,d=r.d[states],q=r.q[states],p=r.p[states])
         shutil.copyfile(r.folder/'checksums.json',case/'original-checksums.json')
+        archive_source_snapshot(r.folder,case/'source.tar.gz')
         print(name,results[name]['seconds'],results[name]['final'][1],flush=True)
     a,b,c=[runs[k] for k in ('default','half_dt','quarter_dt')]
     ab=np.abs(a.d-b.d[::2]);bc=np.abs(b.d[::2]-c.d[::4])
@@ -42,20 +46,20 @@ def main():
         interpretation='Thresholded length/topology can change discontinuously. Mesh refinement changes candidate routes and initial degrees of freedom. No seed-independent optimum or general convergence claim. Single-break survival is our length-weighted one-break connectivity proxy, not the original paper statistic.')
     (args.output/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
     write_report(report,args.output)
-    assets=ROOT/'docs/assets';fig=Figure(figsize=(12,8),dpi=160,layout='constrained',facecolor='white')
+    assets=ROOT/'docs/assets';historical_figures=args.output/'figures';historical_figures.mkdir(exist_ok=True);fig=Figure(figsize=(12,8),dpi=160,layout='constrained',facecolor='white')
     for axis,target in zip(fig.subplots(2,2).flat,(0,3,10,30)):
         idx=int(np.argmin(abs(a.times-target)));draw_tubes(axis,a,idx);m=mesh_metrics(a,idx)
         axis.set_title(f"t = {a.times[idx]:g} · {m['largest_food_component']}/46 connected · {m['length_km']:.1f} km",fontsize=10,loc='left')
     fig.suptitle('London · flow-driven tube adaptation on a fine spatial mesh',fontsize=14)
     fig.supxlabel('γ = 1.8 · I₀ = 2 · seed 42 · D ≥ 10⁻⁴ · fixed width ∝ D¼ · model time, not hours\nTfL coordinates · © OpenStreetMap contributors',fontsize=8)
-    for extension in ('png','svg'):save_figure(fig,assets/f'tube-evolution.{extension}')
+    for extension in ('png','svg'):save_figure(fig,historical_figures/f'euler-tube-evolution.{extension}')
     snapshot=snapshot_figure(a,len(a.times)-1,names=False)
-    for extension in ('png','svg'):save_figure(snapshot,assets/f'tube-network.{extension}')
+    for extension in ('png','svg'):save_figure(snapshot,historical_figures/f'euler-tube-network.{extension}')
     # Parameter effects use measured final-state values at a common explicit cutoff.
     fig2=Figure(figsize=(11,4),dpi=160,layout='constrained');axes=fig2.subplots(1,3);names=list(results)
     for axis,key,label in zip(axes,('length_km','mean_route_direct_ratio','single_break_survival'),('Retained length (km)','Mean route / direct distance','One-break survival proxy')):
         values=[results[name]['final'][1][key] for name in names];axis.barh(names,[np.nan if v is None else v for v in values],color='#367e68');axis.set_xlabel(label,fontsize=8);axis.tick_params(labelsize=8);axis.spines[['top','right']].set_visible(False)
-    fig2.suptitle('Final-state sensitivity · D ≥ 10⁻⁴ · exploratory London scenario',fontsize=12)
+    fig2.suptitle('Euler baseline sensitivity · D ≥ 10⁻⁴ · exploratory London scenario',fontsize=12)
     fig2.savefig(assets/'tube-sensitivity.png',dpi=180)
     print('Recorded study:',args.output,flush=True)
 

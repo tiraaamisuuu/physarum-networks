@@ -16,13 +16,13 @@ from PySide6.QtWidgets import (QMainWindow,QWidget,QSplitter,QVBoxLayout,QHBoxLa
     QLabel,QPushButton,QDoubleSpinBox,QSpinBox,QComboBox,QCheckBox,QSlider,QTabWidget,QTableWidget,
     QTableWidgetItem,QHeaderView,QFileDialog,QMessageBox,QScrollArea,QDialog,QTextBrowser)
 try:
-    from .mesh_data import ROOT,DEFAULT_MESH,DEFAULT_CUTOFF,default_scene,load_mesh_run,run_mesh_experiment,mesh_metrics
+    from .mesh_data import ROOT,DEFAULT_MESH,DEFAULT_CUTOFF,default_scene,load_mesh_run,run_mesh_experiment,mesh_metrics,effective_mesh_settings,compare_mesh_trajectories,solver_extrema
     from .mesh_plot import draw_tubes,tube_widths,export_snapshot
     from .spatial_viewer import StationDialog
     from .mesh_sweep_view import SweepPanel
     from .mesh_layout import LayoutPanel
 except ImportError:
-    from mesh_data import ROOT,DEFAULT_MESH,DEFAULT_CUTOFF,default_scene,load_mesh_run,run_mesh_experiment,mesh_metrics
+    from mesh_data import ROOT,DEFAULT_MESH,DEFAULT_CUTOFF,default_scene,load_mesh_run,run_mesh_experiment,mesh_metrics,effective_mesh_settings,compare_mesh_trajectories,solver_extrema
     from mesh_plot import draw_tubes,tube_widths,export_snapshot
     from spatial_viewer import StationDialog
     from mesh_sweep_view import SweepPanel
@@ -74,6 +74,9 @@ class TubeCanvas(FigureCanvasQTAgg):
         self.history=[mesh_metrics(run,int(i),cutoff) for i in sample]
         self.cp.plot(run.times[sample],[m['largest_food_component'] for m in self.history],color='#13856e',lw=1.2)
         self.cp.axhline(run.food_count,color='#bbb',lw=.6,ls=':');self.cp.set_ylim(0,run.food_count+2)
+        self.length_axis=self.cp.twinx();self.length_axis.plot(run.times[sample],[m['length_km'] if m['length_km']>0 else np.nan for m in self.history],color='#b07a3b',lw=1.,ls='--')
+        self.length_axis.set_yscale('log');self.length_axis.set_ylabel('Retained km · log scale',fontsize=7,color='#95652e');self.length_axis.tick_params(labelsize=6,colors='#95652e');self.length_axis.spines[['top']].set_visible(False)
+        self.cp.set_title('Largest food component · dashed: retained km',loc='left',fontsize=7.5,pad=10)
         self.c_cursor=self.cp.axvline(0,color='#a5784d',lw=.8,ls='--');self.cp.set_xlabel('Model time · arbitrary units',fontsize=7)
         self.figure.text(.01,.005,f'TfL coordinates · © OpenStreetMap contributors   |   D ≥ {cutoff:g}   |   width ∝ D¼; 1.2 pt at D = 0.5   |   blue / orange = source / sink',fontsize=7,color='#59665e')
         if self.terrain:self.map.text(.01,.01,'Surface elevation: Copernicus DEM / Open-Meteo (CC BY 4.0)\nContext only; not underground geology',transform=self.map.transAxes,fontsize=6.5,color='#40514b',bbox={'facecolor':'white','alpha':.85,'edgecolor':'none'},zorder=10)
@@ -156,7 +159,8 @@ class MeshViewer(QMainWindow):
         presets=QComboBox();presets.addItems(['Choose a starting experiment…','Explore lower flow (I₀ = 0.2)','Explore more alternatives (γ = 1.15)','Default tube parameters']);presets.setToolTip('These are parameter starting points. Their effect depends on the food layout, mesh, seed and integration settings.');presets.currentIndexChanged.connect(lambda index:self.apply_preset(index,presets));layout.addWidget(presets)
         group=QGroupBox('Model parameters');form=QFormLayout(group)
         form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
-        definitions=[('current','Injected flow I₀',.1,5,.1,2),('gamma','Response γ',.5,3,.05,2),('duration','Model duration',1,40,5,2),('dt','Time step Δt',.01,.25,.025,4),('switch_interval','Switch demand every',.01,2,.05,4),('spacing','Mesh spacing (km)',.25,1.5,.05,2),('river_penalty','River crossing cost (km)',0,10,.5,2),('initial_conductivity','Initial conductivity D',.01,1,.05,2),('initial_noise','Initial variation ±',0,.5,.05,2)]
+        self.integrator=QComboBox();self.integrator.addItem('Euler · first order','euler');self.integrator.addItem('Heun · second order','heun');form.addRow('Integration',self.integrator);self.integrator.setToolTip('Heun solves pressures at both stages. Compare dt refinements under the same held forcing; a higher formal order is not an accuracy guarantee for every experiment.');self.integrator.currentIndexChanged.connect(self.draft)
+        definitions=[('current','Injected flow I₀',.1,5,.1,2),('gamma','Response γ',.5,3,.05,2),('duration','Model duration',1,40,5,2),('dt','Time step Δt',.005,.25,.00625,5),('switch_interval','Switch demand every',.01,2,.05,5),('spacing','Mesh spacing (km)',.25,1.5,.05,2),('river_penalty','River crossing cost (km)',0,10,.5,2),('initial_conductivity','Initial conductivity D',.01,1,.05,2),('initial_noise','Initial variation ±',0,.5,.05,2)]
         tips={'gamma':'Controls the nonlinear reinforcement curve, not simply tube thinness.','dt':'Refine dt while holding the demand switching interval fixed. Duration and switching interval must be multiples of dt.','spacing':'Controls candidate routes. Compare mesh resolutions and random seeds before interpreting geometry.','river_penalty':'Assumed additional effective resistance length per crossing. This is not a measured engineering cost. Zero leaves the Thames as context only.','initial_noise':'Uniform seeded variation relative to the initial conductivity.'}
         for key,label,low,high,step,decimals in definitions:
             box=QDoubleSpinBox();box.setRange(low,high);box.setSingleStep(step);box.setDecimals(decimals);box.setKeyboardTracking(False);box.setToolTip(tips.get(key,''));form.addRow(label,box);self.controls[key]=box;box.valueChanged.connect(self.draft)
@@ -200,9 +204,10 @@ class MeshViewer(QMainWindow):
         self.slider=QSlider(Qt.Orientation.Horizontal);self.slider.valueChanged.connect(self.display);main.addWidget(self.slider)
         self.state_label=QLabel('');main.addWidget(self.state_label);self.selection=QLabel('Click a tube to inspect D and Q, or a food source for its exact vertex.');self.selection.setWordWrap(True);main.addWidget(self.selection)
     def settings(self):
-        return {**{k:box.value() for k,box in self.controls.items()},'demand_mode':self.mode.currentData(),'source_id':self.source.currentData(),'sink_id':self.sink.currentData()}
+        return {**{k:box.value() for k,box in self.controls.items()},'demand_mode':self.mode.currentData(),'source_id':self.source.currentData(),'sink_id':self.sink.currentData(),'integrator':self.integrator.currentData()}
     def set_settings(self,settings):
         for k,box in self.controls.items():box.setValue(settings[k])
+        self.integrator.setCurrentIndex(self.integrator.findData(settings.get('integrator','euler')))
         self.mode.setCurrentIndex(self.mode.findData(settings['demand_mode']))
         for box,key in ((self.source,'source_id'),(self.sink,'sink_id')):
             ix=box.findData(settings[key]);box.setCurrentIndex(max(0,ix))
@@ -222,8 +227,8 @@ class MeshViewer(QMainWindow):
         count=len(self.scene.get('weighted_demand',{}).get('pairs',[]))
         self.demand_label.setText(f'{count} imported weighted pairs · weights control sampling frequency, not I₀.' if self.mode.currentData()=='weighted_pairs' else 'Uniform sampling of selected food pairs.' if not fixed else 'One fixed food pair carries I₀ throughout the experiment.')
         if self.worker and self.worker.isRunning():return
-        changed=self.run_data is None or self.settings()!=self.run_data.settings or self.scene!=self.run_data.scene
-        self.banner.setText('DESIGN CHANGED · Compute to apply these controls. The figure still shows the recorded run.' if changed and self.run_data else 'Ready to compute a fine-mesh tube experiment.' if changed else f"RECORDED TUBE RUN · γ {self.run_data.settings['gamma']:g} · I₀ {self.run_data.settings['current']:g} · seed {self.run_data.settings['seed']} · {self.run_data.food_count} foods")
+        changed=self.run_data is None or effective_mesh_settings(self.settings())!=effective_mesh_settings(self.run_data.settings) or self.scene!=self.run_data.scene
+        self.banner.setText('DESIGN CHANGED · Compute to apply these controls. The figure still shows the recorded run.' if changed and self.run_data else 'Ready to compute a fine-mesh tube experiment.' if changed else f"RECORDED TUBE RUN · γ {self.run_data.settings['gamma']:g} · I₀ {self.run_data.settings['current']:g} · {self.run_data.settings.get('integrator','euler')} · seed {self.run_data.settings['seed']} · {self.run_data.food_count} foods")
     def choose_foods(self):
         dialog=StationDialog(self.scene['geography'],{n['tfl_id'] for n in self.scene['nodes'] if n['kind']=='station'},self)
         if dialog.exec()!=QDialog.DialogCode.Accepted:return
@@ -330,18 +335,25 @@ class MeshViewer(QMainWindow):
     def update_record(self):
         r=self.run_data;s=r.settings
         protocol={'random_pairs':'Uniformly sampled distinct food pairs.','fixed_pair':'One fixed source/sink pair for the whole run.','weighted_pairs':f"Pairs sampled from {len(r.scene.get('weighted_demand',{}).get('pairs',[]))} user-supplied weighted rows. Weights set sampling frequency; each draw still injects the same I₀. Imported weights are not automatically treated as measured demand."}[s['demand_mode']]
-        self.record.setHtml(f'''<h2>Pressure, flow and adaptation</h2><p><b>Qᵢⱼ = Dᵢⱼ (pᵢ − pⱼ) / Lᵢⱼ</b><br>At each vertex, net outflow equals imposed current: +I₀ at the source, −I₀ at the sink, zero elsewhere.</p><p><b>dD/dt = |Q|ᵞ / (1 + |Q|ᵞ) − D</b><br>All conductivities update simultaneously with explicit Euler. The selected source/sink pair changes every {s['switch_interval']:g} model units; Δt = {s['dt']:g}. A fixed pair is available as a control.</p><p><b>What you see</b><br>All food coordinates are exact graph vertices. Tubes follow actual piecewise-linear mesh edges. Fixed stroke width ∝ D¼ follows the radius relationship for laminar Poiseuille flow at fixed viscosity; no glow, interpolated curves or numerical pruning is used. The display cutoff defines the graph used for displayed connectivity and length. Show the candidate mesh or vary the cutoff to inspect that assumption.</p><p><b>Numerical evidence</b><br>{len(r.mesh['nodes'])} vertices, {len(r.mesh['edges'])} segments, {len(r.times)} states. Scaled sparse LDLᵀ with iterative refinement; every state must pass conservation and backward-error checks. A Hager-style inverse-norm condition estimate is reported; it is not a certified condition bound. Reopening also checks the pressure law, energy identity, Euler recurrence and file checksums.</p><p><b>Interpretation</b><br>This implements the sigmoid tube model in <a href="https://doi.org/10.1126/science.1177894">Tero et al., Science (2010)</a>. It starts with a fine mesh like their numerical experiment; it does not reproduce the expanding colony margin in the biological photos. Mesh, initial noise, integration and demand schedule are documented choices. No biological time calibration, measured transport demand, tunnelling physics or railway feasibility is asserted. River crossing resistance is an explicit assumed cost. The terminal-only Euclidean MST is a comparison, not a Steiner lower bound.</p><p><b>Try an experiment</b><br>Play the adaptation, then inspect the final state. Change γ or I₀ while retaining the same seed, mesh and forcing. Compare runs. Refine Δt while retaining the switching interval, and compare different mesh spacings and seeds. Export snapshots at the same cutoff.</p><p>Complete record: {r.folder}</p>''')
+        self.record.setHtml(f'''<h2>Pressure, flow and adaptation</h2><p><b>Qᵢⱼ = Dᵢⱼ (pᵢ − pⱼ) / Lᵢⱼ</b><br>At each vertex, net outflow equals imposed current: +I₀ at the source, −I₀ at the sink, zero elsewhere.</p><p><b>dD/dt = |Q|ᵞ / (1 + |Q|ᵞ) − D</b><br>All conductivities update simultaneously with the recorded {s.get('integrator','euler')} integrator. The selected source/sink pair changes every {s['switch_interval']:g} model units; Δt = {s['dt']:g}. A fixed pair is available as a control.</p><p><b>What you see</b><br>All food coordinates are exact graph vertices. Tubes follow actual piecewise-linear mesh edges. Fixed stroke width ∝ D¼ follows the radius relationship for laminar Poiseuille flow at fixed viscosity; no glow, interpolated curves or numerical pruning is used. The display cutoff defines the graph used for displayed connectivity and length. Show the candidate mesh or vary the cutoff to inspect that assumption.</p><p><b>Numerical evidence</b><br>{len(r.mesh['nodes'])} vertices, {len(r.mesh['edges'])} segments, {len(r.times)} states. Scaled sparse LDLᵀ with iterative refinement; every state must pass conservation and backward-error checks. A Hager-style inverse-norm condition estimate is reported; it is not a certified condition bound. Reopening also checks the pressure law, energy identity, recorded integration recurrence and file checksums.</p><p><b>Interpretation</b><br>This implements the sigmoid tube model in <a href="https://doi.org/10.1126/science.1177894">Tero et al., Science (2010)</a>. It starts with a fine mesh like their numerical experiment; it does not reproduce the expanding colony margin in the biological photos. Mesh, initial noise, integration and demand schedule are documented choices. No biological time calibration, measured transport demand, tunnelling physics or railway feasibility is asserted. River crossing resistance is an explicit assumed cost. The terminal-only Euclidean MST is a comparison, not a Steiner lower bound.</p><p><b>Try an experiment</b><br>Play the adaptation, then inspect the final state. Change γ or I₀ while retaining the same seed, mesh and forcing. Compare runs. Refine Δt while retaining the switching interval, and compare different mesh spacings and seeds. Export snapshots at the same cutoff.</p><p>Complete record: {r.folder}</p>''')
         self.record.append(f'<p><b>Recorded forcing protocol</b><br>{protocol}</p>')
+        extrema=solver_extrema(r)
+        self.record.append(f"<p><b>All accepted pressure solves, including predictor stages</b><br>Maximum conservation residual {extrema['max_conservation']:.4e}; maximum backward error {extrema['max_backward_error']:.4e}; minimum scaled reciprocal-condition estimate {extrema['min_scaled_rcond_estimate']:.4e}.</p>")
+        if s.get('integrator','euler')=='heun':
+            self.record.append('<p><b>Heun / SSPRK2 stages</b><br>First predict D* = (1−Δt)D + Δt f(Q). Solve a second pressure system at D* using the same held food pair. Correct D_next = ½D + ½[(1−Δt)D* + Δt f(Q*)]. Both stages conserve flow, and all predictor flows/pressures/diagnostics are recorded and independently checked. This is formally second order for smooth held forcing; refine Δt to assess the actual experiment. It does not add biological calibration.</p>')
     def update_comparison(self):
         if self.previous is None or self.run_data is None:return
         cut=self.cutoff.currentData();rows=[]
         a,b=self.previous,self.run_data
         ma,mb=[mesh_metrics(r,len(r.times)-1,cut,True) for r in (a,b)]
-        for key in ('gamma','current','seed','spacing','dt','duration','switch_interval','river_penalty'):rows.append(f'<tr><td>{key}</td><td>{a.settings[key]}</td><td>{b.settings[key]}</td></tr>')
+        for key in ('integrator','gamma','current','seed','spacing','dt','duration','switch_interval','river_penalty'):rows.append(f'<tr><td>{key}</td><td>{effective_mesh_settings(a.settings)[key]}</td><td>{effective_mesh_settings(b.settings)[key]}</td></tr>')
         for key in ('largest_food_component','length_km','mean_route_direct_ratio','single_break_survival','worst_break_connected_pair_fraction','critical_bridge_length_km','length_over_terminal_mst'):
             def fmt(v):return 'Disconnected' if v is None else f'{v:.5g}'
             rows.append(f'<tr><td>{key}</td><td>{fmt(ma[key])}</td><td>{fmt(mb[key])}</td></tr>')
         self.comparison.setHtml(f'<h2>Final-state comparison · D ≥ {cut:g}</h2><table cellpadding="7"><tr><th>Parameter / measurement</th><th>Previous</th><th>Current</th></tr>{"".join(rows)}</table><p>Differences are exploratory. Isolate one parameter and repeat across seeds, cutoffs and mesh resolutions before drawing conclusions.</p><p>Previous: {a.folder}<br>Current: {b.folder}</p>')
+        numerical=compare_mesh_trajectories(a,b)
+        if numerical:
+            self.comparison.append(f"<h3>Matched numerical trajectories</h3><p>Identical graph, initialization, model parameters and complete held forcing; nested Δt {numerical['coarse_dt']:g} / {numerical['fine_dt']:g}. Methods: {numerical['method_a']} / {numerical['method_b']}.</p><p>Maximum transient |ΔD|: {numerical['max_D_difference']:.6g}<br>Final maximum |ΔD|: {numerical['final_D_max_difference']:.6g}<br>RMS |ΔD| over aligned states and edges: {numerical['rms_D_difference']:.6g}</p><p>This is a finite pairwise comparison, not error against an exact solution or proof that the extracted topology has converged.</p>")
     def open_run(self):
         folder=QFileDialog.getExistingDirectory(self,'Open tube run',str(ROOT/'results/mesh_runs'))
         if folder:

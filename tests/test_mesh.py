@@ -17,7 +17,7 @@ def small_scene():
 
 class MeshProtocolTests(unittest.TestCase):
     def test_refinement_keeps_demands(self):
-        scene=default_scene();a=dict(DEFAULT_MESH,duration=1);b=dict(a,dt=.025)
+        scene=default_scene();a=dict(DEFAULT_MESH,duration=1,dt=.05);b=dict(a,dt=.025)
         self.assertEqual(mesh_demands(scene,a),mesh_demands(scene,b)[::2])
         self.assertEqual(build_mesh(small_scene(),a),build_mesh(small_scene(),b))
     def test_exact_food_and_barriers(self):
@@ -30,7 +30,7 @@ class MeshProtocolTests(unittest.TestCase):
         x,y=scene['nodes'][0]['x'],scene['nodes'][0]['y'];scene['barriers']=[[x-.1,y-.1,x+.1,y+.1]]
         with self.assertRaises(ValueError):build_mesh(scene,s)
     def test_invalid_protocol(self):
-        for update in (dict(dt=.03),dict(gamma=float('nan')),dict(switch_interval=.075),dict(seed=True)):
+        for update in (dict(dt=.03),dict(gamma=float('nan')),dict(switch_interval=.073),dict(seed=True)):
             with self.assertRaises(ValueError):validate_mesh_settings(dict(DEFAULT_MESH,**update))
         s=dict(DEFAULT_MESH,demand_mode='fixed_pair',source_id='missing')
         with self.assertRaises(ValueError):mesh_demands(default_scene(),s)
@@ -50,7 +50,7 @@ class MeshProtocolTests(unittest.TestCase):
         scene=small_scene()
         with tempfile.TemporaryDirectory() as temp:
             path=Path(temp)/'demand.csv';path.write_text(f"source,sink,weight\n{scene['nodes'][0]['key']},{scene['nodes'][1]['key']},1\n{scene['nodes'][0]['key']},{scene['nodes'][2]['key']},3\n")
-            loaded=import_pair_weights(scene,path);s=dict(DEFAULT_MESH,duration=30,demand_mode='weighted_pairs');pairs=mesh_demands(loaded,s)
+            loaded=import_pair_weights(scene,path);s=dict(DEFAULT_MESH,duration=30,dt=.05,demand_mode='weighted_pairs');pairs=mesh_demands(loaded,s)
             self.assertEqual(pairs,mesh_demands(loaded,dict(s,dt=.025))[::2]);self.assertTrue(all(a==0 and b in (1,2) for a,b in pairs))
             self.assertTrue(.65<sum(b==2 for a,b in pairs)/len(pairs)<.85)
             self.assertNotIn('weighted_demand',scene);self.assertEqual(loaded['weighted_demand']['filename'],'demand.csv')
@@ -87,7 +87,7 @@ class MetricTests(unittest.TestCase):
 class MeshRecordTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.temp=tempfile.TemporaryDirectory();cls.record=run_mesh_experiment(small_scene(),dict(DEFAULT_MESH,spacing=1.5,duration=1),root=cls.temp.name)
+        cls.temp=tempfile.TemporaryDirectory();cls.record=run_mesh_experiment(small_scene(),dict(DEFAULT_MESH,integrator='euler',dt=.05,spacing=1.5,duration=1),root=cls.temp.name)
     @classmethod
     def tearDownClass(cls):cls.temp.cleanup()
     def test_numpy_pressure_solve(self):
@@ -103,6 +103,18 @@ class MeshRecordTests(unittest.TestCase):
         target=Path(self.temp.name)/'tampered';shutil.copytree(self.record.folder,target)
         d=np.memmap(target/'output/D.f64',dtype='<f8',mode='r+',shape=self.record.d.shape);d[10,0]*=2;d.flush();del d
         with self.assertRaises(ValueError):load_mesh_run(target)
+    def test_source_snapshot_integrity_and_archive(self):
+        from desktop.mesh_data import archive_source_snapshot
+        target=Path(self.temp.name)/'source-tamper';shutil.copytree(self.record.folder,target)
+        source=target/'source/src/mesh_main.cpp';self.assertTrue(source.is_file());source.write_text(source.read_text()+'\n// changed\n')
+        with self.assertRaisesRegex(ValueError,'Source snapshot checksum'):load_mesh_run(target)
+        a,b=Path(self.temp.name)/'source-a.tar.gz',Path(self.temp.name)/'source-b.tar.gz'
+        archive_source_snapshot(self.record.folder,a);archive_source_snapshot(self.record.folder,b);self.assertEqual(a.read_bytes(),b.read_bytes())
+    def test_compiled_source_fingerprint_binding(self):
+        from desktop.growth_data import sha256_file
+        target=Path(self.temp.name)/'fingerprint-tamper';shutil.copytree(self.record.folder,target);path=target/'scenario.json';manifest=json.loads(path.read_text());manifest['software']['engine_source_fingerprint']='0'*64;path.write_text(json.dumps(manifest))
+        checks=json.loads((target/'checksums.json').read_text());checks['scenario.json']=sha256_file(path);(target/'checksums.json').write_text(json.dumps(checks))
+        with self.assertRaisesRegex(ValueError,'Compiled-source fingerprint'):load_mesh_run(target)
     def test_food_attachment_detected(self):
         target=Path(self.temp.name)/'moved';shutil.copytree(self.record.folder,target);path=target/'scenario.json';m=json.loads(path.read_text());m['mesh']['nodes'][0]['x']+=.01;path.write_text(json.dumps(m))
         with self.assertRaisesRegex(ValueError,'exact recorded mesh vertex'):load_mesh_run(target)

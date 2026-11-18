@@ -1,0 +1,15 @@
+{
+  "inputs/initial.csv": "a436292f51b21f2c092ecb73e58b078140041357be4a2d2037aad9407a1ce7c0",
+  "inputs/input.cfg": "e148d96a8495042ed59e63077fd51f80055786b32ef1bf9b49d722f0f21c40c9",
+  "inputs/edges.csv": "0f02dd79371a6d263bfa2a6c56710951f9a12644c55f8d48ab878152f3e7861c",
+  "inputs/demands.csv": "d0d149faeeef405e32655f14d929bc601a42f4aff7357f1f3c0d8518b19ef3b8",
+  "output/metadata.txt": "b64397bdda74a8031f5005ad13bb3f4117c1a86da9ac570e4854beabc8986378",
+  "output/D.f64": "999ac7fe5af16217bd1e5e6ec26ad9d5333aee181ab774dc0c40a92ecfb206fb",
+  "output/diagnostics.csv": "82977007c1a3d9928acd646e890c8ec7307c01ee8d0c51708fa20ee5e87b4cb0",
+  "output/P.f64": "cd7f7efd83944ead8ed96fcad8e8d64889b43e501e702aeaff5edc576d0f4a6f",
+  "output/Q.f64": "44b885a4702fca5a8aa02f44563685f7b87487c30dc65b7e0307b0a870049e46",
+  "output/stage_Q.f64": "3517a2162d44868982325481b9b92470f46fb7b4fe4010a318980260bb9da48f",
+  "output/stage_P.f64": "5081a121c0fc397fe8eb22ba215c7beb481d6a8b6f93efd306e9073a68a1f457",
+  "output/stage_diagnostics.csv": "41578a9edc9d6fb685cb351d743ed60db36658429e92414d66569d01fbdb1f3f",
+  "scenario.json": "e8d088c213773b4200274d843cfbbea08dfc2b7c59fed6c7a095eabb32100aaf"
+}

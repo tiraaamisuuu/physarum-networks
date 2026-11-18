@@ -22,13 +22,13 @@ These mesh, noise, integration and switching choices are ours. The inspected art
 
 Q = (D/L) Δp; at every vertex, signed net outflow equals the imposed injection. The solver grounds vertex 0 at pressure zero, diagonally scales the grounded Laplacian, uses Eigen sparse SimplicialLDLT, and permits up to two residual corrections after the initial solve. A Hager-style inverse-1-norm estimate diagnoses conditioning. It is an estimate, not a certified bound on pressure error.
 
-Conductivity updates simultaneously:
+For the optional Euler method, conductivity updates simultaneously:
 
 `D_next = (1 − Δt) D + Δt |Q|^γ / (1 + |Q|^γ)`.
 
 No numerical pruning, conductivity floor, artificial food attachments, geometric interpolation or curve smoothing is used. All D must stay finite and strictly positive. Ill-conditioning, failed factorization, underflow, overflow or unresolved conservation stops the run and preserves available inputs/output for inspection.
 
-Every state must satisfy conservation ≤ `1e-12 + 1e-10 I₀`, backward error ≤ `1e-12`, and scaled reciprocal condition estimate ≥ `1e-14`. A small residual is not sufficient evidence of accurate forward pressure in every problem. The replay loader separately reconstructs the flow law, Kirchhoff balances, dissipation/work identity and all Euler transitions. It checks dimensions, exact food coordinates, demand protocol, configuration, input graph and SHA-256 checksums.
+Every state must satisfy conservation ≤ `1e-12 + 1e-10 I₀`, backward error ≤ `1e-12`, and scaled reciprocal condition estimate ≥ `1e-14`. A small residual is not sufficient evidence of accurate forward pressure in every problem. The replay loader separately reconstructs the flow law, Kirchhoff balances, dissipation/work identity and all recorded integration transitions. It checks dimensions, exact food coordinates, demand protocol, configuration, input graph and SHA-256 checksums.
 
 ## Read the display and measurements
 
@@ -64,7 +64,7 @@ Our recorded study demonstrates these parameter effects and their numerical sens
 
 Complete runs save locally in `results/mesh_runs/<UTC>-<id>/`, including frozen geography/mesh, settings, binary/source hashes, actual demands, C++ metadata and every raw D/Q/P state. Files D.f64, Q.f64 and P.f64 are state-major IEEE-754 little-endian float64 arrays with shapes `(steps+1, edges)`, `(steps+1, edges)`, `(steps+1, nodes)`. `diagnostics.csv` identifies terminals, times and residuals. Reopen through File → Open recorded tube run or `desktop/viewer.py --mesh-run PATH`.
 
-Export snapshot produces `network.svg`, `network.png`, `tubes.csv`, `nodes.csv`, `snapshot.json`. The snapshot records the state, cutoff, metrics and originating run folder. It is a figure/data extract, not a substitute for the complete dynamic run. File → Save experiment design stores a reusable scene and settings; it does not relabel or overwrite a recorded run. Changed controls have a prominent draft banner until computed.
+Export snapshot produces `network.svg`, `network.png`, `tubes.csv`, `nodes.csv`, `snapshot.json` and the originating `scenario.json`, plus `source.tar.gz` for source-complete runs. The snapshot records the state, cutoff, metrics and originating run folder. It is a figure/data extract, not a substitute for the complete dynamic run. File → Save experiment design stores a reusable scene and settings; it does not relabel or overwrite a recorded run. Changed controls have a prominent draft banner until computed.
 
 `analysis/run_mesh_validation.py` computes the nine-case study. The public compact record includes frozen input CSVs, a compressed scenario and four D/Q/P reference snapshots for each case. `analysis/replay_mesh_case.py CASE` replays those exact inputs with the local C++ binary, independently validates the output and compares snapshots. Original output checksums allow byte-level comparison where the software/platform match. Cross-platform acceptance uses stated numerical tolerances.
 
@@ -91,3 +91,29 @@ Weights control **sampling frequency**, not the magnitude of injected flow, whic
 **Failure impact:** `critical_bridge_length_km` sums retained bridge length whose removal separates food vertices. `expected_connected_pair_fraction_after_break` averages the fraction of all food pairs still connected after one break uniform along retained length. `worst_break_connected_pair_fraction` reports that fraction under the most damaging single-segment removal. A three-food chain retains only one of three food pairs after either link breaks; a cycle retains all three under any one-link break. These metrics account for intermediate junctions and already-disconnected components. The worst-case fraction cannot be improved by adding a food-free dangling branch. They measure topology without flow capacity, repair or a time-calibrated failure rate.
 
 Use **Open saved study** to restore a complete or partial study index, chart and planned controls. Moving the entire study folder preserves inspection because run paths are rebased from its `runs/` directory. Opening a summary checks plan/case agreement and scalar consistency; **Inspect selected run** then revalidates the complete dynamic record. Legacy summaries can be read, with measurements they did not record labelled unavailable rather than fabricated.
+
+## Recorded two-stage integration and the current default
+
+The laboratory now defaults to **Heun / SSPRK2 at Δt = 0.0125**; Euler remains selectable and old records remain readable. Both solve the same sigmoid tube ODE. Heun computes an Euler predictor D*, solves a second pressure system using D* and the **same held food pair**, and corrects with the convex average:
+
+`D* = (1−dt) D + dt f(Q)`
+
+`D_next = ½D + ½[(1−dt) D* + dt f(Q*)]`.
+
+For the supported dt ≤ 0.25 this preserves positive conductivity in exact arithmetic. Overflow/underflow checks still reject unresolved finite states; no floor or pruning is added. Scalar CLI tests verify the exact discrete recurrence and second-order refinement against a continuous analytic solution. The full London experiment has a measured refinement ratio near 2 at the tested coarser steps, so formal order is not an accuracy guarantee there.
+
+The default versus Δt = 0.00625 has maximum transient conductivity difference 0.00885017 and final maximum difference 0.00131974. At D ≥ 10⁻⁴ the final retained segment sets are identical in this pair, with all 46 foods connected. This is finite evidence for this one experiment, not proof of convergence across parameters, seeds or extraction cutoffs. The default network length is 65.894 km and mean food-pair route/direct ratio 1.40091. The earlier Euler study is preserved separately and reports different values. See [integration evidence](../results/integration_validation/REPORT.md).
+
+Heun records schema 2: accepted states remain D/Q/P, and `stage_Q.f64` / `stage_P.f64` have shapes `(steps, edges)` / `(steps, nodes)`. Stage D* is reconstructed from recorded D and Q. `stage_diagnostics.csv` records the predictor solves at endpoint time `(k+1)dt` with the held pair from step k; this is the **left-side forcing at a switch boundary**, not the next accepted state's new pair. These internal stages are not displayed as biological states or interpolated animation frames. The reader verifies their pressure law, conservation, energy identity, reference pressure and integration recurrence. Reported global diagnostic extrema include all accepted and predictor solves.
+
+The interface supports dt from 0.005 to 0.25, at most 6,000 updates and 512 MB of raw states per run; batch studies retain their 2 GB queue cap. Changing method affects storage estimates. Records preserve all numerical stages. **Compare runs** additionally reports aligned D differences when graph, initialization, model and full held forcing match on nested time grids. Those are pairwise differences, not errors against an exact London solution.
+
+## Source provenance
+
+New runs include a code-only `source/` snapshot with SHA-256 checksums. CMake embeds a fingerprint of the C++/header/build-description files in the executable; the reader compares it with the source snapshot and refuses a mismatched run. This detects source edited without rebuilding the engine. The binary hash, compiler/Eigen versions, Python/library versions, exact graph, initial values and forcing remain recorded. Snapshots capture files present at run creation; restart the application after editing Python code. Exact input CSVs and the compiled engine fingerprint are authoritative for physics replay.
+
+Public current Heun cases include `source.tar.gz`; older archives preserve their original hashes and remain labelled by their recorded integration method. Source-verified replays retain original software metadata in `replay_reference_software`, so provenance refinement does not pretend an old file was produced by new source. Every archive is generated only from the indexed code files, with deterministic metadata. Snapshot exports now also include the originating `scenario.json` and, for source-complete runs, `source.tar.gz`; node CSV includes stable food/junction keys.
+
+Additional JSON quantities expose the selected pair's required pressure drop and hydraulic dissipation `I₀ Δp = Σ Q²L/D` over the raw network. These are **model units for the currently imposed pair**, not measured train power, passenger travel cost, capacity or an average over all demands.
+
+To build only the archived engine source in isolation, extract `source.tar.gz` into a scratch directory and configure it with `-DBUILD_TESTING=OFF`. Full repository tests and frozen geographic layers live in the checkout; the source archive is not a standalone distribution of those datasets. Engine snapshots preserve the C++/header/CMake bytes required to reproduce the compiled fingerprint. Figure provenance separately records the rendering script and plotting-library versions, because plotting may occur after the physical run.

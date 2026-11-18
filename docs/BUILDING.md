@@ -93,7 +93,7 @@ Custom graph histories append `source,sink` to the original baseline columns. Al
 
 ## Particle growth engine
 
-CMake also builds `physarum_growth` and its independent tests. The native default runs it with an explicit config and input directory:
+CMake also builds `physarum_growth` and its independent tests. The optional `--particles` mode runs it with an explicit config and input directory:
 
 ```sh
 ./build/physarum_growth CONFIG INPUT_DIRECTORY OUTPUT_DIRECTORY
@@ -109,6 +109,6 @@ The default laboratory uses `build/physarum_mesh`, built by the same CMake comma
 ./build/physarum_mesh INPUT_CFG EDGES_CSV NODE_COUNT INITIAL_D_CSV DEMANDS_CSV OUTPUT_DIRECTORY
 ```
 
-The config has exactly `dt`, `gamma`, `current`, `steps`. Edge CSV header: `edge,from,to,length`; initial CSV: `edge,conductivity`; demand CSV: `step,source,sink` with steps + 1 rows. IDs are consecutive from zero. Lengths and initial D must be positive and finite; the graph must be connected. The Python bridge prepares exact geographic food vertices and records all inputs. Its stricter limits cap runs at 5,500 nodes, 17,000 edges, 3,000 updates and 25 million recorded edge-states.
+The config requires `dt`, `gamma`, `current`, `steps`, with optional `integrator=euler|heun` (legacy four-key files imply Euler). Edge CSV header: `edge,from,to,length`; initial CSV: `edge,conductivity`; demand CSV: `step,source,sink` with steps + 1 rows. IDs are consecutive from zero. Lengths and initial D must be positive and finite; the graph must be connected. The Python bridge prepares exact geographic food vertices and records all inputs. Its stricter limits cap runs at 5,500 nodes, 17,000 edges, 6,000 updates, 25 million recorded edge-states and 512 MB of raw states.
 
-D/Q/P outputs are state-major little-endian float64 arrays, accompanied by per-state diagnostics and compiler/Eigen metadata. Unlike the original dense CLI, this solver requires strictly positive D on a fixed graph and reports a Hager-style reciprocal-condition **estimate**. It never floors or prunes conductivities. See [the tube guide](TUBE_EXPERIMENT.md) for equations, format, assumptions and exports. `analysis/replay_mesh_case.py` demonstrates direct CLI replay using archived exact inputs without rebuilding a triangulation.
+D/Q/P outputs are state-major little-endian float64 arrays, accompanied by per-state diagnostics and compiler/Eigen metadata. Heun also records predictor Q/P and diagnostics. The output directory must be new or empty, preserving existing records. CMake embeds an engine-source fingerprint; the Python bridge binds it to a preserved code snapshot. Unlike the original dense CLI, this solver requires strictly positive D on a fixed graph and reports a Hager-style reciprocal-condition **estimate**. It never floors or prunes conductivities. See [the tube guide](TUBE_EXPERIMENT.md) for equations, format, assumptions and exports. `analysis/replay_mesh_case.py` demonstrates direct CLI replay using archived exact inputs without rebuilding a triangulation.

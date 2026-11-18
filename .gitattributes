@@ -1,2 +1,3 @@
 docs/assets/tube-*.svg linguist-generated=true -diff
 results/mesh_validation/replay/** linguist-generated=true
+results/integration_validation/replay/** linguist-generated=true
