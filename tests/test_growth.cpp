@@ -51,6 +51,23 @@ int main(int argc,char** argv) {
                 for(int y=0;y<64;++y)for(int x=32;x<64;++x)near(model.trail()[static_cast<std::size_t>(y*64+x)],0,0);
             }
             require(model.first_contact()[1]==-1,"Food cue cannot count as contact or teleport an agent");
+        } else if(name=="food_recovery") {
+            auto p=parameters();p.seed_count=1;p.max_agents=1;p.seed_radius=2;p.food_strength=0;
+            physarum::GrowthModel model(p,{{16,32},{50,32}});
+            require(model.first_contact()[0]==0,"Starting food visited");
+            near(model.food_weights()[0],.05,1e-7);
+            bool left=false;
+            for(int step=0;step<150;++step) {
+                model.step();
+                if(model.iteration()%10==0) {
+                    const bool covered=model.food_activity()[0]>0;
+                    near(model.food_weights()[0],covered?.05:1.,1e-7);
+                    if(!covered) {
+                        left=true;require(model.first_contact()[0]==0,"History remains visited while cue recovers");
+                    }
+                }
+            }
+            require(left,"Particle left its starting food; recovery was exercised");
         } else if(name=="invalid") {
             auto p=parameters();p.decay=std::numeric_limits<double>::quiet_NaN();throws([&]{physarum::GrowthModel m(p,{{16,32}});});
             p=parameters();p.initial_x=-1;throws([&]{physarum::GrowthModel m(p,{{16,32}});});

@@ -35,16 +35,18 @@ def main():
     figure,axes=plt.subplots(2,2,figsize=(11,7.5),layout='constrained',facecolor=COLOURS[0])
     for axis,index in zip(axes.flat,indices):
         image,sites=draw_arena(axis,run);image.set_data(run.trail[index]);tick=run.steps[index]
-        visited=(run.contacts>=0)&(run.contacts<=tick);sites.set_facecolors(['#68bda7' if flag else '#f1eee0' for flag in visited])
-        axis.set_title(f'Update {tick} · {int(visited.sum())}/{len(visited)} sites visited',loc='left',fontsize=10,color='white',pad=7)
+        visited=(run.contacts>=0)&(run.contacts<=tick);active=run.activity[index]>0
+        sites.set_facecolors(['#68bda7' if active[i] else '#dda64b' if flag else '#f1eee0' for i,flag in enumerate(visited)])
+        axis.set_title(f'Update {tick} · {int(active.sum())}/{len(visited)} sites active nearby',loc='left',fontsize=10,color='white',pad=7)
     figure.suptitle('From one patch to an evolving network',fontsize=18,fontweight='bold',color='#fff2b0',x=.05,ha='left')
     figure.supxlabel('London station food layout · King’s Cross St Pancras start · C++ particle simulation\n'
-        'Gold = recent trail activity (fixed 0–15 scale). Green = visited at least once, not permanent connectivity.\n'
+        'Gold = trail (fixed 0–15). Green = nearby particles now; amber = previously visited, now empty nearby.\n'
         'Updates are not hours. TfL station data · © OpenStreetMap contributors.',fontsize=8,color='#d3dce0')
     args.output.parent.mkdir(parents=True,exist_ok=True);figure.savefig(args.output.with_suffix('.png'),dpi=180)
-    summary=dict(settings=run.settings,frames=len(run.stats),shape=list(run.trail.shape),selected_updates=run.steps[indices].tolist(),
+    summary=dict(model_version=run.model_version,settings=run.settings,frames=len(run.stats),shape=list(run.trail.shape),selected_updates=run.steps[indices].tolist(),
         final_live_particles=int(run.stats[-1,2]),peak_live_particles=int(run.stats[:,2].max()),visited_sites=int(run.stats[-1,3]),
         last_first_contact_update=int(run.contacts.max()),initial_live_particles=int(run.stats[0,2]),
+        nearby_sites_final=int((run.activity[-1]>0).sum()),
         trail_sha256=sha256_file(run.folder/'output/trail.f32'),occupancy_sha256=sha256_file(run.folder/'output/occupied.u8'),
         contacts_sha256=sha256_file(run.folder/'output/food.csv'),stats_sha256=sha256_file(run.folder/'output/stats.csv'),
         software=json.loads((run.folder/'scenario.json').read_text())['software'],
@@ -54,13 +56,13 @@ def main():
         fig,axis=plt.subplots(figsize=(9,6),facecolor=COLOURS[0]);fig.subplots_adjust(left=.02,right=.98,top=.9,bottom=.13)
         image,sites=draw_arena(axis,run);title=axis.set_title('',color='#fff2b0',fontsize=12,loc='left',pad=12)
         fig.text(.04,.055,'Simulated colony activity · station food layout · fixed colour scale\n'
-            'Visited ≠ permanently connected. TfL data · © OpenStreetMap contributors.',fontsize=8,color='#d3dce0')
+            'Green: particles nearby now; amber: previously visited, empty nearby. Neither proves connectivity.\nTfL data · © OpenStreetMap contributors.',fontsize=8,color='#d3dce0')
         stride=max(1,len(run.stats)//80);frames=list(range(0,len(run.stats),stride))
         if frames[-1]!=len(run.stats)-1:frames.append(len(run.stats)-1)
         def update(index):
-            image.set_data(run.trail[index]);tick=run.steps[index];visited=(run.contacts>=0)&(run.contacts<=tick)
-            sites.set_facecolors(['#68bda7' if flag else '#f1eee0' for flag in visited])
-            title.set_text(f'London · update {tick} · {visited.sum()}/{len(visited)} food sites visited')
+            image.set_data(run.trail[index]);tick=run.steps[index];visited=(run.contacts>=0)&(run.contacts<=tick);active=run.activity[index]>0
+            sites.set_facecolors(['#68bda7' if active[i] else '#dda64b' if flag else '#f1eee0' for i,flag in enumerate(visited)])
+            title.set_text(f'London · update {tick} · {active.sum()}/{len(visited)} sites have nearby particles')
             return image,sites,title
         animation=FuncAnimation(fig,update,frames=frames,interval=125,blit=False)
         animation.save(args.output.with_suffix('.gif'),writer=PillowWriter(fps=8),dpi=100)

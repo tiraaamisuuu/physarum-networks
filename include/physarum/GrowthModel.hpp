@@ -11,6 +11,7 @@ struct GrowthParameters {
     double initial_x=0, initial_y=0, seed_radius=11;
     double sensor_distance=9, sensor_angle=45, turn_angle=45;
     double decay=.08, food_strength=8, food_range=30, river_aversion=0;
+    bool persistent_food=true;
 };
 struct FoodSite { double x,y; };
 struct GrowthAgent { double x,y,angle; };
@@ -27,6 +28,8 @@ public:
     [[nodiscard]] const std::vector<int>& occupancy() const { return occupancy_; }
     [[nodiscard]] const std::vector<GrowthAgent>& agents() const { return agents_; }
     [[nodiscard]] const std::vector<int>& first_contact() const { return first_contact_; }
+    [[nodiscard]] const std::vector<int>& food_activity() const { return food_activity_; }
+    [[nodiscard]] const std::vector<float>& food_weights() const { return food_weights_; }
     [[nodiscard]] std::size_t births() const { return births_; }
     [[nodiscard]] std::size_t deaths() const { return deaths_; }
 private:
@@ -34,6 +37,8 @@ private:
     std::vector<FoodSite> food_;
     std::vector<std::uint8_t> blocked_;
     std::vector<float> river_,trail_,next_,cue_;
+    std::vector<float> food_kernels_,food_weights_;
+    std::vector<int> food_activity_;
     std::vector<int> occupancy_,first_contact_;
     std::vector<GrowthAgent> agents_;
     std::uint32_t random_state_;

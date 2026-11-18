@@ -31,6 +31,11 @@ FIELD_COLOURS=['#101c24','#4f3525','#bc7a18','#f6d55b','#fff2b0']
 def explain_growth(run,index):
     """Plain-language interpretation of measured counters, never inferred optimality."""
     tick=int(run.stats[index,1]);visited=int(run.stats[index,3]);total=len(run.foods)
+    active=int((run.activity[index]>0).sum())
+    if run.model_version==1 and index>0:
+        return ('Legacy run: food sites are being abandoned',
+            f'{visited}/{total} sites were visited, but only {active} have live particles nearby now. '
+            'This saved v1 model permanently weakens food after first contact. Compute a new experiment to use recovering food cues.')
     if index==0:
         return ('A small starting patch',
             'The colony is only at the starting station. The pale dots elsewhere are food sites. '
@@ -42,11 +47,11 @@ def explain_growth(run,index):
     if visited<total:
         return ('Finding food and branching',
             f'Live particles have reached {visited} of {total} food sites by update {tick}. '
-            'Shared trails attract more movement, so branches and loops emerge. Green dots mark sites visited at least once.')
+            f'{active} sites have particles nearby now. Green dots show current local activity; amber marks a past visit without particles nearby.')
     return ('Redistributing the network',
-        f'All {total} sites have been visited at least once. Food cues weaken after first contact. '
-        'Particles keep moving; abandoned trails fade, and crowded regions lose particles. '
-        'A visited site may later lose its visible connection. This is not proof of a connected or optimal railway.')
+        f'All {total} sites were visited; {active} have particles nearby now. '
+        'Food cues recover when a site is uncovered, so a visit no longer switches that site off permanently. '
+        'Local activity still does not prove that every site belongs to one connected network.')
 
 
 class GrowthWorker(QThread):
@@ -93,12 +98,14 @@ class GrowthFigure(FigureCanvasQTAgg):
         self.names=[self.map.annotate(n['name'],self.xy[i],xytext=(4,5),textcoords='offset points',color='#e4e4dd',fontsize=6.5,visible=self.show_names,zorder=8) for i,n in enumerate(foods)]
         self.map.set_xlim(extent[:2]);self.map.set_ylim(extent[2:]);self.map.set_xlabel('British National Grid easting (km)',fontsize=8);self.map.set_ylabel('Northing (km)',fontsize=8);self.map.tick_params(labelsize=8)
         self.map.set_title('London food-site experiment · simulated colony activity',loc='left',fontsize=11,pad=10)
-        self.map.text(.012,.018,'Pale: unvisited food   ·   Green: visited at least once   ·   Gold: recent trail (fixed scale 0–15)\nTfL station coordinates · © OpenStreetMap contributors',
+        self.map.text(.012,.018,'Pale: unvisited   ·   Green: particles nearby now   ·   Amber: visited, currently empty\nGold: recent trail (fixed scale 0–15) · TfL data · © OpenStreetMap contributors',
             transform=self.map.transAxes,color='#d2d9dc',fontsize=7,va='bottom',zorder=11,bbox={'fc':'#101c24','ec':'none','alpha':.8,'pad':4})
         for axis in (self.reached_plot,self.population_plot):
             axis.spines[['top','right']].set_visible(False);axis.tick_params(labelsize=7);axis.grid(alpha=.15,lw=.5);axis.set_xlabel('Simulation updates (not hours)',fontsize=8)
-        self.reached_plot.set_ylabel('Food sites visited',fontsize=8);self.population_plot.set_ylabel('Live particles',fontsize=8)
-        self.reached_line,=self.reached_plot.plot([],[],color='#158075',lw=1.3)
+        self.reached_plot.set_ylabel('Food sites',fontsize=8);self.population_plot.set_ylabel('Live particles',fontsize=8)
+        self.reached_line,=self.reached_plot.plot([],[],color='#888',lw=1,ls='--',label='Ever visited')
+        self.active_line,=self.reached_plot.plot([],[],color='#158075',lw=1.3,label='Particles nearby now')
+        self.reached_plot.legend(fontsize=6.5,frameon=False,loc='upper left')
         self.population_line,=self.population_plot.plot([],[],color='#af7b16',lw=1.3)
         self.cursors=[axis.axvline(0,color='#555',lw=.8,ls='--') for axis in (self.reached_plot,self.population_plot)]
         self.reached_plot.set_ylim(0,len(foods)+1);self.population_plot.set_ylim(0,settings['max_agents']*1.03)
@@ -115,8 +122,10 @@ class GrowthFigure(FigureCanvasQTAgg):
             self.agent_image.set_data(rgba);self.agent_image.set_visible(True)
         else:self.agent_image.set_visible(False)
         tick=int(run.stats[index,1]);visited=(run.contacts>=0)&(run.contacts<=tick)
-        self.sites.set_facecolors(['#68bda7' if flag else '#f1eee0' for flag in visited])
+        active=run.activity[index]>0
+        self.sites.set_facecolors(['#68bda7' if active[i] else '#dda64b' if flag else '#f1eee0' for i,flag in enumerate(visited)])
         self.reached_line.set_data(run.steps[:index+1],run.stats[:index+1,3]);self.population_line.set_data(run.steps[:index+1],run.stats[:index+1,2])
+        self.active_line.set_data(run.steps[:index+1],(run.activity[:index+1]>0).sum(axis=1))
         for cursor in self.cursors:cursor.set_xdata([tick,tick])
         self.draw_idle()
 
@@ -133,7 +142,7 @@ class GrowthFigure(FigureCanvasQTAgg):
 
 class GrowthViewer(QMainWindow):
     def __init__(self,auto_run=True):
-        super().__init__();self.setWindowTitle('Physarum — Growth laboratory');self.resize(1460,940);self.setMinimumSize(1120,760)
+        super().__init__();self.setWindowTitle('Physarum — Growth laboratory · recovering food');self.resize(1460,940);self.setMinimumSize(1120,760)
         self.scene=default_scene();self.run_data=None;self.worker=None;self.index=0;self.playing=False;self.playhead=0.;self.last_tick=time.monotonic();self.selected_food=None;self.previous_windows=[]
         self.closing=False
         self.build_ui();self.refresh_starts();self.preview()
@@ -172,10 +181,11 @@ class GrowthViewer(QMainWindow):
         self.explanation=QLabel();self.explanation.setWordWrap(True);self.explanation.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse);sidebar.addWidget(self.explanation)
         self.metrics=QLabel();self.metrics.setWordWrap(True);self.metrics.setStyleSheet('margin-top: 8px;');sidebar.addWidget(self.metrics)
         self.selected=QLabel('Click a food site for its name and first-contact time.');self.selected.setWordWrap(True);sidebar.addWidget(self.selected)
-        note=QLabel('WHAT THE COLOURS MEAN\nGold is recent movement trail, not rail capacity.\nGreen means visited at least once, not still connected.\n\nThis is a particle growth model inspired by Physarum. London is a scaled experimental layout. Updates are not biological hours.');note.setWordWrap(True);note.setStyleSheet('margin-top: 12px;');sidebar.addWidget(note);sidebar.addStretch()
+        note=QLabel('WHAT THE COLOURS MEAN\nGold: recent movement trail.\nGreen: live particles within 4 grid cells.\nAmber: visited before, empty nearby now.\n\nThese measurements do not prove network connectivity or railway feasibility. Updates are not biological hours.');note.setWordWrap(True);note.setStyleSheet('margin-top: 12px;');sidebar.addWidget(note);sidebar.addStretch()
         scroll=QScrollArea();scroll.setWidget(left);scroll.setWidgetResizable(True);scroll.setFrameShape(QFrame.Shape.NoFrame);scroll.setMinimumWidth(350);split.addWidget(scroll)
         right=QWidget();layout=QVBoxLayout(right);layout.setContentsMargins(4,12,12,8)
         self.run_label=QLabel();self.run_label.setWordWrap(True);layout.addWidget(self.run_label)
+        self.draft_label=QLabel();self.draft_label.setWordWrap(True);self.draft_label.setStyleSheet('color: #e5af50; font-weight: 600; padding: 5px;');self.draft_label.hide();layout.addWidget(self.draft_label)
         self.canvas=GrowthFigure();self.canvas.food_picked.connect(self.pick_food)
         self.toolbar=NavigationToolbar2QT(self.canvas,self);layout.addWidget(self.toolbar);layout.addWidget(self.canvas,1)
         controls=QHBoxLayout();self.play_button=QPushButton('Play growth');self.play_button.clicked.connect(self.toggle_play);controls.addWidget(self.play_button)
@@ -197,9 +207,14 @@ class GrowthViewer(QMainWindow):
             if node['kind']=='station':self.start.addItem(node['name'],node['key'])
         index=self.start.findData(old);self.start.setCurrentIndex(max(0,index));self.start.blockSignals(False)
     def changed(self):
-        if self.run_data:self.statusBar().showMessage('Controls describe the next experiment. Display still shows the saved run; compute again to apply changes.')
+        if self.run_data:
+            settings=self.settings();changes=[f'{key}: {self.run_data.settings[key]} → {settings[key]}' for key in settings if settings[key]!=self.run_data.settings[key]]
+            self.draft_label.setText('UNAPPLIED CHANGES · '+ '; '.join(changes)+' · Press Compute growth experiment to apply.')
+            self.draft_label.setVisible(bool(changes))
+            if changes:self.statusBar().showMessage('Controls describe the next experiment. Display still shows the saved run; compute again to apply changes.')
     def preview(self):
         self.pause();self.run_data=None;self.selected_food=None;self.selected.setText('Click a food site for its name.');self.canvas.setup(self.scene,self.settings());self.toolbar.update()
+        self.draft_label.hide()
         self.run_label.setText('SCENARIO PREVIEW · no growth states computed');self.phase.setText('Ready to inoculate')
         self.explanation.setText('The starting station gets a small patch of simulated material. Each other station is a food attractor. Compute an experiment, then press Play growth.')
         self.metrics.setText(f'{sum(n["kind"]=="station" for n in self.scene["nodes"])} equal station food sites · 1 initial patch')
@@ -227,7 +242,9 @@ class GrowthViewer(QMainWindow):
         self.canvas.setup(self.scene,run.settings,run);self.toolbar.update();self.frame.setRange(0,len(run.stats)-1);self.timeline.setRange(0,len(run.stats)-1)
         for widget in (self.play_button,self.timeline,self.frame,self.restart,self.next_frame):widget.setEnabled(True)
         start=next(n['name'] for n in run.foods if n['key']==run.settings['start_id'])
-        self.run_label.setText(f'RECORDED C++ GROWTH · start: {start} · {len(run.foods)} food sites · seed {run.settings["seed"]} · fixed trail colour scale')
+        protocol='recovering food cues (v2)' if run.model_version==2 else 'LEGACY depleted food cues (v1)'
+        self.run_label.setText(f'RECORDED RUN · {protocol} · start: {start} · {len(run.foods)} sites · seed {run.settings["seed"]}')
+        self.changed()
         try:location=run.folder.relative_to(ROOT)
         except ValueError:location=run.folder
         self.statusBar().showMessage(f'Automatically saved: {location}');self.display_frame(0)
@@ -237,7 +254,7 @@ class GrowthViewer(QMainWindow):
         self.index=max(0,min(int(index),len(run.stats)-1));i=self.index;self.canvas.set_frame(i)
         for control in (self.timeline,self.frame):control.blockSignals(True);control.setValue(i);control.blockSignals(False)
         title,explanation=explain_growth(run,i);self.phase.setText(title);self.explanation.setText(explanation)
-        self.metrics.setText(f'Visited at least once: {int(run.stats[i,3])} / {len(run.foods)}\nLive particles: {int(run.stats[i,2]):,}\nBirths: {int(run.stats[i,6]):,} · removals: {int(run.stats[i,7]):,}')
+        self.metrics.setText(f'Visited at least once: {int(run.stats[i,3])} / {len(run.foods)}\nParticles nearby now: {int((run.activity[i]>0).sum())} / {len(run.foods)} sites\nLive particles: {int(run.stats[i,2]):,}\nBirths: {int(run.stats[i,6]):,} · removals: {int(run.stats[i,7]):,}')
         self.time_label.setText(f'Update {int(run.stats[i,1])} / {run.settings["steps"]} · saved every {run.settings["frame_every"]} updates')
         if self.selected_food is not None:self.update_selected()
     def pick_food(self,index):self.selected_food=index;self.canvas.select_food(index);self.update_selected()
@@ -246,7 +263,7 @@ class GrowthViewer(QMainWindow):
         if run is None or index is None:return
         contact=run.contacts[index];tick=int(run.stats[self.index,1])
         state='not yet visited' if contact<0 or contact>tick else f'first visited at update {contact}'
-        self.selected.setText(run.foods[index]['name']+'\n'+state+'. A visit does not establish a permanent connection.')
+        self.selected.setText(run.foods[index]['name']+'\n'+state+f'. Nearby live particles now: {run.activity[self.index,index]}. This does not establish connectivity.')
     def pause(self):self.playing=False;self.play_button.setText('Play growth')
     def toggle_play(self):
         if self.run_data is None:return
@@ -307,8 +324,8 @@ class GrowthViewer(QMainWindow):
         QMessageBox.information(self,'The experiment and the model',
             'Tero et al. (2010), Fig. 1: a living Physarum inoculum grew from Tokyo toward food sites. Their numerical model in Fig. 4 instead began with an existing fine mesh.\n\n'
             'This separate mode uses a Jones-inspired chemotactic particle model to explore outward growth. Each particle senses three directions, moves toward stronger cues and deposits trail. Sparse moving regions can divide; crowded regions lose particles.\n\n'
-            'Implementation choices include a local seed disk, smooth Gaussian food cues, weaker cues after first contact, reflecting boundaries and the growth/population settings. These are recorded, not a claim of exact paper replication.\n\n'
-            'Gold shows recent trail activity on a fixed 0–15 signal scale; optional bright specks show live particles. This is not the conductivity or flow from the existing Tero solver. Food markers mean visited at least once, not a verified connected railway.\n\n'
+            'Version 2 weakens a food cue while particles cover it and restores it when uncovered, refreshing every 10 updates. Historical visits never permanently consume food. Old version 1 runs retain their original depleted-food behaviour and are labelled legacy. These are implementation choices, not an exact paper replication.\n\n'
+            'Gold shows recent trail activity on a fixed 0–15 signal scale; optional bright specks show live particles. Green food markers have occupied cells nearby now; amber markers were visited but are empty nearby. Neither measure verifies connectivity or the ability to carry transport.\n\n'
             'Station positions and the Thames come from the frozen geographic data. Food strength is synthetic. Thames aversion is an optional assumed repellent; surface elevation does not affect this model. No train curvature radius, capacity or ground engineering is modelled.\n\n'
             'Every run saves inputs, raw fields, contact events, counters, checksums and source/binary hashes. The animation replays those computed snapshots. See docs/GROWTH_EXPERIMENT.md for the complete protocol.')
     def closeEvent(self,event):

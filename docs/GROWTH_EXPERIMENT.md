@@ -7,7 +7,8 @@ The default desktop mode now starts a small simulated colony at **King's Cross S
 Run `Launch Physarum.command` on macOS, or `desktop/viewer.py` after the README setup. The C++ engine computes the default experiment, saves it, and pauses at the initial patch. Press **Play growth**. The animation replays actual computed snapshots; the playback rate changes viewing speed, not model parameters.
 
 - **Pale dots** are station food sites not yet visited.
-- **Green dots** have been visited by a live particle at least once. This is a contact history, not evidence of a permanent connection.
+- **Green dots** currently have live particles in nearby cells (within a 4-cell radius, measured at cell centres).
+- **Amber dots** were visited before but currently have no particles in that neighbourhood. The dashed visit-history plot and solid current-activity plot are separate. Neither establishes that food sites share a connected transport network.
 - **Gold trails** show recent simulated movement activity. Repeated traffic replenishes a trail; unused signal diffuses and decays. The image is a scalar field, not a set of station-to-station straight lines or cosmetic curve interpolation.
 - **Show individual live particles** adds the current occupied cells over the trail. The particles represent portions of simulated material, not separate organisms.
 - The **explanation panel** describes the current stage from recorded counts. The two plots show visits and population up to the current frame. Click a food site for its name and first-contact status at that frame.
@@ -24,7 +25,7 @@ The existing C++ pressure-flow solver implements the Tero conductivity law. Exac
 
 This mode therefore uses a **separate Jones-inspired chemotactic particle model**, retaining the one-start/food-layout idea as a qualitative laboratory analogy. [Jones (2010), Artificial Life 16(2), 127–153](https://doi.org/10.1162/artl.2010.16.2.16202) describes three forward sensors, orientation, movement, deposition and trail diffusion. [Jones and Adamatzky's manuscript](https://arxiv.org/abs/1212.0023) describes related particle sensing, single-site occupancy and external stimuli. The inoculum, population rules, cue geometry/suppression, boundaries and parameters below are explicit choices for this implementation. It is **not an exact reproduction** of either paper or a biological calibration. No claim of novelty is made.
 
-## Complete implementation protocol, version 1
+## Complete implementation protocol, version 2
 
 The selected stations retain their frozen TfL coordinates, transformed to EPSG:27700 in kilometres. The arena spans their bounding box plus a 1.2 km margin. It has 480 columns by default; square cells determine the number of rows. These map distances place the food sites in a scaled experimental layout. They do not imply kilometre-scale biological growth, railway construction or calibrated speed.
 
@@ -46,7 +47,7 @@ The synthetic food cue is the maximum of broad Gaussian cues:
 food_cue(x) = strength × max_f [ w_f × exp(−distance(x, food_f)^2 / (2 × range^2)) ]
 ```
 
-Default strength=8, range=30 cells, and `w_f=1` before contact, `0.05` after first contact. Cues are recomputed when contact status changes. This is an explicit analytic stimulus field, not a physical solution for nutrient diffusion or finite food reserves. Every food site has equal strength. Suppressing a site permanently after its first visit can cause later loss of its connection; that behaviour must not be mistaken for maintaining a transport service.
+Default strength=8 and range=30 cells. Every 10 updates, `w_f=0.05` for sites with nearby occupied cells and `w_f=1` for uncovered sites. A historical visit does not permanently consume the source: when particles leave, the cue recovers. The neighbourhood uses occupied-cell centres within a 4-cell radius. Cues are rebuilt from cached Gaussian kernels when weights change. This is an explicit analytic stimulus field, not a physical solution for nutrient diffusion, nutrient mass or finite food reserves. Equal sites have equal unsuppressed strength. Temporary coverage-dependent inhibition is an implementation choice informed by the engulfment-dependent suppression described in [Jones and Adamatzky, Towards Physarum Binary Adders](https://arxiv.org/abs/1005.2303); no exact reproduction is claimed.
 
 Random choices use a specified xorshift32 generator and integer-to-real mapping, not a platform library distribution. Seed zero maps to the documented nonzero fallback `0x9e3779b9`. The same build and inputs are checked for exact replay. Floating-point trigonometric differences across compilers/platforms can eventually change stochastic trajectories; cross-platform bitwise identity is not promised.
 
@@ -66,13 +67,24 @@ Each run is saved under ignored `results/growth_runs/` with:
 - `inputs/`: C++ config, food coordinates, blocked-cell and river masks.
 - `output/trail.f32`: all recorded float32 trail fields; `occupied.u8`: binary live-particle occupancy snapshots. Layout is frame, row, column; rows increase northward. Files are little endian.
 - `output/stats.csv`: frame, update, live particles, food sites ever visited, occupied cells, trail mass, cumulative particle births and removals.
-- `output/food.csv`: exact first-contact update for each food site, or −1 if never visited; `metadata.txt`: model/compiler/format details.
+- `output/food.csv`: exact first-contact update for each food site, or −1 if never visited. Version 2 also records `activity.csv` with frame, food ID and current nearby-particle count; the loader independently recomputes those counts from occupancy snapshots. `metadata.txt` identifies the model version and compiler/format details.
 - `checksums.json`, engine log, and a failure record when a run fails or is cancelled. Keep the entire folder to preserve an experiment.
 
-The loader checks dimensions, ordering, finite/nonnegative fields, occupancy uniqueness/counts, population accounting, contact counts, initial-patch locality, mask exclusion, initial trail, scenario/config/coordinate agreement and file checksums. These are record-integrity checks, not biological validation or a proof of connected topology. Cancelling/closing requests termination of the owned C++ process and preserves available inputs/partial output.
+The loader checks dimensions, ordering, finite/nonnegative fields, occupancy uniqueness/counts, population accounting, historical contact counts, independently recomputed current activity, initial-patch locality, mask exclusion, initial trail, scenario/config/coordinate agreement and file checksums. These are record-integrity checks, not biological validation or a proof of connected topology. Cancelling/closing requests termination of the owned C++ process and preserves available inputs/partial output.
 
 The display uses one fixed trail range 0–15, saturating brighter values only in the rendering; raw signal remains intact. Live particles are an optional separate overlay. No smoothing is used to invent railway alignments. Natural-looking curves in this raster field still do not demonstrate that a train could follow them.
 
 C++ checks cover the independent 3×3 diffusion stencil and decay/mass at a reflecting corner, seeded replay, local initialization, single-cell occupancy, population accounting, impermeable barriers, first-contact semantics and invalid inputs. Python tests cover replay, corrupted records, field/count agreement, input validation, context separation, frame synchronization, explanation/selection state, draft controls and worker cancellation. A controlled statistical/resolution study and biological data comparison remain future work.
 
 Recompute the illustrated example with `.venv/bin/python analysis/make_growth_figure.py --gif`. It saves raw output and exports measured snapshots, an animation and a compact provenance JSON. No rail-network performance or biological-accuracy conclusion follows from the animation alone.
+
+
+## Correction after inspecting abandoned sites
+
+Version 1 permanently reduced a food cue to 5% after its first visit. It could therefore report 46 visited sites while activity retreated to a few loops and left many food positions empty. The old green markers showed historical visits and obscured that loss. A user screenshot also exposed a draft seed of 47 while the displayed saved experiment still used seed 42. Version 2 restores uncovered food cues, separates current activity from visits in colours/counts/plots, and displays a prominent unapplied-changes banner.
+
+This is a correction of a poor experimental assumption and a misleading presentation. Tests of numeric consistency alone had not established the desired network behaviour. Version 2 still produces particle-model patterns; it does **not** guarantee connectivity, maintained service, tube-flow adaptation or agreement with the Tokyo experiment. The broad cue shape, sensor scale and population rules influence the large loops. Reducing those loops cosmetically or selecting a prettier seed would not validate the model.
+
+Three paired runs (seeds 42, 43, 47; all other defaults unchanged) measured more food sites with nearby particles at the final update in v2, but still substantially fewer than all 46. The exact report, including the last-200-update window, is in [the food-recovery comparison](../results/verification/food-recovery.json). These are local-activity measurements, not connectivity metrics or a statistical biological validation. All three pairs reached all sites historically. Reproduce with `.venv/bin/python analysis/compare_food_recovery.py`; each paired record includes scenario and numeric-output hashes.
+
+Old v1 folders remain readable and visibly labelled **legacy**. Their depleted-food rule can be replayed by the engine with config schema 1. New runs use schema 2. An original saved default v1 run was replayed with the new engine: trail, occupancy, statistics and first-contact files were byte-identical on this Mac. Old results have not been rewritten.

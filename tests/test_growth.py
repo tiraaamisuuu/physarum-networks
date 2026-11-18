@@ -54,6 +54,7 @@ class GrowthIntegrationTest(unittest.TestCase):
         np.testing.assert_array_equal(run.occupied.sum(axis=(1,2)),run.stats[:,2])
         self.assertTrue(np.all(np.diff(run.stats[:,3])>=0));self.assertTrue((run.trail>=0).all())
         self.assertEqual(int(run.stats[-1,3]),int((run.contacts>=0).sum()))
+        self.assertEqual(run.activity.shape,(11,46));self.assertEqual(run.model_version,2)
         self.assertLess(np.count_nonzero(run.trail[0]),run.trail.shape[1]*run.trail.shape[2]/20)
 
     def test_exact_seeded_replay(self):
@@ -84,6 +85,18 @@ class GrowthIntegrationTest(unittest.TestCase):
             with path.open('r+b') as stream:stream.write(np.array([np.nan],dtype='<f4').tobytes())
             with self.assertRaisesRegex(ValueError,'Nonfinite/negative'):load_growth_run(folder)
 
+    def test_activity_corruption_rejected_independently_of_checksums(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            folder=self.copy_run(temporary);path=folder/'output/activity.csv'
+            values=np.loadtxt(path,skiprows=1,delimiter=',');values[-1,2]+=1
+            np.savetxt(path,values,header='frame,food,nearby_particles',comments='',fmt='%.17g',delimiter=',')
+            with self.assertRaisesRegex(ValueError,'Current food occupancy'):load_growth_run(folder)
+
+    def test_v1_remains_readable_and_distinct(self):
+        old=run_growth_experiment(default_scene(),self.settings,self.temporary.name,model_version=1)
+        self.assertEqual(load_growth_run(old.folder).model_version,1)
+        self.assertFalse(np.array_equal(old.trail,self.dataset.trail))
+
 
 try:
     from PySide6.QtWidgets import QApplication
@@ -111,6 +124,7 @@ class GrowthViewerTest(unittest.TestCase):
         self.assertEqual(window.frame.value(),4);self.assertEqual(window.timeline.value(),4)
         np.testing.assert_array_equal(window.canvas.image.get_array(),self.dataset.trail[4])
         self.assertEqual(window.canvas.cursors[0].get_xdata(),[40,40])
+        np.testing.assert_array_equal(window.canvas.active_line.get_ydata(),(self.dataset.activity[:5]>0).sum(axis=1))
         self.assertIn('Update 40',window.time_label.text());self.assertEqual(window.phase.text(),explain_growth(self.dataset,4)[0])
         window.pick_food(3);window.scrub(0);self.assertIn(self.dataset.foods[3]['name'],window.selected.text())
         if self.dataset.contacts[3]>0:self.assertIn('not yet visited',window.selected.text())
@@ -122,9 +136,11 @@ class GrowthViewerTest(unittest.TestCase):
         window=self.window;window.set_run(self.dataset);old=self.dataset.trail[2].copy()
         window.controls['seed'].setValue(13)
         self.assertEqual(window.run_data.settings['seed'],42);self.assertIn('next experiment',window.statusBar().currentMessage())
+        self.assertFalse(window.draft_label.isHidden());self.assertIn('42 → 13',window.draft_label.text())
         window.toggle_agents(True);window.toggle_names(True);window.scrub(2)
         np.testing.assert_array_equal(self.dataset.trail[2],old);self.assertTrue(window.canvas.agent_image.get_visible())
         window.reset();self.assertIsNone(window.run_data);self.assertEqual(window.start.currentData(),DEFAULT_GROWTH['start_id'])
+        self.assertTrue(window.draft_label.isHidden())
 
     def test_close_cancels_worker_without_destroying_a_running_thread(self):
         window=self.window;window.show();window.controls['steps'].setValue(4000);window.run();window.close()

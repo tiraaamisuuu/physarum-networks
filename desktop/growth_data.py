@@ -30,7 +30,8 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
-def prepare_growth(scene, settings):
+def prepare_growth(scene, settings, model_version=2):
+    if model_version not in (1,2):raise ValueError('Unsupported growth model version.')
     validate_scene(scene)
     if set(settings)!=set(DEFAULT_GROWTH):raise ValueError('Incomplete growth settings.')
     for key,low,high in [('seed',0,2**31-1),('steps',100,4000),('frame_every',1,100),('width',160,640),
@@ -76,7 +77,7 @@ def prepare_growth(scene, settings):
     padded=np.pad(river,1)
     river=np.maximum.reduce([padded[dy:dy+height,dx:dx+width] for dy in range(3) for dx in range(3)])
     config={key:settings[key] for key in DEFAULT_GROWTH if key!='start_id'}
-    config.update(height=height,initial_x=float(sx),initial_y=float(sy),schema_version=1)
+    config.update(height=height,initial_x=float(sx),initial_y=float(sy),schema_version=model_version)
     return foods,pixels,extent,blocked,river,config
 
 
@@ -91,6 +92,8 @@ class GrowthRun:
     stats:np.ndarray
     contacts:np.ndarray
     folder:Path
+    activity:np.ndarray
+    model_version:int
 
     @property
     def steps(self):return self.stats[:,1].astype(int)
@@ -98,9 +101,11 @@ class GrowthRun:
 
 def load_growth_run(folder):
     folder=Path(folder);manifest=json.loads((folder/'scenario.json').read_text())
-    if manifest.get('model')!='chemotactic_particles_with_growth_v1':raise ValueError('Unsupported growth model.')
+    models={'chemotactic_particles_with_growth_v1':1,'chemotactic_particles_with_growth_v2':2}
+    if manifest.get('model') not in models:raise ValueError('Unsupported growth model.')
+    model_version=models[manifest['model']]
     scene,settings=manifest['scene'],manifest['settings']
-    foods,pixels,extent,blocked,river,config=prepare_growth(scene,settings)
+    foods,pixels,extent,blocked,river,config=prepare_growth(scene,settings,model_version)
     if manifest['config']!=config or not np.allclose(manifest['extent'],extent,rtol=0,atol=1e-12):
         raise ValueError('Recorded arena does not match scenario.')
     with (folder/'output/stats.csv').open() as stream:header=stream.readline().strip()
@@ -133,11 +138,23 @@ def load_growth_run(folder):
     contacts=contacts[:,1].astype(int)
     reached=(contacts[None,:]>=0)&(contacts[None,:]<=stats[:,1,None])
     if not np.array_equal(reached.sum(axis=1),stats[:,3]):raise ValueError('Food contacts do not match growth counts.')
+    # Current local occupancy is separate from historical first contact and connectivity.
+    activity=np.zeros((frames,len(foods)),dtype=int)
+    for food,(x,y) in enumerate(pixels):
+        xx,yy=np.meshgrid(np.arange(max(0,int(x)-5),min(width,int(x)+6)),np.arange(max(0,int(y)-5),min(height,int(y)+6)))
+        inside=(xx+.5-x)**2+(yy+.5-y)**2<=16
+        activity[:,food]=occupied[:,yy[inside],xx[inside]].sum(axis=1)
+    activity_path=folder/'output/activity.csv'
+    if model_version==2 or activity_path.exists():
+        recorded=np.loadtxt(activity_path,skiprows=1,delimiter=',',ndmin=2)
+        expected=np.column_stack((np.repeat(np.arange(frames),len(foods)),np.tile(np.arange(len(foods)),frames),activity.ravel()))
+        if not np.array_equal(recorded,expected):raise ValueError('Current food occupancy does not match the saved field.')
     # Check that the initial colony really is local, not a revealed global mesh.
     yy,xx=np.nonzero(occupied[0]);distance=np.hypot(xx+.5-config['initial_x'],yy+.5-config['initial_y'])
     if np.any(distance>settings['seed_radius']+math.sqrt(2)):raise ValueError('Initial colony lies outside inoculum.')
     checks=json.loads((folder/'checksums.json').read_text())
     expected_paths={'inputs/input.cfg','inputs/food.csv','inputs/blocked.bin','inputs/river.bin','output/trail.f32','output/occupied.u8','output/stats.csv','output/food.csv','output/metadata.txt','scenario.json'}
+    if model_version==2 or activity_path.exists():expected_paths.add('output/activity.csv')
     if set(checks)!=expected_paths:raise ValueError('Incomplete growth checksums.')
     for relative,digest in checks.items():
         if sha256_file(folder/relative)!=digest:raise ValueError('Growth record checksum mismatch: '+relative)
@@ -150,21 +167,22 @@ def load_growth_run(folder):
         raise ValueError('Recorded food coordinates do not match the scenario.')
     text=(folder/'inputs/input.cfg').read_text()
     if text!=''.join(f'{key}={value}\n' for key,value in config.items()):raise ValueError('Recorded config does not match the scenario.')
-    return GrowthRun(scene,settings,foods,extent,trail,occupied,stats,contacts,folder)
+    return GrowthRun(scene,settings,foods,extent,trail,occupied,stats,contacts,folder,activity,model_version)
 
 
-def run_growth_experiment(scene,settings,root=None,cancel=None):
+def run_growth_experiment(scene,settings,root=None,cancel=None,model_version=2):
     scene,settings=copy.deepcopy(scene),copy.deepcopy(settings)
-    foods,pixels,extent,blocked,river,config=prepare_growth(scene,settings)
+    foods,pixels,extent,blocked,river,config=prepare_growth(scene,settings,model_version)
     root=Path(root or ROOT/'results/growth_runs')
     folder=root/(datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+uuid.uuid4().hex[:8]);inputs=folder/'inputs';inputs.mkdir(parents=True)
-    manifest=dict(schema_version=1,model='chemotactic_particles_with_growth_v1',scene=scene,settings=settings,extent=extent,config=config,
+    manifest=dict(schema_version=1,model=f'chemotactic_particles_with_growth_v{model_version}',scene=scene,settings=settings,extent=extent,config=config,
         interpretation='Particle activity and recent trail; not conductivity, tube radius, pressure or calibrated biological growth.',
         sources=['https://doi.org/10.1126/science.1177894','https://doi.org/10.1162/artl.2010.16.2.16202','https://arxiv.org/abs/1212.0023'],
         assumptions=['London station food layout is an analogy to the Tokyo laboratory experiment, not its numerical replication.',
-            'Broad Gaussian food cues, their suppression after first contact, boundaries and growth parameters are documented implementation choices.',
+            'Food cues recover when uncovered; nearby-particle counts do not establish connectivity.' if model_version==2 else 'Legacy permanently weakened food cues after first contact.',
             'Equal food sites are not passenger demand; iteration is not a biological hour.',
             'Optional Thames aversion is a hypothetical repellent; elevation never changes growth.'])
+    manifest['food_protocol']='coverage-dependent cue: 0.05 while occupied, 1.0 when uncovered; refreshed every 10 updates' if model_version==2 else 'legacy once-visited cue: permanently 0.05'
     executable=ROOT/'build/physarum_growth'
     manifest['software']=dict(numpy=np.__version__,executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest(),
         source_sha256={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest()

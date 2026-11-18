@@ -55,8 +55,9 @@ int main(int argc,char** argv) {
         p.decay=number<double>(c.at("decay"));p.food_strength=number<double>(c.at("food_strength"));p.food_range=number<double>(c.at("food_range"));
         p.river_aversion=number<double>(c.at("river_aversion"));
         const int steps=number<int>(c.at("steps")),every=number<int>(c.at("frame_every"));
-        if(c.at("schema_version")!="1" || steps<1 || steps>4000 || every<1 || every>100 || steps%every!=0)
-            throw std::invalid_argument("Require 1..4000 steps divisible by frame_every (1..100), schema 1");
+        if((c.at("schema_version")!="1" && c.at("schema_version")!="2") || steps<1 || steps>4000 || every<1 || every>100 || steps%every!=0)
+            throw std::invalid_argument("Require 1..4000 steps divisible by frame_every (1..100), schema 1 or 2");
+        p.persistent_food=c.at("schema_version")=="2";
         if(p.width<32 || p.width>800 || p.height<32 || p.height>600)throw std::invalid_argument("Growth grid outside supported bounds");
         const std::filesystem::path input=argv[2],dir=argv[3];
         const auto count=static_cast<std::size_t>(p.width*p.height);
@@ -74,6 +75,8 @@ int main(int argc,char** argv) {
         std::filesystem::create_directories(dir);
         auto trail=output(dir/"trail.f32",true),occupied=output(dir/"occupied.u8",true),stats=output(dir/"stats.csv");
         stats<<"frame,step,agents,food_reached,occupied_cells,trail_mass,births,deaths\n";
+        std::ofstream activity;
+        if(p.persistent_food) { activity=output(dir/"activity.csv");activity<<"frame,food,nearby_particles\n"; }
         for(int step=0;step<=steps;++step) {
             if(step%every==0) {
                 const auto& field=model.trail();
@@ -82,6 +85,7 @@ int main(int argc,char** argv) {
                 for(int cell:model.occupancy())density.push_back(static_cast<std::uint8_t>(cell));
                 occupied.write(reinterpret_cast<const char*>(density.data()),static_cast<std::streamsize>(density.size()));
                 const auto reached=std::count_if(model.first_contact().begin(),model.first_contact().end(),[](int value){return value>=0;});
+                if(p.persistent_food)for(std::size_t f=0;f<model.food_activity().size();++f)activity<<step/every<<','<<f<<','<<model.food_activity()[f]<<'\n';
                 stats<<step/every<<','<<step<<','<<model.agents().size()<<','<<reached<<','<<std::accumulate(density.begin(),density.end(),0)<<','
                      <<std::accumulate(field.begin(),field.end(),0.)<<','<<model.births()<<','<<model.deaths()<<'\n';
             }
@@ -89,9 +93,9 @@ int main(int argc,char** argv) {
         }
         auto contacts=output(dir/"food.csv");contacts<<"food,first_contact_step\n";
         for(std::size_t i=0;i<model.first_contact().size();++i)contacts<<i<<','<<model.first_contact()[i]<<'\n';
-        auto meta=output(dir/"metadata.txt");meta<<"model=chemotactic_particles_with_growth_v1\ncompiler="<<__VERSION__
+        auto meta=output(dir/"metadata.txt");meta<<"model=chemotactic_particles_with_growth_v"<<c.at("schema_version")<<"\ncompiler="<<__VERSION__
             <<"\nrandom=xorshift32\nfloat_layout=IEEE754_float32_little_endian\nboundary=reflecting\nflow_solver=not_used\n";
-        trail.close();occupied.close();stats.close();contacts.close();meta.close();
+        trail.close();occupied.close();stats.close();contacts.close();if(activity.is_open())activity.close();meta.close();
         std::cout<<"Completed "<<steps<<" updates; "<<model.agents().size()<<" live particles\n";
     } catch(const std::exception& error) { std::cerr<<"Error: "<<error.what()<<'\n';return 1; }
 }

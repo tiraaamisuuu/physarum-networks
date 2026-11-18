@@ -32,7 +32,7 @@ The project includes an independently checked four-node flow baseline and two na
 
 The default native window starts a small patch at **King’s Cross St Pancras**. The other selected stations act as food sites. Simulated particles sense nearby cues, move, deposit trail and grow locally; winding branches and loops emerge across the surface. A changing explanation panel, visit history and population plot help interpret what is happening.
 
-Gold shows recent trail activity. Green markers mean **visited at least once**, not permanent connectivity. The animation uses actual recorded C++ fields. It does not draw preset railway routes or map its curves to train engineering constraints. [Growth guide, model and assumptions](docs/GROWTH_EXPERIMENT.md) · [Figure provenance](docs/assets/README.md)
+Gold shows recent trail activity. Green markers show **live particles nearby now**; amber marks a historical visit with no particles nearby. Neither proves network connectivity. The animation uses actual recorded C++ fields. It does not draw preset railway routes or map its curves to train engineering constraints. [Growth guide, model and assumptions](docs/GROWTH_EXPERIMENT.md) · [Figure provenance](docs/assets/README.md)
 
 ## Validated flow adaptation
 
@@ -57,7 +57,7 @@ The source is node **0** and the sink is node **3**. The routes have total lengt
 
 The baseline uses `I₀ = 2`, `γ = 1.8`, `Δt = 0.05`, initial `D = 0.5`, and duration `30`. Tests compare pressures and flows with hand-calculated circuit solutions and compare the update with an exact scalar Euler recurrence. Halving the time step approximately halves the measured transient error for this fixture. The fine-step comparison has finite numerical error.
 
-**Validation scope:** the current 19 CTest cases pass locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64; 39 Python checks cover the native viewers, growth/geographic preparation and run integrity. The table above records the original Phase 1 experiment. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
+**Validation scope:** the current 20 CTest cases pass locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64; 41 Python checks cover the native viewers, growth/geographic preparation and run integrity. The table above records the original Phase 1 experiment. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
 
 ## Native desktop viewer
 

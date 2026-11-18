@@ -1,0 +1,114 @@
+{
+  "protocol": "Three paired seeds; all other default settings unchanged. Current nearby occupied-cell count within radius 4; final and 1400\u20131600 inclusive window.",
+  "settings": {
+    "start_id": "940GZZLUKSX",
+    "seed": 42,
+    "steps": 1600,
+    "frame_every": 10,
+    "width": 480,
+    "seed_count": 220,
+    "seed_radius": 11.0,
+    "max_agents": 14000,
+    "division_interval": 4,
+    "sensor_distance": 9.0,
+    "sensor_angle": 45.0,
+    "turn_angle": 45.0,
+    "decay": 0.08,
+    "food_strength": 8.0,
+    "food_range": 30.0,
+    "river_aversion": 0.0
+  },
+  "rows": [
+    {
+      "seed": 42,
+      "version": 1,
+      "folder": "results/growth_runs/20261118T173625-7ee8cc57",
+      "ever_visited": 46,
+      "nearby_final": 11,
+      "nearby_last_200_mean": 12.142857142857142,
+      "scenario_sha256": "7007215e8a1d80d134ccffb449cf685e7f6413c36ebafa1a7970a691c3653396",
+      "output_sha256": {
+        "trail.f32": "abcc4c7113b38b356922a7b5f2e8c7f333c50284186f40b7531a6aeeea993663",
+        "occupied.u8": "7a938c93cfa21d65295b6db9cc0a33648dddfcee4e450c241a6a4b25f2aedd8c",
+        "stats.csv": "619a2da8ec10ec5d9b7739cd3187ddac7dc7bc05be6c086e5a81b462d09a6955",
+        "food.csv": "fff197e656211b5a35132b8dde29332f73e5789939d3e9a163964616d837b560"
+      }
+    },
+    {
+      "seed": 42,
+      "version": 2,
+      "folder": "results/growth_runs/20261118T173625-e4131e73",
+      "ever_visited": 46,
+      "nearby_final": 26,
+      "nearby_last_200_mean": 25.857142857142858,
+      "scenario_sha256": "74c0ddac641770380385346794541e9dfb9a936ceca9eb22ef7c550856c12e5b",
+      "output_sha256": {
+        "trail.f32": "220ba5e4a6391472ebe1b44640480a2758498db5500b6fa676923bbb2873de13",
+        "occupied.u8": "53c2b6320ca5640587a84048999794ce42fe6a6826fbb0f8ab2e8de05c869fe9",
+        "stats.csv": "377be0e96cffb17687944e42b9b7637c55f351081a80677462dc52954180969c",
+        "food.csv": "2431572a4aae14419b22e7b45f911704dec310deb5c435ae33202bf275d8ca14"
+      }
+    },
+    {
+      "seed": 43,
+      "version": 1,
+      "folder": "results/growth_runs/20261118T173628-19fe5019",
+      "ever_visited": 46,
+      "nearby_final": 19,
+      "nearby_last_200_mean": 20.047619047619047,
+      "scenario_sha256": "333442deba44be11df0af530cc4b4e93b4a4d71e80643fb3083a7c3124040eb2",
+      "output_sha256": {
+        "trail.f32": "251bece5330f072edc55ac3dea9155c57995ffeb062768270ad836b959e2523e",
+        "occupied.u8": "5beea14db44cbbcd259651cdaf5aaa45ec6452d0496822237e84efc5679b2296",
+        "stats.csv": "5d20c7fff92a9813c069c0e7465aaca6e34111a65e50edf2448ebb79d9bfef82",
+        "food.csv": "b8da8055ffdec8ecd17731f370ebaf04b168f28e66407f375e28ea6104f3a3ec"
+      }
+    },
+    {
+      "seed": 43,
+      "version": 2,
+      "folder": "results/growth_runs/20261118T173628-935ebda7",
+      "ever_visited": 46,
+      "nearby_final": 31,
+      "nearby_last_200_mean": 30.571428571428573,
+      "scenario_sha256": "bf3ac827884ce9a8c84bf571db546abf032c3787120abe31522d8c4866f8bd0b",
+      "output_sha256": {
+        "trail.f32": "a6dde07ed0207b2ddc69c66f017f0364f10a3e1a4708c403799125a88a7d7f1e",
+        "occupied.u8": "4db5da514e4c31b3e23fd8ce84c991e1e57a7994b315d834ad772a323076e88e",
+        "stats.csv": "13de3585810e98dde01a0ed8553c37f15f23cfb365856b2bf34c0790636f8f7d",
+        "food.csv": "9dcc7cef0ba40d523c2af4b3c34ce04670263c8daff45f1018adae962d6554fb"
+      }
+    },
+    {
+      "seed": 47,
+      "version": 1,
+      "folder": "results/growth_runs/20261118T173635-fcf1235a",
+      "ever_visited": 46,
+      "nearby_final": 16,
+      "nearby_last_200_mean": 16.952380952380953,
+      "scenario_sha256": "cd4737172821b8436b72e42164183630eff07d1f70d8a3c813e20132f87d2a3b",
+      "output_sha256": {
+        "trail.f32": "7a27823d0f28ec56daeb5c61a9da48e846f74d37cf3ceb263e30a2aeb491d4a3",
+        "occupied.u8": "37932d34eb1decaae7bb0e6eab8464d80639fbc59f51d1de91f73ef9ee82b60e",
+        "stats.csv": "8adfae53a16a610013b0bb4a2d4bf2ad296d2edf0186dc1c21dcad39b5b71a95",
+        "food.csv": "952b2722a96c9a81333ec8ebee754efb92d1b1013374bd244e69601cead0fc7b"
+      }
+    },
+    {
+      "seed": 47,
+      "version": 2,
+      "folder": "results/growth_runs/20261118T173635-f3f66982",
+      "ever_visited": 46,
+      "nearby_final": 26,
+      "nearby_last_200_mean": 25.761904761904763,
+      "scenario_sha256": "b563c240d5094af5b50152e315490bb66d3ceab3d982efe73a4edbee8805cf8c",
+      "output_sha256": {
+        "trail.f32": "99cba91ede85e371eb5df4f29e90d66dc9b9b194b931dffd022e3136b6b71d16",
+        "occupied.u8": "0406d3005564efd0b98c9c2e9bf073a307e46d49cc2df512ac99ac865b82bee4",
+        "stats.csv": "32c0f035d62ee4069f27290835bd5b9072efc970b12fa484f48986e8e607dd1a",
+        "food.csv": "74bf373c98a40cb0b4506d7d2e8d269721bdffd8c505b65ba1566b127c7bcb5c"
+      }
+    }
+  ],
+  "interpretation": "Local activity, not connectivity, optimality, railway feasibility or biological validation."
+}
