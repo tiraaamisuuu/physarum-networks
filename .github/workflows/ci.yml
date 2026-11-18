@@ -41,7 +41,7 @@ jobs:
         run: |
           python3 -m venv .venv
           .venv/bin/python -m pip install -r desktop/requirements.txt -r analysis/requirements.txt
-          .venv/bin/python -c "import PySide6.QtWidgets; import matplotlib.backends.backend_qtagg"
+          .venv/bin/python -c "import PySide6.QtWidgets; import matplotlib.backends.backend_qtagg; import desktop.growth_viewer"
       - name: Test viewer data and synchronized states
         env:
           QT_QPA_PLATFORM: offscreen

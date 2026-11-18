@@ -4,3 +4,4 @@ __pycache__/
 .DS_Store
 tmp/
 results/spatial_runs/
+results/growth_runs/

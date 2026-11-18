@@ -24,9 +24,17 @@
 
 This research project implements the adaptive tube model of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894) in C++20. Pressure differences drive flow; flow reinforces tube conductivity; the updated conductivities redistribute the next flow.
 
-The core has an independently checked four-node numerical baseline. A native desktop explorer now applies the same equations to **real London station locations**, with editable hypothetical connections, recorded synthetic demand and an explicit Thames crossing cost. This geographic example is exploratory; it is not a Tube engineering design or a replication of the published Tokyo experiment.
+The project includes an independently checked four-node flow baseline and two native London experiments: a **growth laboratory** where a small inoculum spreads toward station food sites, and a **station-connection explorer** using the Tero pressure-flow equations. The growth mode uses a separate, explicitly documented particle model. These are exploratory experiments, not Tube engineering designs or exact replications of the published Tokyo study.
 
-## See the adaptation
+## Watch growth from one starting patch
+
+![Recorded C++ growth simulation starting at King’s Cross St Pancras and expanding toward London station food sites.](docs/assets/growth-evolution.gif)
+
+The default native window starts a small patch at **King’s Cross St Pancras**. The other selected stations act as food sites. Simulated particles sense nearby cues, move, deposit trail and grow locally; winding branches and loops emerge across the surface. A changing explanation panel, visit history and population plot help interpret what is happening.
+
+Gold shows recent trail activity. Green markers mean **visited at least once**, not permanent connectivity. The animation uses actual recorded C++ fields. It does not draw preset railway routes or map its curves to train engineering constraints. [Growth guide, model and assumptions](docs/GROWTH_EXPERIMENT.md) · [Figure provenance](docs/assets/README.md)
+
+## Validated flow adaptation
 
 ![Four measured states at model times 0, 2, 6 and 30: the short route gains conductivity while the long route decays.](docs/assets/network-evolution.png)
 
@@ -49,11 +57,11 @@ The source is node **0** and the sink is node **3**. The routes have total lengt
 
 The baseline uses `I₀ = 2`, `γ = 1.8`, `Δt = 0.05`, initial `D = 0.5`, and duration `30`. Tests compare pressures and flows with hand-calculated circuit solutions and compare the update with an exact scalar Euler recurrence. Halving the time step approximately halves the measured transient error for this fixture. The fine-step comparison has finite numerical error.
 
-**Validation scope:** the current 15 CTest cases pass locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64; 29 Python checks cover both native viewers, geographic preparation and run integrity. The table above records the original Phase 1 experiment. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
+**Validation scope:** the current 19 CTest cases pass locally in Release and Debug with UndefinedBehaviorSanitizer on macOS ARM64; 39 Python checks cover the native viewers, growth/geographic preparation and run integrity. The table above records the original Phase 1 experiment. Automated builds run on Ubuntu and macOS; the badge above reports their current status. [Measured report](results/phase1/REPORT.md) · [Full validation data](results/phase1/validation.json) · [Recorded test logs](results/verification)
 
 ## Native desktop viewer
 
-The native Qt explorer opens a **46-station London example with 183 possible connections**. Station positions come from TfL, the Thames centreline from OpenStreetMap, and sampled elevation from Copernicus/Open-Meteo. The C++ engine computes every state; Python provides the interface and scientific plots. Normal use works offline with frozen geographic inputs.
+The native Qt application opens the **Growth laboratory**, with 46 station food sites and a local King’s Cross inoculum. The File menu also opens the previous **46-station / 183-candidate-connection** experiment and the four-node validation viewer. C++ computes every simulation state; Python provides the interface and scientific plots. Normal use works offline with frozen geographic inputs.
 
 After building the C++ project, install the viewer dependencies and launch. The pinned viewer stack supports Python 3.12–3.14 and is tested with 3.14:
 
@@ -63,9 +71,11 @@ python3.14 -m venv .venv
 .venv/bin/python desktop/viewer.py
 ```
 
-On macOS, double-click **`Launch Physarum.command`** in Finder. It prepares the local environment if needed, builds the engine and opens the native window. Press **Play** to watch connections reinforce and weaken.
+On macOS, double-click **`Launch Physarum.command`** in Finder. It prepares the local environment if needed, builds the engine and opens the native window. Press **Play growth** to watch the colony expand. The explanations update as you move through the recorded states.
 
-![Actual native London explorer with station geography, conductivity and flow trajectories, and recorded values.](docs/assets/london-explorer.jpg)
+![Computed growth from a local inoculum to changing trails between London station food sites.](docs/assets/growth-evolution.png)
+
+The previous connection experiment remains available through **File → Open station-connection experiment**, or `.venv/bin/python desktop/viewer.py --network`:
 
 - Click stations or links to inspect their values and trajectories.
 - Choose different stations, add hypothetical junctions or drag restricted rectangles, then **Run adaptation**.
@@ -102,7 +112,7 @@ On Ubuntu, install `build-essential`, `cmake` and `libeigen3-dev` with your pack
 
 ### Reproduce the figures
 
-For the London snapshots, run `.venv/bin/python analysis/make_london_figure.py` after installing both desktop and analysis dependencies. It computes the frozen default example, saves the raw run locally and writes PNG/SVG snapshots with a compact provenance JSON.
+For growth snapshots and the animation, run `.venv/bin/python analysis/make_growth_figure.py --gif`. For the station-connection London snapshots, run `.venv/bin/python analysis/make_london_figure.py` after installing both desktop and analysis dependencies. It computes the frozen default example, saves the raw run locally and writes PNG/SVG snapshots with a compact provenance JSON.
 
 The C++ program performs the simulation. Python validates the exported CSV data and generates the plots. The recorded analysis environment uses Python 3.14; dependency versions are pinned.
 
@@ -139,7 +149,7 @@ The core uses a dense, diagonally scaled Eigen LDLT solver. It retains positive 
 
 The fixed terminals, uniform initialization and four-node graph are validation choices. The 2010 paper uses random food-source pairs and a fine mesh. This repository does **not** yet reproduce its Tokyo experiment, establish general shortest-path convergence for the sigmoid law, or demonstrate resilience or real transport-system feasibility. The dense solver is intended for small graphs, and Euler step-size accuracy must be checked for each setup. Local AddressSanitizer verification remains inconclusive because its runtime stalled before `main`; the separate UBSan run passed.
 
-The London explorer is a separately documented geographic extension with synthetic terminal sampling, added to support hands-on exploration. A source-audited reproduction protocol and controlled numerical/statistical studies remain necessary before interpreting it as published network reproduction or transport research evidence. No originality claim is made.
+The London explorer is a separately documented geographic extension with synthetic terminal sampling. The growth laboratory adds a distinct Jones-inspired particle model for a local inoculum and food sites. Both support hands-on exploration and document their differences from published experiments. A source-audited reproduction protocol and controlled numerical/statistical studies remain necessary before interpreting it as published network reproduction or transport research evidence. No originality claim is made.
 
 ## Explore the project
 
@@ -149,7 +159,7 @@ The London explorer is a separately documented geographic extension with synthet
 | [`tests/`](tests) | Analytic fixtures and numerical checks |
 | [`experiments/configs/`](experiments/configs) | Reproducible experiment parameters |
 | [`analysis/`](analysis) | Independent CSV checks and figure generation |
-| [`desktop/`](desktop) | Native geographic explorer, four-node viewer and C++ data bridges |
+| [`desktop/`](desktop) | Growth laboratory, geographic explorer, four-node viewer and C++ data bridges |
 | [`data/london/`](data/london) | Frozen TfL/OSM/elevation inputs and source attribution |
 | [`results/phase1/`](results/phase1) | Recorded histories, diagnostics and figures |
 | [`docs/`](docs) | [Project brief](docs/PROJECT_BRIEF.md), [literature notes](docs/LITERATURE.md), [bibliography](docs/references.bib) and research record |

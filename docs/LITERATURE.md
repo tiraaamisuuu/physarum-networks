@@ -52,3 +52,11 @@ Describes observed arbuscular mycorrhizal network development with tip-growth wa
 4. For any fungal comparison, choose one organism class and a published, explicit growth/fusion/recycling model before coding.
 
 `references.bib` stores the initial bibliography. The initial planning brief supplied two incorrect DOIs; their corrections are recorded above. `PROJECT_BRIEF.md` is the public research summary. `source_inventory.json` records supplied PDF filenames and hashes without machine-specific paths. Copyrighted source PDFs are not copied into the Git project.
+
+## Outward-growth exploration added 17 November 2026
+
+The user's request to watch a local inoculum expand concerns the laboratory sequence in Tero et al. Fig. 1, not the pre-existing-mesh initialization of its Fig. 4 numerical model. Those are kept distinct in the new growth mode and its [complete protocol](GROWTH_EXPERIMENT.md).
+
+**Jones (2010), Characteristics of Pattern Formation and Evolution in Approximations of Physarum Transport Networks**, Artificial Life 16(2), 127–153, [doi:10.1162/artl.2010.16.2.16202](https://doi.org/10.1162/artl.2010.16.2.16202). The primary institutional manuscript was located at `https://uwe-repository.worktribe.com/preview/980585/artl.2010.16.2.pdf`; browser retrieval was blocked, while indexed method/table excerpts and the author manuscript mirrored elsewhere were available. Three-sensor chemotaxis, exclusive particle occupancy, movement deposition and 3×3 mean diffusion motivate the new engine. Exact reproduction is not claimed.
+
+**Jones and Adamatzky (2012), Emergence of Self-Organized Amoeboid Movement in a Multi-Agent Approximation of Physarum polycephalum**, [author manuscript](https://arxiv.org/abs/1212.0023). The methods section and sensing/movement pseudocode were read from the primary arXiv PDF. It supports the broader family of particle models and environmental cues; this repository does not claim its oscillatory motor model or full organism behaviour. Our population, Gaussian cue and boundary choices are specified separately, and the new mode does not invoke the Tero Laplacian solver.

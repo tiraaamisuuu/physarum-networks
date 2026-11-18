@@ -1,0 +1,59 @@
+-- Configuring done (0.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: <project-root>/build-debug
+[  7%] Building CXX object CMakeFiles/physarum.dir/src/GrowthModel.cpp.o
+[ 15%] Linking CXX static library libphysarum.a
+[ 38%] Built target physarum
+[ 46%] Building CXX object CMakeFiles/physarum_growth_tests.dir/tests/test_growth.cpp.o
+[ 53%] Building CXX object CMakeFiles/physarum_growth.dir/src/growth_main.cpp.o
+[ 61%] Linking CXX executable physarum_run
+[ 69%] Linking CXX executable physarum_tests
+[ 76%] Built target physarum_tests
+[ 84%] Built target physarum_run
+[ 92%] Linking CXX executable physarum_growth_tests
+[ 92%] Built target physarum_growth_tests
+[100%] Linking CXX executable physarum_growth
+[100%] Built target physarum_growth
+Test project <project-root>/build-debug
+      Start  1: series
+ 1/19 Test  #1: series ...........................   Passed    0.26 sec
+      Start  2: parallel
+ 2/19 Test  #2: parallel .........................   Passed    0.01 sec
+      Start  3: diamond
+ 3/19 Test  #3: diamond ..........................   Passed    0.01 sec
+      Start  4: reverse
+ 4/19 Test  #4: reverse ..........................   Passed    0.02 sec
+      Start  5: zero
+ 5/19 Test  #5: zero .............................   Passed    0.01 sec
+      Start  6: components
+ 6/19 Test  #6: components .......................   Passed    0.01 sec
+      Start  7: disconnected
+ 7/19 Test  #7: disconnected .....................   Passed    0.01 sec
+      Start  8: near_zero
+ 8/19 Test  #8: near_zero ........................   Passed    0.01 sec
+      Start  9: invalid
+ 9/19 Test  #9: invalid ..........................   Passed    0.01 sec
+      Start 10: euler
+10/19 Test #10: euler ............................   Passed    0.01 sec
+      Start 11: positivity
+11/19 Test #11: positivity .......................   Passed    0.04 sec
+      Start 12: timestep
+12/19 Test #12: timestep .........................   Passed    0.65 sec
+      Start 13: conditioning
+13/19 Test #13: conditioning .....................   Passed    0.01 sec
+      Start 14: terminals
+14/19 Test #14: terminals ........................   Passed    0.01 sec
+      Start 15: cli_smoke
+15/19 Test #15: cli_smoke ........................   Passed    0.37 sec
+      Start 16: growth_diffusion
+16/19 Test #16: growth_diffusion .................   Passed    0.23 sec
+      Start 17: growth_determinism
+17/19 Test #17: growth_determinism ...............   Passed    0.20 sec
+      Start 18: growth_barrier
+18/19 Test #18: growth_barrier ...................   Passed    0.19 sec
+      Start 19: growth_invalid
+19/19 Test #19: growth_invalid ...................   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 19
+
+Total Test time (real) =   2.10 sec

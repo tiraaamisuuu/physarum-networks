@@ -1,0 +1,53 @@
+{
+  "settings": {
+    "start_id": "940GZZLUKSX",
+    "seed": 42,
+    "steps": 1600,
+    "frame_every": 10,
+    "width": 480,
+    "seed_count": 220,
+    "seed_radius": 11.0,
+    "max_agents": 14000,
+    "division_interval": 4,
+    "sensor_distance": 9.0,
+    "sensor_angle": 45.0,
+    "turn_angle": 45.0,
+    "decay": 0.08,
+    "food_strength": 8.0,
+    "food_range": 30.0,
+    "river_aversion": 0.0
+  },
+  "frames": 161,
+  "shape": [
+    161,
+    284,
+    480
+  ],
+  "selected_updates": [
+    0,
+    100,
+    300,
+    1600
+  ],
+  "final_live_particles": 4550,
+  "peak_live_particles": 7582,
+  "visited_sites": 46,
+  "last_first_contact_update": 282,
+  "initial_live_particles": 220,
+  "trail_sha256": "abcc4c7113b38b356922a7b5f2e8c7f333c50284186f40b7531a6aeeea993663",
+  "occupancy_sha256": "7a938c93cfa21d65295b6db9cc0a33648dddfcee4e450c241a6a4b25f2aedd8c",
+  "contacts_sha256": "fff197e656211b5a35132b8dde29332f73e5789939d3e9a163964616d837b560",
+  "stats_sha256": "619a2da8ec10ec5d9b7739cd3187ddac7dc7bc05be6c086e5a81b462d09a6955",
+  "software": {
+    "numpy": "2.5.5",
+    "executable_sha256": "3b2182dd7fba99e6f8b83a4b5ebfe48d38413395f9c1293cd7e2c1b21a1e4b75",
+    "source_sha256": {
+      "src/GrowthModel.cpp": "7c0ffe5dcc89fb090c7a21c75fe3e1daeaba042cb27679019d47b5ac80fa2426",
+      "src/growth_main.cpp": "b8bf16f327b1a1b5a2a2627342c9531e87d9f5be5c6d015af1a87c1052836cfe",
+      "include/physarum/GrowthModel.hpp": "b5d066a3fc0a6bbbd029e9353578b98d40669b4e8857910bbac7e7ad034efffb",
+      "desktop/growth_data.py": "b86123c11a437ae55e20c63e7bc0feeacf3eba8ea62a38e89a79e8249632b6cf",
+      "desktop/growth_viewer.py": "33fd4c0e10c3260afdd5584fac05b31e7f1f0b9d95d7d4860253cbdc1e9afe87"
+    }
+  },
+  "interpretation": "Recorded particle trail, not Tero conductivity or an engineering rail alignment."
+}

@@ -2,7 +2,7 @@
 
 The viewer is a Qt desktop application using PySide6 and Matplotlib. Python provides the interface and plotting; the existing C++20/Eigen executable remains responsible for all simulation steps. There is no web server or browser component.
 
-The default application opens the **London geographic explorer**. Start with the [London tutorial and research protocol](LONDON_EXPERIMENT.md) for station selection, junctions, restrictions, geography, demand assumptions and automatically saved spatial runs. The rest of this document describes the original **four-node validation viewer**, available through the London File menu or `--fixture`. Its schematic geometry and archive format are deliberately separate from the spatial experiment.
+The default application opens the **Growth laboratory**. Start with the [growth guide](GROWTH_EXPERIMENT.md) for the one-patch/food-site model, plain-language explanations and saved field data. The [London connection tutorial](LONDON_EXPERIMENT.md) describes the previous geographic pressure-flow experiment, available from the growth File menu or `--network`. The rest of this document describes the original **four-node validation viewer**, available through File → Open four-node validation or `--fixture`. Its schematic geometry and archive format remain separate from the spatial and growth experiments.
 
 ## Start the four-node viewer
 
@@ -14,7 +14,7 @@ python3.14 -m venv .venv
 .venv/bin/python desktop/viewer.py --fixture
 ```
 
-On macOS, `Launch Physarum.command` supplies the same setup/build/launch sequence. Keep its terminal open while using the viewer. The launcher opens the London example. Use File → Open validated four-node viewer to inspect the baseline, which pauses at step zero. Press **Play** to animate.
+On macOS, `Launch Physarum.command` supplies the same setup/build/launch sequence. Keep its terminal open while using the viewer. The launcher opens the growth laboratory. Use File → Open four-node validation to inspect the baseline, which pauses at step zero. Press **Play** to animate.
 
 To open an existing experiment directly:
 

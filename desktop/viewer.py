@@ -503,6 +503,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run",type=Path,help="Open a recorded C++ run directory or ZIP archive.")
     parser.add_argument("--fixture",action="store_true",help="Open the validated four-node viewer instead of London.")
+    parser.add_argument("--network",action="store_true",help="Open the London station-connection experiment instead of growth.")
     args = parser.parse_args()
     prepare_platform_plugins()
     app = QApplication(sys.argv[:1])
@@ -512,12 +513,18 @@ def main():
     if args.fixture or args.run:
         window = Viewer(auto_run=not args.run)
         if args.run:window.open_path(args.run)
-    else:
+    elif args.network:
         try:
             from .spatial_viewer import SpatialViewer
         except ImportError:
             from spatial_viewer import SpatialViewer
         window=SpatialViewer()
+    else:
+        try:
+            from .growth_viewer import GrowthViewer
+        except ImportError:
+            from growth_viewer import GrowthViewer
+        window=GrowthViewer()
     window.show()
     sys.exit(app.exec())
 

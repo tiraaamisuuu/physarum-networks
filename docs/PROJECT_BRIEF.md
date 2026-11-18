@@ -28,6 +28,10 @@ Resolve the mesh, initial conductivities, source-sink selection, integration sch
 
 Possible directions include nonstationary origin-destination demand, damage and recovery, scaling and stability, or comparison with a defensible fungal growth model. Choose one direction after baseline reproduction and a sufficiently broad related-work review. Existing multi-commodity and distributed Physarum literature must be accounted for before claiming novelty.
 
+## User-directed exploratory tools
+
+The native London connection workspace and the separate Jones-inspired particle growth laboratory support hands-on experimentation at the user’s request. Their protocols, model differences and limitations are recorded in `LONDON_EXPERIMENT.md` and `GROWTH_EXPERIMENT.md`. They do not change the status of the source-audited Tokyo reproduction or establish a research contribution. Both retain recorded inputs and computed results.
+
 ## Research principles
 
 - Correctness before performance, with small independently verifiable components.

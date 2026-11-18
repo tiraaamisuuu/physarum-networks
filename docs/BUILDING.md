@@ -89,3 +89,14 @@ The spatial runner also accepts:
 `EDGES_CSV` has the exact header `edge,from,to,length`, consecutive zero-based edge IDs, zero-based endpoints and positive finite effective resistance lengths. It supports 2–256 nodes and 1–4,000 edges; desktop bounds are narrower. Without `DEMAND_CSV`, the config's fixed pair is used. With it, the header is `step,source,sink`, followed by exactly `steps+1` distinct, valid terminal pairs at consecutive states. The first scheduled pair is written into the resolved config. The actual schedule is copied to the output. Conductivities persist when terminals change.
 
 Custom graph histories append `source,sink` to the original baseline columns. All edge flows, pressures, conductivities and terminals on a row refer to the same state. The terminal pair used in an update is the pair recorded at its starting state. Baseline history columns and numeric results remain unchanged. Compiler/Eigen details and the schedule source are recorded in metadata. The engine does not interpret geography or generate randomness; those choices are explicit inputs. See [the London protocol](LONDON_EXPERIMENT.md) for the meaning of its effective edge cost and terminal-switching interval.
+
+
+## Particle growth engine
+
+CMake also builds `physarum_growth` and its independent tests. The native default runs it with an explicit config and input directory:
+
+```sh
+./build/physarum_growth CONFIG INPUT_DIRECTORY OUTPUT_DIRECTORY
+```
+
+Inputs include station food coordinates, accessible-cell mask and optional synthetic river repellent. This engine is a separate chemotactic particle model; it does not call the pressure-flow solver. To create a complete reproducible example and recorded fields, use `.venv/bin/python analysis/make_growth_figure.py --gif` after installing the desktop/analysis dependencies. See [the growth protocol](GROWTH_EXPERIMENT.md) for every update rule, binary format, assumptions and checks.

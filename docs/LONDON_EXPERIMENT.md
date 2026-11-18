@@ -4,7 +4,7 @@ This native desktop mode asks: **how does an abstract adaptive network change wh
 
 ## Try it
 
-Launch `Launch Physarum.command` on macOS, or run `desktop/viewer.py` after the README setup. The application computes the 46-station London example and pauses at step zero.
+The default launcher now opens the growth laboratory. Use **File → Open station-connection experiment**, or run `desktop/viewer.py --network` after the README setup, to compute this 46-station connection example and pause at step zero.
 
 1. Press **Play**. Initially, all possible links have the same conductivity. Flow reinforces some connections; others become thinner. Grey outlines retain the candidate graph. No model edge is deleted.
 2. Click a station to see its name and current pressure. Click a connection or table row to inspect its conductivity D and signed flow Q over the complete run. The dashed cursor selects the current recorded state.
