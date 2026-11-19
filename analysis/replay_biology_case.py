@@ -29,12 +29,13 @@ def main():
             subprocess.run(['cmake','--build',str(source/'build'),'--target','physarum_biology','--parallel','2'],check=True,stdout=subprocess.DEVNULL);executable=source/'build/physarum_biology'
         output=ROOT/'results/biology_runs'/('replay-'+case.name+'-'+uuid.uuid4().hex[:8]);output.parent.mkdir(parents=True,exist_ok=True)
         cmd=[str(executable),str(case/'nodes.csv'),str(case/'edges.csv')]+[str(settings[k]) for k in ('duration','dt','hill','feedback','tau_front','save_interval')]+[str(engine['probe']),str(output)]
+        if 'integrator' in settings:cmd.append(settings['integrator'])
         subprocess.run(cmd,check=True,stdout=subprocess.DEVNULL);actual=json.loads((output/'engine.json').read_text())
         if actual['source_fingerprint']!=engine['source_fingerprint']:raise ValueError('Replayed engine source differs; use --build-source.')
         reference=np.load(case/'reference.npz');differences={}
         for key in ('c','phi','u','v','w','p','q','d'):
             count=engine['edges'] if key in ('q','d') else engine['nodes'];field=np.memmap(output/(key+'.f64'),dtype='<f8',mode='r',shape=(engine['frames'],count));differences[key]=float(np.abs(field[reference['indices']]-reference[key]).max())
-        byte_equal={name:(output/name).read_bytes()==gzip.decompress((case/(name+'.gz')).read_bytes()) for name in ('history.csv','probe.csv')}
+        byte_equal={name:(output/name).read_bytes()==gzip.decompress((case/(name+'.gz')).read_bytes()) for name in ('history.csv','probe.csv')+(('global.csv',) if (case/'global.csv.gz').exists() else ())}
         report=dict(case=case.name,output=str(output),source_fingerprint=actual['source_fingerprint'],maximum_snapshot_absolute_differences=differences,full_history_and_probe_byte_equal=byte_equal)
         (output/'replay-report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()

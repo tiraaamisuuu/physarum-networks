@@ -1,7 +1,7 @@
 test_gating_rejects_rehashed_physical_corruption (test_biology.BiologicalRecords.test_gating_rejects_rehashed_physical_corruption) ... ok
 test_geometry_and_zero_normal_flux_weights (test_biology.BiologicalRecords.test_geometry_and_zero_normal_flux_weights) ... ok
 test_limits (test_biology.BiologicalRecords.test_limits) ... ok
-test_plot_and_native_frame (test_biology.BiologicalRecords.test_plot_and_native_frame) ... qt.qpa.fonts: Populating font family aliases took 86 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+test_plot_and_native_frame (test_biology.BiologicalRecords.test_plot_and_native_frame) ... qt.qpa.fonts: Populating font family aliases took 86 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost.
 ok
 test_raw_checksum (test_biology.BiologicalRecords.test_raw_checksum) ... ok
 test_record_and_body_gating (test_biology.BiologicalRecords.test_record_and_body_gating) ... ok

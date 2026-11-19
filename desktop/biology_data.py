@@ -19,12 +19,13 @@ try:
 except ImportError:
     from mesh_data import capture_source_snapshot
 ROOT=Path(__file__).resolve().parents[1]
-DEFAULT_BIOLOGY=dict(arena='snake',spacing=.5,seed=42,duration=1280.,dt=.02,hill=4,feedback=.01,tau_front=2.,save_interval=8.)
+DEFAULT_BIOLOGY=dict(arena='snake',spacing=.5,seed=42,duration=1280.,dt=.02,hill=4,feedback=.01,tau_front=2.,save_interval=8.,integrator='midpoint')
 POLYGON=np.array([(0,10),(5,10),(5,0),(20,0),(20,10),(25,10),(25,0),(40,0),(40,5),(30,5),(30,15),(15,15),(15,5),(10,5),(10,15),(0,15)],float)
 RECTANGLES=np.array([(0,10,10,15),(5,0,10,15),(5,0,20,5),(15,0,20,15),(15,10,30,15),(25,0,30,15),(25,0,40,5)],float)
 
 def validate_biology(settings):
-    if set(settings)!=set(DEFAULT_BIOLOGY):raise ValueError('Incomplete biological settings.')
+    if set(settings) not in (set(DEFAULT_BIOLOGY),set(DEFAULT_BIOLOGY)-{'integrator'}):raise ValueError('Incomplete biological settings.')
+    if settings.get('integrator','legacy') not in ('legacy','midpoint'):raise ValueError('Unknown biological integrator.')
     if settings['arena'] not in ('snake','straight'):raise ValueError('Unknown corridor arena.')
     for key,low,high in [('spacing',.35,1.),('duration',8,1600),('dt',.005,.04),('feedback',0,.1),('tau_front',2,40),('save_interval',.1,40)]:
         x=settings[key]
@@ -33,7 +34,7 @@ def validate_biology(settings):
     if isinstance(settings['seed'],bool) or not isinstance(settings['seed'],int) or not 0<=settings['seed']<2**31:raise ValueError('Invalid mesh seed.')
     for key in ('duration','save_interval'):
         if not math.isclose(round(settings[key]/settings['dt'])*settings['dt'],settings[key],abs_tol=1e-8):raise ValueError(f'{key} must be a multiple of dt.')
-    if settings['duration']/settings['dt']>160000 or settings['save_interval']>settings['duration']:raise ValueError('Biological record exceeds supported steps/interval.')
+    if settings['duration']/settings['dt']>320000 or settings['save_interval']>settings['duration']:raise ValueError('Biological record exceeds supported steps/interval.')
 
 def geometry(arena):
     if arena=='snake':return POLYGON.copy(),RECTANGLES.copy()
@@ -86,6 +87,12 @@ def make_biology_mesh(settings):
 
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
+def named_csv(path):
+    """Read the known numeric record schema without Python per-cell inference."""
+    with Path(path).open() as stream:names=stream.readline().strip().split(',')
+    if not names or len(set(names))!=len(names) or any(not n or not n.replace('_','').isalnum() for n in names):raise ValueError('Invalid biological CSV header.')
+    return np.loadtxt(path,delimiter=',',skiprows=1,dtype=[(n,'<f8') for n in names],ndmin=1)
+
 def write_biology_inputs(folder,mesh):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     np.savetxt(folder/'nodes.csv',np.column_stack([np.arange(len(mesh['xy'])),mesh['xy'],mesh['mass'],mesh['inoculum'].astype(int)]),delimiter=',',header='id,x,y,mass,inoculum',comments='',fmt='%.17g')
@@ -98,8 +105,10 @@ def run_biology(settings=None,progress=None,cancelled=None,folder=None):
     if folder.exists() and any(folder.iterdir()):raise ValueError('Biological output must be new/empty.')
     write_biology_inputs(folder,mesh);software=capture_source_snapshot(folder);executable=ROOT/'build/physarum_biology';software['executable_sha256']=sha(executable)
     manifest=dict(schema=1,settings=settings,software=software,source='Schenz et al. 2017, DOI 10.1088/1361-6463/aa88e9; cooperative4 restores the Smith & Saldana 1992 Hill exponent as an explicit variant.',discretization='Lumped P1 FEM, no-flux boundary; split RK4 reaction and backward-Euler diffusion; frozen-coefficient Crank–Nicolson fluid; exponential vein update. Overall first order, uncalibrated model units.',status='computing')
+    if settings.get('integrator','legacy')=='midpoint':manifest['discretization']='Lumped P1 FEM, no-flux boundary; RK4/Crank–Nicolson Strang reaction–diffusion with two-step Rannacher startup; positive midpoint conductivity predictor; midpoint v/w fluid and vein coupling. Formal second order only for smooth resolved regimes; discontinuous gates and stiff splitting require refinement.'
     (folder/'scenario.json').write_text(json.dumps(manifest,indent=2)+'\n')
     candidate=np.flatnonzero(mesh['inoculum']);probe=int(candidate[np.argmin(np.linalg.norm(mesh['xy'][candidate]-[39.5,2.5],axis=1))]);args=[str(executable),str(folder/'nodes.csv'),str(folder/'edges.csv')]+[str(settings[k]) for k in ('duration','dt','hill','feedback','tau_front','save_interval')]+[str(probe),str(folder/'raw')]
+    if 'integrator' in settings:args.append(settings['integrator'])
     with (folder/'engine.log').open('w') as log:
         process=subprocess.Popen(args,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
         try:
@@ -119,7 +128,9 @@ def run_biology(settings=None,progress=None,cancelled=None,folder=None):
 def load_biology(folder):
     folder=Path(folder);manifest=json.loads((folder/'scenario.json').read_text());settings=manifest['settings'];validate_biology(settings)
     if manifest.get('schema')!=1 or manifest.get('status')!='complete':raise ValueError('Not a complete biological experiment.')
+    engine=json.loads((folder/'raw/engine.json').read_text())
     expected={'nodes.csv','edges.csv','triangles.csv'}|{'raw/'+n for n in ('engine.json','history.csv','probe.csv')}|{'raw/'+n+'.f64' for n in ('c','phi','u','v','w','p','q','d')}
+    if engine.get('global_record'):expected.add('raw/global.csv')
     if set(manifest.get('files',{}))!=expected:raise ValueError('Biological manifest file set mismatch.')
     for name,digest in manifest['files'].items():
         if sha(folder/name)!=digest:raise ValueError('Biological checksum mismatch: '+name)
@@ -133,6 +144,7 @@ def load_biology(folder):
     nodes=np.loadtxt(folder/'nodes.csv',delimiter=',',skiprows=1,ndmin=2);edges=np.loadtxt(folder/'edges.csv',delimiter=',',skiprows=1,ndmin=2);triangles=np.loadtxt(folder/'triangles.csv',delimiter=',',skiprows=1,dtype=int,ndmin=2)
     n,e,frames=engine['nodes'],engine['edges'],engine['frames']
     if n!=len(nodes) or e!=len(edges) or nodes.shape[1]!=5 or edges.shape[1]!=5 or not np.array_equal(nodes[:,0],np.arange(n)) or not np.array_equal(edges[:,0],np.arange(e)):raise ValueError('Biological mesh dimensions mismatch.')
+    if engine.get('integrator','legacy')!=settings.get('integrator','legacy'):raise ValueError('Biology integrator mismatch.')
     if any(engine[k]!=settings[k] for k in ('dt','hill','feedback','tau_front')):raise ValueError('Biology engine parameters mismatch.')
     if not np.isfinite(nodes).all() or not np.isfinite(edges).all() or np.any(nodes[:,3]<=0) or np.any(edges[:,3]<=0) or np.any(edges[:,4]<0) or not np.isin(nodes[:,4],[0,1]).all():raise ValueError('Invalid biological mesh values.')
     if not np.array_equal(edges[:,1:3],edges[:,1:3].astype(int)) or edges[:,1:3].min()<0 or edges[:,1:3].max()>=n or triangles.min()<0 or triangles.max()>=n:raise ValueError('Invalid biological mesh indices.')
@@ -150,11 +162,16 @@ def load_biology(folder):
         if not np.array_equal(fields[name][0],values):raise ValueError('Biological initial state mismatch: '+name)
     outside=.5*(fields['w'][:,edges[:,1].astype(int)]+fields['w'][:,edges[:,2].astype(int)])<=1
     if np.any(fields['d'][outside & ~seed_edge[None,:]]!=0):raise ValueError('Vein reinforcement occurred outside the body gate.')
-    history=np.genfromtxt(folder/'raw/history.csv',delimiter=',',names=True,ndmin=1);probe=np.genfromtxt(folder/'raw/probe.csv',delimiter=',',names=True,ndmin=1)
+    history=named_csv(folder/'raw/history.csv');probe=named_csv(folder/'raw/probe.csv')
     steps=round(settings['duration']/settings['dt']);stride=round(settings['save_interval']/settings['dt']);indices=np.unique(np.r_[np.arange(0,steps+1,stride),steps])
     if len(history)!=frames or not np.allclose(history['time'],indices*settings['dt'],atol=1e-10,rtol=0) or len(probe)!=steps+1 or not np.allclose(probe['time'],np.arange(steps+1)*settings['dt'],atol=1e-10,rtol=0):raise ValueError('Biological recording times mismatch.')
     if not np.isfinite(history.view(float)).all() or not np.isfinite(probe.view(float)).all():raise ValueError('Non-finite biology diagnostics.')
     if max(probe['fluid_residual'])>1e-7 or max(probe['energy_defect'])>1e-9:raise ValueError('Biological fluid balance failed.')
     body=(fields['w']>1)@nodes[:,3];length=(fields['d']>=1)@edges[:,3]
     if not np.allclose(body,history['body_area'],atol=1e-8) or not np.allclose(length,history['vein_length'],atol=1e-8):raise ValueError('Biological summary disagrees with raw fields.')
-    return dict(folder=folder,manifest=manifest,settings=settings,engine=engine,xy=nodes[:,1:3],mass=nodes[:,3],inoculum=nodes[:,4].astype(bool),edges=edges[:,1:],triangles=triangles,fields=fields,history=history,probe=probe)
+    global_history=None
+    if engine.get('global_record'):
+        global_history=named_csv(folder/'raw/global.csv')
+        if len(global_history)!=len(probe) or not np.array_equal(global_history['time'],probe['time']) or not np.isfinite(global_history.view(float)).all() or np.any(global_history['vein_volume']<0) or np.any(global_history['retained_length_D1']<0):raise ValueError('Invalid full-rate global measurements.')
+        if not np.allclose(global_history['vein_volume'][indices],history['vein_volume'],atol=1e-9) or not np.allclose(global_history['retained_length_D1'][indices],history['vein_length'],atol=1e-9):raise ValueError('Full-rate global measurements disagree with saved states.')
+    return dict(global_history=global_history,folder=folder,manifest=manifest,settings=settings,engine=engine,xy=nodes[:,1:3],mass=nodes[:,3],inoculum=nodes[:,4].astype(bool),edges=edges[:,1:],triangles=triangles,fields=fields,history=history,probe=probe)

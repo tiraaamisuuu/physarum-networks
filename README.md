@@ -7,7 +7,7 @@
 
 The native laboratory now couples an advancing colony margin, calcium oscillations, dynamic pressure, compliant internal flow and adaptive veins. It follows the exploratory-migration framework of [Schenz et al. (2017)](https://doi.org/10.1088/1361-6463/aa88e9), with an explicitly identified cooperative calcium variant. The separate London laboratory retains the numerically checked pressure–flow and tube-adaptation implementation of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894).
 
-![Four recorded states of the cooperative growth variant exploring a bent corridor.](docs/assets/biology-growth.png)
+![Four recorded states of the cooperative growth variant exploring a bent corridor.](docs/assets/biology-growth-midpoint.png)
 
 *Actual C++ fields. Fine gold strokes are conductivity, with a fixed fourth-root width scale; body colour is a model proxy. These are not microscopy images. Time and length are uncalibrated.*
 
@@ -17,17 +17,25 @@ The growth model is a **research prototype**, not a quantitative paper reproduct
 
 On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It builds the C++ engines and opens the **Biological growth laboratory**. A complete matching local run opens immediately; otherwise it computes and saves one.
 
-1. Press **Play growth**. **Follow colony** keeps the advancing footprint in view; turn it off to see the full arena.
+1. Press **Play growth**. Use **Run short growth experiment** to try new settings with the same physics over a shorter duration. **Follow colony** keeps the advancing footprint in view; turn it off to see the full arena.
 2. Switch between **Body + veins**, **Advancing margin** and **Calcium**. The adjustable D cutoff changes the drawing, never the underlying simulation.
 3. Choose a control preset, then **Compute biological experiment**. Compare the source front timescale, printed calcium response or disabled vein-to-front feedback. Change dt and mesh spacing to test numerical sensitivity.
-4. Inspect **Equations and interpretation** and **Recorded experiment**. The lower plots show accumulated occupied area and the separately sampled fast calcium/flow probe.
+4. Inspect **Vein measurements**, **Equations and interpretation** and **Recorded experiment**. The lower plots show accumulated occupied area and the separately sampled fast calcium/flow probe.
 5. **Export figure / fields** saves PNG, SVG, node/edge CSV and a JSON reference. Complete numerical records save under `results/biology_runs/` with checksums and source snapshots.
 
-The study reproduces its own frozen numerical records, including a source-built replay with zero sampled-field differences and byte-identical full-rate probe/history files on the development platform. It does **not** yet reproduce the paper's surviving-vein morphology. Halving dt changes final retained length from 25.47 to 33.44 model units; finer mesh changes it to 49.20. Those substantial differences remain visible in the evidence.
+![Native Qt biological laboratory showing an actual recorded growth state.](docs/assets/biological-laboratory.png)
+
+*Offscreen widget render at model time 280 from the verified midpoint run; not an interface mockup.*
+
+The current default uses midpoint coupling and Crank–Nicolson diffusion with damped startup. On the frozen corridor mesh, halving Δt from 0.02 to 0.01 leaves the final retained graph unchanged at D ≥ 1; the final-80-unit mean volume proxy changes by 0.485%. The smaller 0.005 reference and the previous method are preserved in the [matched integration study](results/biology_integration/REPORT.md). This is numerical evidence for this setup; the surviving veins still do **not** quantitatively reproduce the biological experiment.
+
+The earlier first-order six-case study remains available. In it, halving dt changed retained length from 25.47 to 33.44, and a finer mesh gave 49.20. Those results are retained as evidence of the limitations of that protocol, rather than relabelled as current default results.
 
 ![Controlled comparisons of growth, calcium response, numerical sensitivity and reversing flow.](docs/assets/biology-controls.png)
 
-[Six-case growth study and replay instructions](results/biology_validation/REPORT.md).
+[Earlier six-case growth study and replay instructions](results/biology_validation/REPORT.md).
+
+![Integration refinement and measurements recorded at every simulation step.](docs/assets/biology-integration.png)
 
 ## London tube-adaptation experiment
 
@@ -98,7 +106,10 @@ python3.14 -m venv .venv
 Other modes: `--tubes` for the London tube laboratory, `--biology-run PATH` to reopen a growth run, `--fixture` for the analytic circuit, `--network` for the older coarse station graph, `--particles` for the separate particle experiment. `--mesh-run PATH` reopens a tube run. [Build details](docs/BUILDING.md).
 
 ```sh
-# Recompute biological controls and their figures.
+# Recompute matched biological integration evidence.
+.venv/bin/python analysis/validate_biology_integrators.py
+.venv/bin/python analysis/plot_biology_integrators.py
+# Recompute the earlier biological controls and their figures.
 .venv/bin/python analysis/validate_biology.py
 .venv/bin/python analysis/plot_biology.py
 # Replay preserved growth source and compare the frozen reference.
@@ -117,7 +128,7 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'tes
 
 The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every integration transition, exact food attachment and file checksums. Source snapshots and a compiled C++ fingerprint bind new records to their engine source. Metric fixtures test trees, cycles and disconnections.
 
-Locally, **33 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **78 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
+Locally, **34 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **88 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
 
 The tube experiment implements its stated numerical equations; mesh construction, initial fluctuations, demand timing and integration are documented choices. The growth experiment has additional source-equation ambiguities and explicitly labelled variants. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
 
@@ -130,6 +141,7 @@ The tube experiment implements its stated numerical equations; mesh construction
 | [`tests/`](tests) | Independent mathematical, topology, integrity and UI checks |
 | [`analysis/`](analysis) | Repeatable studies and scientific figure generation |
 | [`data/london/`](data/london) | Frozen geographic inputs, attribution and licences |
+| [`results/biology_integration/`](results/biology_integration) | Matched midpoint/legacy integration evidence and full-rate scalar records |
 | [`results/biology_validation/`](results/biology_validation) | Growth controls, source-complete replays and reference fields |
 | [`results/integration_validation/`](results/integration_validation) | Current Heun/default evidence, source snapshots and replay inputs |
 | [`results/mesh_validation/`](results/mesh_validation) | Earlier Euler sensitivity study and frozen replay inputs |

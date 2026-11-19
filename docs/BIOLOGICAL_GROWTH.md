@@ -75,15 +75,14 @@ The default uses **τ₂ = 2**, one of the front-timescale contrasts discussed b
 
 A seeded, jittered triangular lattice and exact sampled boundary are triangulated. Triangles crossing a corridor wall are rejected by partitioning each edge at every rectangle boundary, not by sparse point sampling. The mesh must cover the known arena area, have strictly positive lumped masses, nonnegative assembled cotangent weights and a connected diffusion graph. Invalid meshes are rejected; no negative weights are clipped. The default spacing 0.5 gives 1,643 nodes and 4,626 edges at seed 42. The frozen CSVs, not a seed alone, define a replay across library versions.
 
-Reaction–diffusion fields use lumped linear finite elements with zero normal flux. Each step applies:
+Reaction–diffusion fields use lumped linear finite elements with zero normal flux. Two recorded integration protocols are available:
 
-1. Half a local reaction step using RK4, internally subdivided to at most 0.005 time units.
-2. A full backward-Euler diffusion solve `(Mτ + Δt D K)x_new = Mτ x_old` for c, φ, u and v.
-3. The other half reaction step, with the preceding vein state held fixed.
-4. A frozen-coefficient Crank–Nicolson pressure/flow solve using the previous D, newly updated v and the endpoint average calcium forcing.
-5. A positive exponential-decay vein update using midpoint flow and the newly updated body gate.
+- **Midpoint / CN (current default, Δt = 0.02):** a positive half-step conductivity predictor, RK4/Crank–Nicolson reaction–diffusion splitting with damped startup, midpoint fluid coefficients/body gate and an exponential vein update.
+- **Legacy split:** the earlier backward-Euler diffusion and lagged-coupling protocol, preserved for the 18 November six-case study and old records. Its complete accuracy is first order.
 
-This composition is **overall first order**: implicit Euler diffusion and lagged/gated coupling limit its accuracy. Calling the pressure substep Crank–Nicolson does not make the complete model second order. The discontinuous gates further limit smooth-order arguments. The default is Δt = 0.02; comparisons at 0.01 are archived. There is no claim of spatial or long-time morphological convergence.
+The midpoint protocol approaches second order in a resolved smooth test. Stiff splitting, nonsmooth initial fields and discontinuous gates still require measured refinement. At practical full-corridor steps 0.02 and 0.01, the final retained edge set is identical at D ≥ 1; the late-window volume proxy differs by approximately 0.485%. This is a finite result on one frozen mesh, not a biological validation or general convergence proof. The smaller 0.005 reference is included in the matched integration study.
+
+[Complete numerical update and small-case order evidence](BIOLOGICAL_INTEGRATION.md) · [Matched integration study](../results/biology_integration/REPORT.md). The earlier mesh/seed/response contrasts retain their legacy interpretation; they have not all been rerun with the new protocol.
 
 The pressure solve eliminates edge flows to a symmetric positive-definite node system and reuses its symbolic factorisation. Its residuals are independently checked against the compliant-storage and momentum equations. For coefficients held over that substep,
 
@@ -96,15 +95,17 @@ The energy diagnostic checks **this frozen linear substep**, not energy conserva
 
 ## What you can inspect
 
-Double-click `Launch Physarum.command`, compute, then press **Play growth**. The app reuses a complete matching local record when its engine source still matches. **Follow colony** keeps the expanding footprint visible; turn it off for the full arena.
+Double-click `Launch Physarum.command`, then press **Play growth** for a matching cached record. To try changes, use **Run short growth experiment** for about 80 model units, or compute the selected full duration. The short experiment preserves equations, mesh and time step; only its duration and recording interval change. The app reuses a complete matching local record when its engine source still matches. **Follow colony** keeps the expanding footprint visible; turn it off for the full arena.
 
 - Body colour is the piecewise-linear w field: unoccupied arena, advancing band, transition, accumulated body. It is not predicted optical intensity.
 - Fine veins are the actual mesh D values. Width is proportional to D¼, with a fixed scale of 0.5 pt at D = 1. The adjustable cutoff only affects rendering. Raw D is never clipped or pruned.
 - **Advancing margin** shows v, and **Calcium** shows c over the computational domain. Their colour scales are fixed and labelled.
 - Occupied area uses the lumped-node quadrature of w > 1. It is an approximate area measurement, not an exact level-set area.
 - Full fields are saved every 8 model units by default. They cannot resolve the roughly unit-period calcium oscillations. The fixed inoculum-node calcium probe and its explicitly identified incident-edge flow are therefore saved **every integration step**. The lower plot shows an eight-unit probe window and signed flow, including reversals.
-- Figure exports include SVG, PNG, node-field CSV, edge-flow/conductivity CSV and a JSON record reference with the cutoff and source fingerprint.
-- Complete records save automatically under `results/biology_runs/`. Open a copied complete folder to inspect it on another computer. Checksums, initial conditions, positivity, monotone w, body gating, timing, summaries and source fingerprints are checked when loading.
+- Figure exports include SVG/PNG for the colony and vein measurements, node-field CSV including masses/inoculum membership, edge-flow/conductivity CSV, complete probe/history/global CSVs and a JSON record reference with the cutoff, source fingerprint and vein diagnostics. Comparison history is included when an earlier record appears in the figure.
+- The **Vein measurements** tab retains full-rate global volume/length measures using bin means and min–max envelopes. The main display reports retained components and length attached to the inoculum at the selected cutoff. The inoculum is a starting patch, not a permanent food source: losing attachment is reported, and must not be confused with maintained food-site connectivity.
+
+**Unapplied controls are highlighted above the plots**; the displayed state always retains its recorded settings. Complete records save automatically under `results/biology_runs/`. Open a copied complete folder to inspect it on another computer. Checksums, initial conditions, positivity, monotone w, body gating, timing, summaries and source fingerprints are checked when loading.
 
 Use **Other models → London tube adaptation** or `--tubes` for the existing food-site network experiment. The older particle model and analytic fixture remain available. The biological corridor and transport models are intentionally distinct experiments.
 

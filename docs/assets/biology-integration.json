@@ -1,0 +1,14 @@
+{
+  "generator_sha256": "0918183d8e9484c782fbe8d565cc44b73a9bedf119e77795918739ee0027db5b",
+  "metric_source_sha256": "9b39b7460a77fe02c1e1abefa02bb6a94052b958060f8d1b38ce92f5041edad5",
+  "validation_sha256": "9649bc502a78cb3997340be8b4ae95334c08e26e7db56490331508e679117ae3",
+  "smooth_order_sha256": "4bf581707d744ceebc3ed2cb584859f30c0a2a9d2bc92102b8a1870dfa63e473",
+  "numpy": "2.5.5",
+  "matplotlib": "3.11.2",
+  "figures": {
+    "biology-integration.png": "d2bbf71b84221a2f9dc89e9143c58ad37438f0c5bcd0d07757ba5f12cb22e5ec",
+    "biology-integration.svg": "f4435e2aed8a97fce4c1aa33c51f6871620bef89aadaf8a95d312100a98eb150",
+    "biology-growth-midpoint.png": "f32b1b43f8c66a6912904581940dc50157c1e3193cb0bd6d802c95b4421560a3",
+    "biology-growth-midpoint.svg": "7997ab43d5305c7eb8a1d5b8377b88cffc2f0ffa0e6d35eccc41ba363421cc91"
+  }
+}

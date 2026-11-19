@@ -43,7 +43,7 @@ def archive_case(name,run,output):
     target=output/'replay'/name;target.mkdir(parents=True,exist_ok=True)
     for file in ('nodes.csv','edges.csv','triangles.csv','scenario.json','raw/engine.json'):
         dest=target/file;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes((run['folder']/file).read_bytes())
-    for file in ('history.csv','probe.csv'):
+    for file in ('history.csv','probe.csv')+ (('global.csv',) if (run['folder']/'raw/global.csv').exists() else ()):
         with (target/(file+'.gz')).open('wb') as raw,gzip.GzipFile(filename='',fileobj=raw,mode='wb',mtime=0) as out:out.write((run['folder']/'raw'/file).read_bytes())
     indices=np.unique(np.linspace(0,len(run['history'])-1,9).round().astype(int));np.savez_compressed(target/'reference.npz',indices=indices,times=run['history']['time'][indices],**{key:np.asarray(field[indices]) for key,field in run['fields'].items()})
     sources=run['manifest']['software']['source_sha256']
@@ -54,6 +54,7 @@ def archive_case(name,run,output):
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--jobs',type=int,default=2);parser.add_argument('--cases',nargs='*');args=parser.parse_args()
+    baseline=dict(arena='snake',spacing=.5,seed=42,duration=1280.,dt=.02,hill=4,feedback=.01,tau_front=2.,save_interval=8.,integrator='legacy')
     variants=dict(default={},source_front={'tau_front':20.},half_dt={'dt':.01},finer_mesh={'spacing':.4},no_feedback={'feedback':0.},printed_control={'hill':1})
     selected=args.cases or list(variants)
     if any(k not in variants for k in selected):parser.error('Unknown case')
@@ -61,7 +62,7 @@ def main():
     existing=output/'validation.json'
     if existing.exists():summaries=json.loads(existing.read_text()).get('cases',{})
     def task(name):
-        print('START',name,flush=True);r=run_biology(dict(DEFAULT_BIOLOGY,**variants[name]),progress=lambda v:print(name,round(v*100),flush=True) if round(v*100)%25==0 else None);return name,r
+        print('START',name,flush=True);r=run_biology(dict(baseline,**variants[name]),progress=lambda v:print(name,round(v*100),flush=True) if round(v*100)%25==0 else None);return name,r
     with ThreadPoolExecutor(max_workers=max(1,min(2,args.jobs))) as pool:
         for future in as_completed([pool.submit(task,name) for name in selected]):
             name,run=future.result();summaries[name]=summarize(run);archive_case(name,run,output)

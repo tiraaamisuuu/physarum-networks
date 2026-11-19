@@ -1,0 +1,20 @@
+{
+  "case": "midpoint",
+  "output": "/Users/alfiecorthine/Desktop/physarum/results/biology_runs/replay-midpoint-3b674973",
+  "source_fingerprint": "726ec1301ff2caeebadccf806f272d53a7ab577cacaaf47da6788551e4398c28",
+  "maximum_snapshot_absolute_differences": {
+    "c": 0.0,
+    "phi": 0.0,
+    "u": 0.0,
+    "v": 0.0,
+    "w": 0.0,
+    "p": 0.0,
+    "q": 0.0,
+    "d": 0.0
+  },
+  "full_history_and_probe_byte_equal": {
+    "history.csv": true,
+    "probe.csv": true,
+    "global.csv": true
+  }
+}

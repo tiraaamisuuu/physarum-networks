@@ -1,0 +1,336 @@
+{
+  "scope": "Matched integration study of an uncalibrated cooperative growth variant; no biological validation implied.",
+  "cases": {
+    "midpoint_coarse": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.04,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0,
+        "integrator": "midpoint"
+      },
+      "record": "results/biology_runs/20261119T214850-54b829b9",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 33.22408644800161,
+      "max_conductivity": 470.3683064167509,
+      "late_probe_calcium_range": [
+        6.446255607421226,
+        7.645557223775431
+      ],
+      "late_probe_flow_range": [
+        -0.016757598931960726,
+        0.0008016445302621997
+      ],
+      "late_calcium_period": 1.0,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 2.2530172172352536e-12,
+      "max_energy_defect": 1.1706105394367892e-11,
+      "source_fingerprint": "726ec1301ff2caeebadccf806f272d53a7ab577cacaaf47da6788551e4398c28",
+      "last_80_time_mean_volume": 844.7547106672843,
+      "last_80_time_mean_retained_length_D1": 33.298478449320314,
+      "global_sample_interval": 0.04,
+      "integrator": "midpoint",
+      "final_vein_graph_D1": {
+        "cutoff": 1.0,
+        "components": 2,
+        "length": 33.2240864480016,
+        "inoculum_attached_length": 0.0,
+        "inoculum_attached_fraction": 0.0,
+        "mean_wall_clearance": 0.3712795382815536,
+        "near_wall_length_fraction": 0.7609739417845895
+      },
+      "late_mean_sampled_peak_period": 1.0123076923076928,
+      "final_D1_mask_differences_from_finest": 2,
+      "relative_mean_volume_difference_from_finest": -0.030564831390002323
+    },
+    "legacy": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0,
+        "integrator": "legacy"
+      },
+      "record": "results/biology_runs/20261119T214850-d7c6511a",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 25.46897180944994,
+      "max_conductivity": 284.9595111701069,
+      "late_probe_calcium_range": [
+        6.40237981903462,
+        7.6459304196629905
+      ],
+      "late_probe_flow_range": [
+        -0.013911619479762223,
+        0.003943679231442939
+      ],
+      "late_calcium_period": 1.0199999999999818,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 4.621844573726719e-12,
+      "max_energy_defect": 6.906823839086547e-11,
+      "source_fingerprint": "726ec1301ff2caeebadccf806f272d53a7ab577cacaaf47da6788551e4398c28",
+      "last_80_time_mean_volume": 643.7330543839396,
+      "last_80_time_mean_retained_length_D1": 25.81878430944993,
+      "global_sample_interval": 0.02,
+      "integrator": "legacy",
+      "legacy_reference_snapshot_max_difference": {
+        "c": 0.0,
+        "phi": 0.0,
+        "u": 0.0,
+        "v": 0.0,
+        "w": 0.0,
+        "p": 0.0,
+        "q": 0.0,
+        "d": 0.0
+      },
+      "legacy_reference_probe_history_byte_equal": {
+        "history.csv": true,
+        "probe.csv": true
+      },
+      "final_vein_graph_D1": {
+        "cutoff": 1.0,
+        "components": 2,
+        "length": 25.46897180944994,
+        "inoculum_attached_length": 0.0,
+        "inoculum_attached_fraction": 0.0,
+        "mean_wall_clearance": 0.3451791036421415,
+        "near_wall_length_fraction": 0.769427121897537
+      },
+      "late_mean_sampled_peak_period": 1.0123076923076928,
+      "final_D1_mask_differences_from_finest": 50,
+      "relative_mean_volume_difference_from_finest": -0.26125601404037035
+    },
+    "midpoint": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.02,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0,
+        "integrator": "midpoint"
+      },
+      "record": "results/biology_runs/20261119T215407-30c87c85",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 34.356668592537495,
+      "max_conductivity": 479.7909696134807,
+      "late_probe_calcium_range": [
+        6.452697449000913,
+        7.647391556580054
+      ],
+      "late_probe_flow_range": [
+        -0.01769485846855761,
+        0.0008323090932378201
+      ],
+      "late_calcium_period": 1.0199999999999818,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 3.13064851820144e-12,
+      "max_energy_defect": 2.8427107031748484e-11,
+      "source_fingerprint": "726ec1301ff2caeebadccf806f272d53a7ab577cacaaf47da6788551e4398c28",
+      "last_80_time_mean_volume": 866.2062980197221,
+      "last_80_time_mean_retained_length_D1": 34.3566685925375,
+      "global_sample_interval": 0.02,
+      "integrator": "midpoint",
+      "final_vein_graph_D1": {
+        "cutoff": 1.0,
+        "components": 2,
+        "length": 34.35666859253749,
+        "inoculum_attached_length": 0.0,
+        "inoculum_attached_fraction": 0.0,
+        "mean_wall_clearance": 0.3944863024665529,
+        "near_wall_length_fraction": 0.7504413286487246
+      },
+      "late_mean_sampled_peak_period": 1.01205128205128,
+      "final_D1_mask_differences_from_finest": 0,
+      "relative_mean_volume_difference_from_finest": -0.005947125280336918
+    },
+    "midpoint_half": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.01,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0,
+        "integrator": "midpoint"
+      },
+      "record": "results/biology_runs/20261119T215554-5cba825d",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 34.356668592537495,
+      "max_conductivity": 481.5246380940862,
+      "late_probe_calcium_range": [
+        6.45399833558732,
+        7.648109500237541
+      ],
+      "late_probe_flow_range": [
+        -0.018299920785096735,
+        0.000821889736416309
+      ],
+      "late_calcium_period": 1.009999999999991,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 5.819733583933839e-12,
+      "max_energy_defect": 3.5750302831968986e-11,
+      "source_fingerprint": "726ec1301ff2caeebadccf806f272d53a7ab577cacaaf47da6788551e4398c28",
+      "last_80_time_mean_volume": 870.4080138064735,
+      "last_80_time_mean_retained_length_D1": 34.3566685925375,
+      "global_sample_interval": 0.01,
+      "integrator": "midpoint",
+      "final_vein_graph_D1": {
+        "cutoff": 1.0,
+        "components": 2,
+        "length": 34.35666859253749,
+        "inoculum_attached_length": 0.0,
+        "inoculum_attached_fraction": 0.0,
+        "mean_wall_clearance": 0.3944863024665529,
+        "near_wall_length_fraction": 0.7504413286487246
+      },
+      "late_mean_sampled_peak_period": 1.012179487179485,
+      "final_D1_mask_differences_from_finest": 0,
+      "relative_mean_volume_difference_from_finest": -0.0011252627908538981
+    },
+    "midpoint_fine": {
+      "settings": {
+        "arena": "snake",
+        "spacing": 0.5,
+        "seed": 42,
+        "duration": 1280.0,
+        "dt": 0.005,
+        "hill": 4,
+        "feedback": 0.01,
+        "tau_front": 2.0,
+        "save_interval": 8.0,
+        "integrator": "midpoint"
+      },
+      "record": "results/biology_runs/20261119T220030-3a45fde5",
+      "nodes": 1643,
+      "edges": 4626,
+      "occupied_area": 350.00000000000017,
+      "arena_area": 350.0,
+      "body_components": 1,
+      "largest_body_component_area": 349.9999999999997,
+      "target_first_contact_time": 528.0,
+      "retained_length_D1": 34.356668592537495,
+      "max_conductivity": 481.9244703222969,
+      "late_probe_calcium_range": [
+        6.454313815989802,
+        7.648309348842078
+      ],
+      "late_probe_flow_range": [
+        -0.018454460436460002,
+        0.0008226133408760567
+      ],
+      "late_calcium_period": 1.009999999999991,
+      "max_vein_conductivity_outside_body_gate": 0.0,
+      "max_fluid_residual": 1.0491010837831993e-11,
+      "max_energy_defect": 2.886154484020579e-11,
+      "source_fingerprint": "726ec1301ff2caeebadccf806f272d53a7ab577cacaaf47da6788551e4398c28",
+      "last_80_time_mean_volume": 871.3885549237051,
+      "last_80_time_mean_retained_length_D1": 34.356668592537495,
+      "global_sample_interval": 0.005,
+      "integrator": "midpoint",
+      "final_vein_graph_D1": {
+        "cutoff": 1.0,
+        "components": 2,
+        "length": 34.35666859253749,
+        "inoculum_attached_length": 0.0,
+        "inoculum_attached_fraction": 0.0,
+        "mean_wall_clearance": 0.3944863024665529,
+        "near_wall_length_fraction": 0.7504413286487246
+      },
+      "late_mean_sampled_peak_period": 1.0121153846153839,
+      "final_D1_mask_differences_from_finest": 0,
+      "relative_mean_volume_difference_from_finest": 0.0
+    }
+  },
+  "maximum_nine_snapshot_difference_to_midpoint_dt_0005": {
+    "legacy": {
+      "c": 0.8364169463033102,
+      "phi": 0.2635811139748602,
+      "u": 0.029212090774088373,
+      "v": 0.07642812693166268,
+      "w": 0.08810211795459111,
+      "p": 4.023571848819202,
+      "q": 72.29235933789465,
+      "d": 481.8389803937733
+    },
+    "midpoint_coarse": {
+      "c": 0.21606465931238006,
+      "phi": 0.0730661324407973,
+      "u": 0.0040535564178448835,
+      "v": 0.009972021449515367,
+      "w": 0.007260771108938968,
+      "p": 0.5878643693138486,
+      "q": 26.214411945447154,
+      "d": 253.74851066212938
+    },
+    "midpoint": {
+      "c": 0.048121581912267786,
+      "phi": 0.01547873012581924,
+      "u": 0.0009240629622323526,
+      "v": 0.0022617051528386334,
+      "w": 0.001665375629272603,
+      "p": 0.11582628678956652,
+      "q": 3.3546441875471658,
+      "d": 27.327173772685626
+    },
+    "midpoint_half": {
+      "c": 0.00926763701207367,
+      "phi": 0.002953836238735852,
+      "u": 0.00018906853786593292,
+      "v": 0.0004629697355471585,
+      "w": 0.0003178267779304633,
+      "p": 0.022001424428673033,
+      "q": 0.6359187330976219,
+      "d": 5.035374441586555
+    },
+    "midpoint_fine": {
+      "c": 0.0,
+      "phi": 0.0,
+      "u": 0.0,
+      "v": 0.0,
+      "w": 0.0,
+      "p": 0.0,
+      "q": 0.0,
+      "d": 0.0
+    }
+  }
+}

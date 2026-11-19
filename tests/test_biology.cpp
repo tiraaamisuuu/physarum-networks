@@ -19,10 +19,19 @@ int main(int argc,char** argv){try{
  }else if(test=="symmetry"){
   BiologyModel model({{0,0,1,true},{1,0,1,true}},{{0,1,1,2}},{.02,4,.01,20});
   for(int i=0;i<100;++i)model.step();const auto& s=model.state();near(s.q[0],0,1e-13);near(s.p[0],s.p[1],1e-12);near(s.d[0],.1*std::exp(-.15*2),1e-13);near(s.c[0],s.c[1],1e-12);
+ }else if(test=="midpoint_order"){
+  auto state=[](double dt,const std::string& method){
+   BiologyModel m({{0,0,.5,true},{.7,0,1,false},{2,0,.5,false}},{{0,1,.7,1},{1,2,1.3,1}},{dt,4,0,20,method});
+   for(int i=0;i<std::lround(4/dt);++i)m.step();const auto& a=m.state();Eigen::VectorXd out(22);out<<a.c,a.phi,a.u,a.v,a.w,a.p,a.q,a.d;return out;
+  };
+  const Eigen::VectorXd reference=state(.000078125,"midpoint");
+  double last=0;std::cout<<"integrator,dt,scaled_error,refinement_ratio\n";
+  for(const std::string method:{"legacy","midpoint"}){last=0;for(double dt:{.04,.02,.01,.005,.0025,.00125}){const auto a=state(dt,method);const double error=((a-reference).array()/(1+reference.array().abs())).matrix().norm();std::cout<<method<<','<<dt<<','<<error<<','<<(last>0?last/error:0)<<'\n';if(method=="midpoint"&&dt<=.0025&&last>0)require(last/error>2.8,"Midpoint smooth-case refinement should approach second order");last=error;}}
  }else if(test=="mass"){
-  BiologyModel model({{0,0,.2,true},{.7,0,.7,false},{2,0,1.1,false}},{{0,1,.7,.7},{1,2,1.3,.3}},{.02,4,0,20});
+  for(const std::string method:{"legacy","midpoint"}){
+  BiologyModel model({{0,0,.2,true},{.7,0,.7,false},{2,0,1.1,false}},{{0,1,.7,.7},{1,2,1.3,.3}},{.02,4,0,20,method});
   const Eigen::Vector3d masses{.2,.7,1.1};
-  for(int i=0;i<500;++i){model.step();const auto& a=model.state();near(masses.dot(a.u+a.v+.1*a.w),6.2,3e-11);}
+  for(int i=0;i<500;++i){model.step();const auto& a=model.state();near(masses.dot(a.u+a.v+.1*a.w),6.2,3e-11);}}
  }else if(test=="fluid"){
   BiologyModel model({{0,0,.5,true},{.7,0,1,false},{2,0,.5,false}},{{0,1,.7,1},{1,2,1.3,1}},{.01,4,.01,20});
   for(int step=0;step<200;++step){const auto before=model.state();model.step();const auto& s=model.state();Eigen::Vector3d balance=(s.p-before.p)/.01+(s.c+before.c)*.5-Eigen::Vector3d::Constant(7);
