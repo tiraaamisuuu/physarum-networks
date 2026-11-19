@@ -149,4 +149,4 @@ The tube experiment implements its stated numerical equations; mesh construction
 
 Principal source: Tero et al., *Rules for Biologically Inspired Adaptive Network Design*, **Science** 327, 439–442 (2010), [doi:10.1126/science.1177894](https://doi.org/10.1126/science.1177894).
 
-Code: [MIT licence](LICENSE). Geographic data retain their [upstream terms](data/london/README.md). Source PDFs are not redistributed.
+Geographic data retain their [upstream terms](data/london/README.md). Source PDFs are not redistributed.
