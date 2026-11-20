@@ -58,6 +58,47 @@ def edit_food(scene,key=None,*,x=None,y=None,name=None):
 def sandbox_example():
     scene=sandbox_scene();scene,a=edit_food(scene,x=2.,y=5.,name='West food');scene,b=edit_food(scene,x=14.,y=5.,name='East food');scene['nodes'][0]['key']='sandbox-west';scene['nodes'][1]['key']='sandbox-east';scene['name']='Sandbox: route around a blocked area';scene['barriers']=[[7.,2.,9.,8.]];return scene
 
+
+SANDBOX_EXAMPLES={
+    'obstacle':('Obstacle detour','Two foods separated by a central blocked area. Try changing its height.','fixed_pair'),
+    'corridors':('Unequal routes','Two foods with a shorter lower detour and a longer upper detour. Compare what survives across seeds.','fixed_pair'),
+    'network':('Eight-food network','Eight foods around a central obstacle. Different pairs take turns driving flow.','random_pairs'),
+}
+
+
+def example_scene(key):
+    if key not in SANDBOX_EXAMPLES:raise ValueError('Choose an available sandbox example.')
+    if key=='obstacle':return sandbox_example()
+    scene=sandbox_scene();scene['name']='Sandbox: '+SANDBOX_EXAMPLES[key][0]
+    points=[('West food',2,3),('East food',14,3)] if key=='corridors' else [
+        ('South west',2,2),('South food',8,1),('South east',14,2),('North east',14,8),
+        ('North food',8,9),('North west',2,8),('Inner west',5,5),('Inner east',11,5)]
+    for i,(name,x,y) in enumerate(points):
+        scene,stable_key=edit_food(scene,x=x,y=y,name=name);scene['nodes'][-1]['key']=f'sandbox-{key}-{i}'
+    scene['barriers']=[[7.,1.,9.,7.]] if key=='corridors' else [[7.,3.,9.,7.]]
+    validate_scene(scene);return scene
+
+
+def edit_barrier(scene,index=None,*,bounds=None,remove=False):
+    """Edit draft geometry only, rejecting invalid rectangles and covered foods."""
+    result=copy.deepcopy(scene)
+    if index is not None and (isinstance(index,bool) or not isinstance(index,int) or not 0<=index<len(result['barriers'])):raise ValueError('Select an existing blocked area.')
+    if remove:
+        if index is None:raise ValueError('Select a blocked area to remove.')
+        result['barriers'].pop(index);return result
+    if bounds is None or len(bounds)!=4 or any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) for v in bounds):raise ValueError('Use four finite coordinates for the blocked area.')
+    x0,y0,x1,y1=map(float,bounds)
+    if x0>=x1 or y0>=y1:raise ValueError('Minimum coordinates must be smaller than maximum coordinates.')
+    if is_sandbox(result):
+        a,b,c,d=design_bounds(result)
+        if not a<=x0<x1<=c or not b<=y0<y1<=d:raise ValueError('Keep the blocked area inside the sandbox boundary.')
+    if any(x0<=n['x']<=x1 and y0<=n['y']<=y1 for n in food_nodes(result)):raise ValueError('The blocked area contains food. Move its boundary or remove that food site first.')
+    if index is None:
+        if len(result['barriers'])>=100:raise ValueError('Use at most 100 blocked areas.')
+        result['barriers'].append([x0,y0,x1,y1])
+    else:result['barriers'][index]=[x0,y0,x1,y1]
+    validate_scene(result);return result
+
 class DesignHistory:
     def __init__(self,limit=50):self.undo_stack=[];self.redo_stack=[];self.limit=limit
     def push(self,scene):

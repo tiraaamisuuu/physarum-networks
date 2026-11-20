@@ -11,13 +11,13 @@ from matplotlib.figure import Figure
 from matplotlib.patches import Rectangle
 from matplotlib.widgets import RectangleSelector
 from PySide6.QtCore import Qt,QThread,QTimer,Signal,QUrl
-from PySide6.QtGui import QDesktopServices,QPalette,QColor
+from PySide6.QtGui import QDesktopServices,QPalette,QColor,QShortcut,QKeySequence
 from PySide6.QtWidgets import (QMainWindow,QWidget,QSplitter,QVBoxLayout,QHBoxLayout,QFormLayout,QGroupBox,
     QLabel,QPushButton,QDoubleSpinBox,QSpinBox,QComboBox,QCheckBox,QSlider,QTabWidget,QTableWidget,
     QTableWidgetItem,QHeaderView,QFileDialog,QMessageBox,QScrollArea,QDialog,QTextBrowser)
 try:
     from .spatial_data import is_food
-    from .scene_design import sandbox_scene,sandbox_example,scene_title,scene_credit,is_sandbox,food_nodes,edit_food,DesignHistory
+    from .scene_design import sandbox_scene,example_scene,SANDBOX_EXAMPLES,scene_title,scene_credit,is_sandbox,food_nodes,edit_food,edit_barrier,DesignHistory
     from .mesh_routes import retained_route
     from .mesh_data import ROOT,DEFAULT_MESH,DEFAULT_CUTOFF,default_scene,load_mesh_run,run_mesh_experiment,mesh_metrics,effective_mesh_settings,compare_mesh_trajectories,solver_extrema
     from .mesh_plot import draw_tubes,tube_widths,export_snapshot
@@ -26,7 +26,7 @@ try:
     from .mesh_layout import LayoutPanel
 except ImportError:
     from spatial_data import is_food
-    from scene_design import sandbox_scene,sandbox_example,scene_title,scene_credit,is_sandbox,food_nodes,edit_food,DesignHistory
+    from scene_design import sandbox_scene,example_scene,SANDBOX_EXAMPLES,scene_title,scene_credit,is_sandbox,food_nodes,edit_food,edit_barrier,DesignHistory
     from mesh_routes import retained_route
     from mesh_data import ROOT,DEFAULT_MESH,DEFAULT_CUTOFF,default_scene,load_mesh_run,run_mesh_experiment,mesh_metrics,effective_mesh_settings,compare_mesh_trajectories,solver_extrema
     from mesh_plot import draw_tubes,tube_widths,export_snapshot
@@ -53,7 +53,7 @@ class TubeCanvas(FigureCanvasQTAgg):
         self.figure.get_layout_engine().set(rect=(0,.04,1,.96))
         super().__init__(self.figure);self.setMinimumSize(640,430);self.run=None;self.index=0;self.selected=0
         self.names=True;self.background=False;self.cutoff=DEFAULT_CUTOFF
-        self.edit_restriction=False;self.rectangle_selector=None;self.terrain=False;self.draft_patches=[]
+        self.edit_restriction=False;self.rectangle_selector=None;self.terrain=False;self.draft_patches=[];self.route_foods=[]
         self.mpl_connect('button_press_event',self.pick);self.mpl_connect('motion_notify_event',self.hover)
         self.figure.text(.5,.5,'Prepare a tube-network experiment',ha='center',color='#59665e')
     def setup(self,run,cutoff,names=False,background=False):
@@ -68,6 +68,9 @@ class TubeCanvas(FigureCanvasQTAgg):
         self.terminals=self.map.collections[-1]
         if old_limits:self.map.set_xlim(*old_limits[0]);self.map.set_ylim(*old_limits[1])
         self.route_line=self.map.plot([],[],color='#c36e2d',lw=2.7,zorder=7)[0]
+        self.route_rings=self.map.plot([],[],linestyle='None',marker='o',ms=12,mfc='none',mec='#c36e2d',mew=1.4,zorder=10)[0]
+        self.route_markers=[self.map.annotate(letter,(0,0),xytext=(0,-15),textcoords='offset points',ha='center',fontsize=8,fontweight='bold',color='#a55420',zorder=11,visible=False,bbox=dict(boxstyle='circle,pad=.15',fc='white',ec='#c36e2d',lw=.6)) for letter in ('A','B')]
+        for marker in self.route_markers:marker.set_in_layout(False)
         self.hover_annotation=self.map.annotate('',xy=(0,0),xytext=(9,12),textcoords='offset points',fontsize=9,bbox=dict(facecolor='white',edgecolor='#a8b9ac',alpha=.98),zorder=12,visible=False);self.hover_annotation.set_in_layout(False);self.hover_key=None
         if self.terrain and not is_sandbox(run.scene):
             elevation=run.scene['geography']['elevation']
@@ -92,7 +95,7 @@ class TubeCanvas(FigureCanvasQTAgg):
         self.c_cursor=self.cp.axvline(0,color='#a5784d',lw=.8,ls='--');self.cp.set_xlabel('Model time · arbitrary units',fontsize=7)
         self.figure.text(.01,.005,f'{scene_credit(run.scene)}   |   D ≥ {cutoff:g}   |   width ∝ D¼; 1.2 pt at D = 0.5   |   blue / orange = source / sink',fontsize=7,color='#59665e')
         if self.terrain and not is_sandbox(run.scene):self.map.text(.01,.01,'Surface elevation: Copernicus DEM / Open-Meteo (CC BY 4.0)\nContext only; not underground geology',transform=self.map.transAxes,fontsize=6.5,color='#40514b',bbox={'facecolor':'white','alpha':.85,'edgecolor':'none'},zorder=10)
-        self.select_edge(self.selected);self.set_frame(self.index)
+        self.select_edge(self.selected);self.set_frame(self.index);self.set_route_endpoints(self.route_foods)
     def select_edge(self,k):
         self.selected=k
         if self.run is None:return
@@ -105,7 +108,7 @@ class TubeCanvas(FigureCanvasQTAgg):
         run=self.run;keep=run.d[index]>=self.cutoff
         self.links.set_segments(self.xy[self.endpoints[keep]]);self.links.set_linewidths(tube_widths(run.d[index,keep]))
         self.terminals.set_offsets(self.xy[run.pairs[index]])
-        self.map._food_labels.priority=list(map(int,run.pairs[index]))
+        self.map._food_labels.priority=self.route_foods+list(map(int,run.pairs[index]))
         self.highlight.set_data(*self.xy[self.endpoints[self.selected]].T)
         self.highlight.set_visible(run.d[index,self.selected]>=self.cutoff)
         self.title.set_text(f'{scene_title(run.scene)} · t = {run.times[index]:.3g} · {int(keep.sum())} retained tube segments')
@@ -134,6 +137,14 @@ class TubeCanvas(FigureCanvasQTAgg):
     def show_route(self,route):
         if self.run is None:return
         self.route_line.set_data(*self.xy[route['nodes']].T) if route else self.route_line.set_data([],[]);self.draw_idle()
+    def set_route_endpoints(self,foods):
+        self.route_foods=list(foods)
+        if self.run is None:return
+        self.route_rings.set_data(*self.xy[foods].T) if foods else self.route_rings.set_data([],[])
+        for i,marker in enumerate(self.route_markers):
+            marker.set_visible(i<len(foods))
+            if i<len(foods):marker.xy=tuple(self.xy[foods[i]])
+        self.map._food_labels.priority=self.route_foods+list(map(int,self.run.pairs[self.index]));self.draw_idle()
     def rectangle(self,start,end):
         if not self.edit_restriction or any(v is None for v in (start.xdata,start.ydata,end.xdata,end.ydata)):return
         self.restricted.emit([min(start.xdata,end.xdata),min(start.ydata,end.ydata),max(start.xdata,end.xdata),max(start.ydata,end.ydata)])
@@ -214,8 +225,9 @@ class MeshViewer(QMainWindow):
         self.cutoff.setCurrentIndex(2);self.cutoff.currentIndexChanged.connect(self.replot);display.addWidget(self.cutoff)
         self.names=QCheckBox('Key place names');self.names.setToolTip('Shows names that fit. Hover any site for its full name; zoom in for more labels.');self.names.setChecked(True);self.background=QCheckBox('Candidate mesh');self.terrain=QCheckBox('Surface elevation');display.addWidget(self.names);display.addWidget(self.background);display.addWidget(self.terrain);self.names.toggled.connect(self.replot);self.background.toggled.connect(self.replot);self.terrain.toggled.connect(self.replot);display.addStretch()
         export=QPushButton('Export figure + data…');export.clicked.connect(self.export);display.addWidget(export);wl.addLayout(display)
-        self.legend=QLabel('○ Station / food site    ◇ Your custom food    Blue: current start    Orange: current target    Dark paths: simulated connections');self.legend.setWordWrap(True);wl.addWidget(self.legend)
-        self.canvas=TubeCanvas();self.toolbar=NavigationToolbar2QT(self.canvas,self);wl.addWidget(self.toolbar);wl.addWidget(self.canvas,1);self.canvas.picked.connect(self.picked)
+        legend_row=QHBoxLayout();self.legend=QLabel('○ Station / food site    ◇ Your custom food    Blue: current start    Orange: current target    Dark paths: simulated connections');self.legend.setWordWrap(True);legend_row.addWidget(self.legend,1);self.route_pick=QPushButton('Trace route · click 2 foods');self.route_pick.setCheckable(True);self.route_pick.setEnabled(False);self.route_pick.toggled.connect(self.route_pick_mode);legend_row.addWidget(self.route_pick);clear=QPushButton('Clear route');clear.clicked.connect(self.clear_route);legend_row.addWidget(clear);wl.addLayout(legend_row)
+        self.route_pick_start=None;self.route_escape=QShortcut(QKeySequence('Escape'),self);self.route_escape.activated.connect(lambda:self.route_pick.setChecked(False))
+        self.canvas=TubeCanvas();self.toolbar=NavigationToolbar2QT(self.canvas,self);wl.addWidget(self.toolbar);wl.addWidget(self.canvas,1);self.canvas.picked.connect(self.map_picked)
         self.canvas.restricted.connect(self.add_restriction)
         self.tabs.addTab(workspace,'Network')
         self.layout_panel=LayoutPanel(self);self.tabs.addTab(self.layout_panel,'Map editor / sandbox')
@@ -268,14 +280,14 @@ class MeshViewer(QMainWindow):
         self.sync_context()
     def sync_context(self,*_):
         editing=self.tabs.currentWidget() is self.layout_panel
-        self.measurements.setVisible(not editing and self.run_data is not None);self.playback.setVisible(not editing)
+        self.measurements.setVisible(not editing and self.run_data is not None);self.playback.setVisible(not editing);self.narrative.setVisible(not editing)
         if editing:
-            self.pause();self.narrative.setText('Place and name your food sites, choose the connection task, then Compute tube experiment. Blocked areas exclude candidate tubes. Undo and Redo restore design edits; the Network tab keeps the last computed result.')
+            self.pause();self.route_pick.setChecked(False);self.narrative.setText('Place and name your food sites, choose the connection task, then Compute tube experiment. Blocked areas exclude candidate tubes. Undo and Redo restore design edits; the Network tab keeps the last computed result.')
         else:self.narrative.setText(getattr(self,'run_narrative','Choose a map and compute an experiment, or open a recorded run.'))
         if self.worker and self.worker.isRunning():return
         changed=self.run_data is None or effective_mesh_settings(self.settings())!=effective_mesh_settings(self.run_data.settings) or self.scene!=self.run_data.scene
         if editing:
-            self.banner.setText(f"{'DESIGN CHANGED · ' if changed else ''}EDITING {scene_title(self.scene).upper()} · {len(food_nodes(self.scene))} food sites · {len(self.scene['barriers'])} blocked areas · {'place at least two food sites' if len(food_nodes(self.scene))<2 else 'compute to see the result'}")
+            self.banner.setText(f"{'DESIGN CHANGED · ' if changed else ''}EDITING {scene_title(self.scene).upper()} · {len(food_nodes(self.scene))} food sites · {len(self.scene['barriers'])} blocked areas · {'place at least two food sites' if len(food_nodes(self.scene))<2 else 'compute to see the result' if changed else 'saved result available in Network'}")
         elif changed and self.run_data:self.banner.setText(f'DESIGN CHANGED · This is the recorded {scene_title(self.run_data.scene)} result. Compute to apply your current {scene_title(self.scene)} design and controls.')
         else:self.banner.setText('Place at least two food sites in the map editor, then compute.' if len(food_nodes(self.scene))<2 else 'Ready to compute your network experiment.' if changed else f"RECORDED {scene_title(self.run_data.scene).upper()} TUBE RUN · γ {self.run_data.settings['gamma']:g} · I₀ {self.run_data.settings['current']:g} · {self.run_data.settings.get('integrator','euler')} · seed {self.run_data.settings['seed']} · {self.run_data.food_count} foods")
     def start_default(self):
@@ -295,7 +307,11 @@ class MeshViewer(QMainWindow):
         self.commit_design(sandbox_scene() if index else default_scene(),True);self.mode.setCurrentIndex(self.mode.findData('random_pairs'));self.tabs.setCurrentWidget(self.layout_panel)
         if index:self.layout_panel.tools.setCurrentIndex(1)
     def load_sandbox_example(self):
-        self.commit_design(sandbox_example(),True);self.mode.setCurrentIndex(self.mode.findData('fixed_pair'));self.tabs.setCurrentWidget(self.layout_panel)
+        self.load_example('obstacle')
+    def load_example(self,key):
+        scene=example_scene(key);self.commit_design(scene,True);foods=food_nodes(scene)
+        self.set_settings(dict(DEFAULT_MESH,demand_mode=SANDBOX_EXAMPLES[key][2],source_id=foods[0]['key'],sink_id=foods[-1]['key']))
+        self.layout_panel.examples.setCurrentIndex(self.layout_panel.examples.findData(key));self.layout_panel.details.setChecked(False);self.tabs.setCurrentWidget(self.layout_panel);self.statusBar().showMessage(SANDBOX_EXAMPLES[key][1])
     def undo_design(self):
         self.scene=self.design_history.undo(self.scene);self.refresh_pairs();self.draft();self.layout_panel.refresh(True)
     def redo_design(self):
@@ -319,19 +335,40 @@ class MeshViewer(QMainWindow):
     def remove_food(self,key):
         scene=copy.deepcopy(self.scene);scene['nodes']=[n for n in scene['nodes'] if n['key']!=key];self.commit_design(scene)
     def show_route(self):
-        self.route_enabled=True;self.refresh_route();self.tabs.setCurrentIndex(0)
-    def clear_route(self):self.route_enabled=False;self.current_route=None;self.canvas.show_route(None);self.route_text.setText('Route highlight cleared.');self.update_legend();self.picked(*self.selected_pick)
+        self.route_pick.setChecked(False);self.route_enabled=True;self.refresh_route();self.tabs.setCurrentIndex(0)
+    def clear_route(self):
+        self.route_pick.setChecked(False);self.route_enabled=False;self.current_route=None;self.canvas.show_route(None);self.canvas.set_route_endpoints([]);self.route_text.setText('Route highlight cleared.');self.update_legend();self.picked(*self.selected_pick)
+    def route_pick_mode(self,enabled):
+        self.route_pick_start=None
+        if enabled:
+            self.pause();self.restriction_button.setChecked(False)
+            if self.toolbar.mode:self.toolbar.pan() if 'pan' in str(self.toolbar.mode).lower() else self.toolbar.zoom()
+            self.route_enabled=False;self.current_route=None;self.canvas.show_route(None);self.canvas.set_route_endpoints([]);self.update_legend();self.selection.setText('TRACE ROUTE · Click the first food marker (A), then another food (B). Escape cancels.');self.route_pick.setText('Choose A, then B · Esc cancels');self.route_text.setPlainText('Choose A and B on the Network map to inspect a recorded route.')
+        else:
+            self.route_pick.setText('Trace route · click 2 foods')
+            if not self.route_enabled:self.canvas.set_route_endpoints([]);self.selection.setText('Route selection ended. Click Trace route to choose another pair.')
+            self.update_legend()
+    def map_picked(self,kind,k):
+        if self.route_pick.isChecked():
+            if kind!='food':self.selection.setText('TRACE ROUTE · Click a food marker to choose A or B.');return
+            if self.route_pick_start is None:
+                self.route_pick_start=k;self.route_start.setCurrentIndex(self.route_start.findData(k));self.canvas.set_route_endpoints([k]);self.selection.setText(f"A · {self.run_data.mesh['nodes'][k]['name']} · Now click a different food marker for B.")
+            elif k==self.route_pick_start:self.selection.setText('Choose a different food marker for B.');return
+            else:self.route_end.setCurrentIndex(self.route_end.findData(k));self.show_route()
+            return
+        self.picked(kind,k)
     def update_legend(self):
-        self.legend.setText('○ Station / food site    ◇ Your custom food    Blue / orange dots: current start / target    Dark paths: simulated connections'+('    Orange path: inspected route' if self.current_route else ''))
+        self.legend.setText('○ Station / food site    ◇ Your custom food    Blue / orange dots: current start / target    Dark paths: simulated connections'+('    A/B: route ends' if self.route_enabled or self.route_pick.isChecked() else '')+('    Orange path: inspected route' if self.current_route else ''))
     def refresh_route(self):
         if not self.route_enabled or self.run_data is None:return
         try:
             a,b=self.route_start.currentData(),self.route_end.currentData();route=retained_route(self.run_data,self.index,a,b,self.cutoff.currentData());self.current_route=route;self.canvas.show_route(route)
+            self.canvas.set_route_endpoints([a,b])
             if route:
                 text=' → '.join(route['foods']);self.route_text.setPlainText(f"RETAINED ROUTE\n{self.run_data.mesh['nodes'][a]['name']} → {self.run_data.mesh['nodes'][b]['name']}\n\nLength: {route['length_km']:.3f} km\nDirect distance: {route['direct_km']:.3f} km\n{len(route['edges'])} simulated segments\n\nFood sites actually traversed:\n{text}\n\nOrange is the inspected route, not a TfL line. It uses the current recorded frame and cutoff.")
                 self.selection.setText(f"ROUTE · {text} · {route['length_km']:.2f} km · {len(route['edges'])} retained segments")
             else:self.route_text.setPlainText('No retained route joins these sites in this frame at this cutoff. Nothing has been drawn to bridge the gap.');self.selection.setText('ROUTE · These sites are disconnected in the current retained network.')
-        except (ValueError,TypeError) as e:self.route_text.setPlainText(str(e));self.current_route=None;self.canvas.show_route(None)
+        except (ValueError,TypeError) as e:self.route_text.setPlainText(str(e));self.current_route=None;self.canvas.show_route(None);self.canvas.set_route_endpoints([])
         self.update_legend()
     def choose_foods(self):
         dialog=StationDialog(self.scene['geography'],{n['tfl_id'] for n in self.scene['nodes'] if n['kind']=='station'},self)
@@ -365,11 +402,17 @@ class MeshViewer(QMainWindow):
         self.layout_panel.draw_button.setChecked(enabled)
         if enabled:self.pause();self.tabs.setCurrentWidget(self.layout_panel)
     def add_restriction(self,rect):
-        if any(r[0]<=n['x']<=r[2] and r[1]<=n['y']<=r[3] for r in [rect] for n in self.scene['nodes'] if is_food(n)):
-            QMessageBox.warning(self,'Food inside restriction','The rectangle contains a food source. Move its boundary or remove that food source first.');return
-        self.design_history.push(self.scene);self.scene['barriers'].append(rect);self.restriction_button.setChecked(False);self.layout_panel.draw_button.setChecked(False);self.draft()
+        try:
+            scene=edit_barrier(self.scene,bounds=rect);self.restriction_button.setChecked(False);self.layout_panel.draw_button.setChecked(False);self.commit_design(scene);self.layout_panel.select_barrier(len(scene['barriers'])-1)
+        except ValueError as error:self.statusBar().showMessage(str(error));self.layout_panel.instruction.setText(str(error)+' Draw another rectangle.');self.layout_panel.refresh()
+    def set_barrier(self,index,rect):
+        try:self.commit_design(edit_barrier(self.scene,index,bounds=rect));self.layout_panel.select_barrier(index)
+        except ValueError as error:self.statusBar().showMessage(str(error));self.layout_panel.refresh()
+    def remove_barrier(self,index):
+        try:self.commit_design(edit_barrier(self.scene,index,remove=True));self.layout_panel.canvas.focus_barrier(None)
+        except ValueError as error:self.statusBar().showMessage(str(error))
     def remove_restriction(self):
-        if self.scene['barriers']:self.design_history.push(self.scene);self.scene['barriers'].pop();self.draft()
+        if self.scene['barriers']:self.remove_barrier(len(self.scene['barriers'])-1)
     def compute(self):
         if (self.worker and self.worker.isRunning()) or self.sweep_panel.running():return
         self.pause();self.worker=MeshWorker(self.scene,self.settings(),self);self.worker.completed.connect(self.accept_run);self.worker.failed.connect(self.failed);self.worker.finished.connect(self.worker_done)
@@ -386,8 +429,8 @@ class MeshViewer(QMainWindow):
         if not self.closing:QMessageBox.warning(self,'Experiment stopped',error)
     def accept_run(self,run):
         if self.run_data:self.previous=self.run_data
-        self.run_data=run;self.index=0;self.playhead=0.;self.selected_pick=('edge',0);self.slider.blockSignals(True);self.slider.setRange(0,len(run.times)-1);self.slider.setValue(0);self.slider.blockSignals(False)
-        self.route_enabled=False;self.current_route=None
+        self.run_data=run;self.index=0;self.playhead=0.;self.canvas.selected=int(np.argmax(run.d[-1]));self.selected_pick=('edge',self.canvas.selected);self.slider.blockSignals(True);self.slider.setRange(0,len(run.times)-1);self.slider.setValue(0);self.slider.blockSignals(False)
+        self.route_enabled=False;self.current_route=None;self.route_pick.setChecked(False);self.route_pick.setEnabled(True);self.canvas.route_foods=[]
         self.update_legend();self.route_text.setText('Choose two sites from this recorded run, then Highlight route.')
         for box in (self.route_start,self.route_end):
             box.blockSignals(True);box.clear()

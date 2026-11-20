@@ -16,16 +16,20 @@ The native Qt laboratory opens on a named London station map. Place custom food 
 On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It builds the C++ engines and opens **London** at the final computed network. A complete matching local record is reused; otherwise one is computed and saved.
 
 1. Hover a station for its full name. Zoom for more labels. Click a tube to inspect its conductivity and flow; press **Play adaptation** to replay the run.
-2. Open **Edit map / place food**. Search for a station, click a grey station to add it, or choose **Place food · click map** for your own points. Rename or edit custom coordinates in the table. Use **Move custom food · drag**, **Remove food · click**, **Undo** and **Redo**.
-3. Choose **Blank sandbox** in the sidebar for a fresh local arena. **Load obstacle example** provides two named foods and a blocked rectangle. You can also place custom food directly on London.
+2. Open **Edit map / place food**. Search for a station, click a grey station to add it, or choose **Place food · click map** for your own points. **Edit coordinates** opens the food/blocked-area tables. Use **Move custom food · drag**, **Remove food · click**, **Undo** and **Redo**.
+3. Choose **Blank sandbox**, select **Obstacle detour**, **Unequal routes** or **Eight-food network**, then **Load example**. **Check design / preview paths** shows the actual candidate mesh, checks food reachability and estimates recording size. You can also place custom food directly on London.
 4. Choose **Connect all selected places**, or **Find a start → target route** for a fixed pair. Press **Compute tube experiment**. The final network opens automatically; designs and old computed records remain distinct.
-5. In **Route inspector**, choose two recorded sites and **Highlight route**. Orange traces the shortest physical-distance route through surviving simulated segments. Disconnected sites remain disconnected. **Export figure + data** includes the route and its underlying measurements.
+5. Press **Trace route · click 2 foods** and click A/B on the result map, or choose sites in **Route inspector**. Orange traces the shortest physical-distance route through surviving simulated segments. Disconnected sites remain disconnected. **Export figure + data** includes the route and its underlying measurements.
 
 [Step-by-step sandbox guide](docs/SANDBOX.md) · [Model and numerical protocol](docs/TUBE_EXPERIMENT.md)
 
 ![Computed sandbox network routing around a blocked area.](docs/assets/sandbox-pathfinding.png)
 
 *Both food coordinates are exact graph vertices. The obstacle excludes intersecting tubes before the run; the highlighted route uses only retained numerical edges. This is adaptation of an existing candidate mesh, not biological growth or a globally optimal path guarantee.*
+
+![Eight-food sandbox example and a route inspected between two selected food sites.](docs/assets/sandbox-workflow.png)
+
+*Actual Qt render of the seed-42 eight-food example. All eight foods are in one retained component at D ≥ 10⁻⁴. The A/B route highlight inspects the saved graph; it does not change the forcing or add edges.*
 
 ## Separate biological growth benchmark
 
@@ -148,7 +152,7 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'tes
 
 The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every integration transition, exact food attachment and file checksums. Source snapshots and a compiled C++ fingerprint bind new records to their engine source. Metric fixtures test trees, cycles and disconnections.
 
-Locally, **34 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **96 Python tests** pass. The sandbox checks include actual C++ obstacle avoidance, exact food attachment, disconnected routes, signed route exports and native editing without record mutation. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
+Locally, **34 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **104 Python tests** pass. The sandbox checks include actual C++ obstacle avoidance, exact food attachment, disconnected routes, signed route exports, preview/run agreement, map route selection and native editing without record mutation. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
 
 The tube experiment implements its stated numerical equations; mesh construction, initial fluctuations, demand timing and integration are documented choices. The growth experiment has additional source-equation ambiguities and explicitly labelled variants. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
 

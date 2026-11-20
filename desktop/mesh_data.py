@@ -81,7 +81,7 @@ def capture_source_snapshot(folder):
 def archive_source_snapshot(run_folder,target):
     """Deterministic, code-only archive; never includes run data or arbitrary extra files."""
     run_folder=Path(run_folder);manifest=json.loads((run_folder/'scenario.json').read_text())
-    if not manifest.get('software',{}).get('source_snapshot'):return
+    if not manifest.get('software',{}).get('source_snapshot'):Path(target).unlink(missing_ok=True);return
     with Path(target).open('wb') as raw,gzip.GzipFile(filename='',fileobj=raw,mode='wb',mtime=0) as compressed,tarfile.open(fileobj=compressed,mode='w') as archive:
         for name,digest in sorted(manifest['software']['source_sha256'].items()):
             data=(run_folder/'source'/name).read_bytes()
@@ -362,11 +362,18 @@ def compare_mesh_trajectories(a,b):
     return dict(coarse_dt=coarse.settings['dt'],fine_dt=fine.settings['dt'],method_a=sa['integrator'],method_b=sb['integrator'],max_D_difference=max(differences),final_D_max_difference=differences[-1],rms_D_difference=math.sqrt(sum_squares/count),times=coarse.times.tolist(),max_D_difference_by_time=differences,interpretation='Matched graph, initial values and full held forcing. A finite pairwise numerical comparison, not an exact error estimate or proof of converged topology.')
 
 
-def run_mesh_experiment(scene,settings,root=None,cancel=None):
-    scene,settings=copy.deepcopy(scene),copy.deepcopy(settings);steps,_=validate_mesh_settings(settings);mesh=build_mesh(scene,settings)
+def prepare_mesh_experiment(scene,settings):
+    """Shared preview/run preparation. No flow solve or numerical output is created."""
+    steps,_=validate_mesh_settings(settings);mesh=build_mesh(scene,settings)
     if len(mesh['edges'])*(steps+1)>25000000:raise ValueError('This mesh/time-step combination creates too much recorded data; increase spacing or dt.')
-    if mesh_raw_bytes(mesh,settings)>512_000_000:raise ValueError('This experiment exceeds 512 MB of raw states; increase dt or mesh spacing.')
-    pairs=mesh_demands(scene,settings);m=len(mesh['edges']);rng=np.random.default_rng(np.random.SeedSequence([settings['seed'],23]))
+    raw_bytes=mesh_raw_bytes(mesh,settings)
+    if raw_bytes>512_000_000:raise ValueError('This experiment exceeds 512 MB of raw states; increase dt or mesh spacing.')
+    return dict(mesh=mesh,pairs=mesh_demands(scene,settings),states=steps+1,raw_bytes=raw_bytes)
+
+
+def run_mesh_experiment(scene,settings,root=None,cancel=None):
+    scene,settings=copy.deepcopy(scene),copy.deepcopy(settings);prepared=prepare_mesh_experiment(scene,settings)
+    mesh,pairs=prepared['mesh'],prepared['pairs'];m=len(mesh['edges']);rng=np.random.default_rng(np.random.SeedSequence([settings['seed'],23]))
     initial=settings['initial_conductivity']*(1+rng.uniform(-settings['initial_noise'],settings['initial_noise'],m))
     folder=Path(root or ROOT/'results/mesh_runs')/(datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+uuid.uuid4().hex[:8]);inputs=folder/'inputs';inputs.mkdir(parents=True)
     manifest=dict(schema_version=2 if 'integrator' in settings else 1,model='Tero_2010_sigmoid_mesh_v1',scene=scene,settings=settings,mesh=mesh,

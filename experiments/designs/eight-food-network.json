@@ -1,0 +1,128 @@
+{
+  "model": "Tero_2010_sigmoid_mesh_v1",
+  "scene": {
+    "schema_version": 1,
+    "name": "Sandbox: Eight-food network",
+    "nodes": [
+      {
+        "key": "sandbox-network-0",
+        "kind": "food",
+        "name": "South west",
+        "x": 2.0,
+        "y": 2.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-1",
+        "kind": "food",
+        "name": "South food",
+        "x": 8.0,
+        "y": 1.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-2",
+        "kind": "food",
+        "name": "South east",
+        "x": 14.0,
+        "y": 2.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-3",
+        "kind": "food",
+        "name": "North east",
+        "x": 14.0,
+        "y": 8.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-4",
+        "kind": "food",
+        "name": "North food",
+        "x": 8.0,
+        "y": 9.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-5",
+        "kind": "food",
+        "name": "North west",
+        "x": 2.0,
+        "y": 8.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-6",
+        "kind": "food",
+        "name": "Inner west",
+        "x": 5.0,
+        "y": 5.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-network-7",
+        "kind": "food",
+        "name": "Inner east",
+        "x": 11.0,
+        "y": 5.0,
+        "provenance": "User-placed food site; not an official station."
+      }
+    ],
+    "barriers": [
+      [
+        7.0,
+        3.0,
+        9.0,
+        7.0
+      ]
+    ],
+    "geography": {
+      "coordinate_system": "local_km",
+      "design_bounds_km": [
+        0.0,
+        0.0,
+        16.0,
+        10.0
+      ],
+      "station_catalog": [],
+      "river": [],
+      "elevation": {
+        "x": [
+          0.0,
+          16.0
+        ],
+        "y": [
+          0.0,
+          10.0
+        ],
+        "metres": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    }
+  },
+  "settings": {
+    "seed": 42,
+    "spacing": 0.45,
+    "current": 2.0,
+    "gamma": 1.8,
+    "dt": 0.0125,
+    "duration": 30.0,
+    "switch_interval": 0.05,
+    "initial_conductivity": 0.5,
+    "initial_noise": 0.1,
+    "river_penalty": 0.0,
+    "demand_mode": "random_pairs",
+    "source_id": "sandbox-network-0",
+    "sink_id": "sandbox-network-7",
+    "integrator": "heun"
+  }
+}

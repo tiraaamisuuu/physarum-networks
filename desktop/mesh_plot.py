@@ -61,16 +61,19 @@ def snapshot_figure(run,index,cutoff=DEFAULT_CUTOFF,names=False,route=None):
     axis=figure.add_subplot();draw_tubes(axis,run,index,cutoff,names)
     if route:
         coords=np.array([[n['x'],n['y']] for n in run.mesh['nodes']]);axis.plot(*coords[route['nodes']].T,color='#c36e2d',lw=2.5,zorder=6)
+        ends=coords[[route['nodes'][0],route['nodes'][-1]]];axis.plot(*ends.T,linestyle='None',marker='o',ms=10,mfc='none',mec='#c36e2d',mew=1.2,zorder=7)
+        for letter,point in zip(('A','B'),ends):axis.annotate(letter,point,xytext=(0,-15),textcoords='offset points',ha='center',fontsize=8,fontweight='bold',color='#a55420',zorder=8)
     metrics=mesh_metrics(run,index,cutoff,True)
     axis.set_title(f"{scene_title(run.scene)} · adaptive tube network · t = {run.times[index]:g}",loc='left',fontsize=12,pad=18)
     figure.suptitle(f"γ = {run.settings['gamma']:g}   I₀ = {run.settings['current']:g}   Δt = {run.settings['dt']:g}   {run.settings.get('integrator','euler')}   seed = {run.settings['seed']}   mesh = {run.settings['spacing']:g} km",fontsize=9)
-    route_label=f"\nOrange path: inspected retained route · {route['length_km']:.3f} km" if route else ''
+    route_label=f"\nA/B: inspected route ends · orange path: retained route · {route['length_km']:.3f} km" if route else ''
     axis.text(.01,.01,f"{metrics['largest_food_component']}/{run.food_count} foods in largest component · retained length {metrics['length_km']:.2f} km\nD ≥ {cutoff:g}; width ∝ D¼ (1.2 pt at D = 0.5). Blue/orange dots: current source/sink.{route_label}\n{scene_credit(run.scene)} · model time, not biological hours",transform=axis.transAxes,fontsize=7,color='#40514b',va='bottom',bbox={'facecolor':'white','alpha':.9,'edgecolor':'none'})
     return figure
 
 
 def export_snapshot(run,index,folder,cutoff=DEFAULT_CUTOFF,names=False,route=None):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
+    if route is None:(folder/'route.csv').unlink(missing_ok=True)
     metrics=mesh_metrics(run,index,cutoff,True)
     record=dict(model='Tero_2010_sigmoid_mesh_v1',integration_method=run.settings.get('integrator','euler'),run_folder=str(run.folder.resolve()),state=index,time=float(run.times[index]),settings=run.settings,metrics=metrics,solver_extrema=solver_extrema(run),
         interpretation='Cutoff defines this measured/displayed graph only; all numerical D are unchanged. Single-break survival assumes one break uniformly along retained physical length; it is not the paper’s fault-tolerance statistic. Terminal MST is a reference, not a Steiner lower bound.')

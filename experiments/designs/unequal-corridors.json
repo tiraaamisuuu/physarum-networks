@@ -1,0 +1,80 @@
+{
+  "model": "Tero_2010_sigmoid_mesh_v1",
+  "scene": {
+    "schema_version": 1,
+    "name": "Sandbox: Unequal routes",
+    "nodes": [
+      {
+        "key": "sandbox-corridors-0",
+        "kind": "food",
+        "name": "West food",
+        "x": 2.0,
+        "y": 3.0,
+        "provenance": "User-placed food site; not an official station."
+      },
+      {
+        "key": "sandbox-corridors-1",
+        "kind": "food",
+        "name": "East food",
+        "x": 14.0,
+        "y": 3.0,
+        "provenance": "User-placed food site; not an official station."
+      }
+    ],
+    "barriers": [
+      [
+        7.0,
+        1.0,
+        9.0,
+        7.0
+      ]
+    ],
+    "geography": {
+      "coordinate_system": "local_km",
+      "design_bounds_km": [
+        0.0,
+        0.0,
+        16.0,
+        10.0
+      ],
+      "station_catalog": [],
+      "river": [],
+      "elevation": {
+        "x": [
+          0.0,
+          16.0
+        ],
+        "y": [
+          0.0,
+          10.0
+        ],
+        "metres": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    }
+  },
+  "settings": {
+    "seed": 42,
+    "spacing": 0.45,
+    "current": 2.0,
+    "gamma": 1.8,
+    "dt": 0.0125,
+    "duration": 30.0,
+    "switch_interval": 0.05,
+    "initial_conductivity": 0.5,
+    "initial_noise": 0.1,
+    "river_penalty": 0.0,
+    "demand_mode": "fixed_pair",
+    "source_id": "sandbox-corridors-0",
+    "sink_id": "sandbox-corridors-1",
+    "integrator": "heun"
+  }
+}
