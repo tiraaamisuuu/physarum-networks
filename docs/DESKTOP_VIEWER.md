@@ -2,7 +2,7 @@
 
 The viewer is a Qt desktop application using PySide6 and Matplotlib. Python provides the interface and plotting; the existing C++20/Eigen executable remains responsible for all simulation steps. There is no web server or browser component.
 
-The default application opens the **Tube-network laboratory**: a fine spatial mesh, exact food vertices and the Tero pressure–flow/sigmoid equations. Start with the [tube experiment guide](TUBE_EXPERIMENT.md). The previous [particle growth model](GROWTH_EXPERIMENT.md) remains available through Other models or `--particles`; the [coarse London experiment](LONDON_EXPERIMENT.md) uses `--network`. The rest of this document describes the original **four-node validation viewer**, available through Other models → Four-node mathematical fixture or `--fixture`. Its schematic geometry and archive format remain separate.
+The default application opens the **Tube-network laboratory**: a fine spatial mesh, exact food vertices and the Tero pressure–flow/sigmoid equations. Start with the [London/sandbox guide](SANDBOX.md) or the [tube experiment protocol](TUBE_EXPERIMENT.md). The previous [particle growth model](GROWTH_EXPERIMENT.md) remains available through Other models or `--particles`; the [coarse London experiment](LONDON_EXPERIMENT.md) uses `--network`. The rest of this document describes the original **four-node validation viewer**, available through Other models → Four-node mathematical fixture or `--fixture`. Its schematic geometry and archive format remain separate.
 
 ## Start the four-node viewer
 

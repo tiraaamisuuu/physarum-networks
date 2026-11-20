@@ -1,6 +1,6 @@
 # Exploratory biological growth laboratory
 
-The default native application now runs a **mechanistic exploratory-migration benchmark**, before the separate London transport experiment. It is a working research prototype, **not a quantitatively reproduced paper or a biologically validated digital organism**.
+The native application includes a separate **mechanistic exploratory-migration benchmark**, accessible through **Other models → Biological growth benchmark · corridor** or `--biology`. London and the food-site sandbox open by default. The biological benchmark is a working research prototype, **not a quantitatively reproduced paper or a biologically validated digital organism**.
 
 The earlier particle trail model was insufficient for interpreting an expanding living body or persistent veins. Narrowing its glow would not repair that distinction. This laboratory instead couples an advancing reaction–diffusion margin, calcium/phosphorylation dynamics, pressure, compliant fluid flow and vein adaptation.
 
@@ -95,7 +95,7 @@ The energy diagnostic checks **this frozen linear substep**, not energy conserva
 
 ## What you can inspect
 
-Double-click `Launch Physarum.command`, then press **Play growth** for a matching cached record. To try changes, use **Run short growth experiment** for about 80 model units, or compute the selected full duration. The short experiment preserves equations, mesh and time step; only its duration and recording interval change. The app reuses a complete matching local record when its engine source still matches. **Follow colony** keeps the expanding footprint visible; turn it off for the full arena.
+Double-click `Launch Physarum.command`, open **Other models → Biological growth benchmark · corridor**, then press **Play growth** for a matching cached record. To try changes, use **Run short growth experiment** for about 80 model units, or compute the selected full duration. The short experiment preserves equations, mesh and time step; only its duration and recording interval change. The app reuses a complete matching local record when its engine source still matches. **Follow colony** keeps the expanding footprint visible; turn it off for the full arena.
 
 - Body colour is the piecewise-linear w field: unoccupied arena, advancing band, transition, accumulated body. It is not predicted optical intensity.
 - Fine veins are the actual mesh D values. Width is proportional to D¼, with a fixed scale of 0.5 pt at D = 1. The adjustable cutoff only affects rendering. Raw D is never clipped or pruned.
@@ -107,7 +107,7 @@ Double-click `Launch Physarum.command`, then press **Play growth** for a matchin
 
 **Unapplied controls are highlighted above the plots**; the displayed state always retains its recorded settings. Complete records save automatically under `results/biology_runs/`. Open a copied complete folder to inspect it on another computer. Checksums, initial conditions, positivity, monotone w, body gating, timing, summaries and source fingerprints are checked when loading.
 
-Use **Other models → London tube adaptation** or `--tubes` for the existing food-site network experiment. The older particle model and analytic fixture remain available. The biological corridor and transport models are intentionally distinct experiments.
+The launcher opens the London and food-site sandbox laboratory; `--tubes` remains an alias for it. The older particle model and analytic fixture remain available. The biological corridor and transport models are intentionally distinct experiments.
 
 ## Limits and next biological targets
 

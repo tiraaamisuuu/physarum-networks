@@ -53,6 +53,8 @@ def hits_rectangle(a,b,rect):
     return any(intersects(a,b,corners[i],corners[(i+1)%4]) for i in range(4))
 
 
+def is_food(node):return node.get('kind') in ('station','food')
+
 def within_coverage(node,geography):
     bounds=geography.get('coverage_bounds_lat_lon')
     if bounds is None:return True  # Synthetic mathematical fixtures need no geographic bounds.
@@ -66,15 +68,24 @@ def validate_scene(scene):
     if not isinstance(scene['name'],str) or not isinstance(geography['station_catalog'],list):
         raise ValueError('Invalid scenario labels or station catalogue.')
     for node in nodes:
-        if node['kind'] not in ('station','junction') or not isinstance(node['name'],str):
+        if node['kind'] not in ('station','food','junction') or not isinstance(node['name'],str):
             raise ValueError('Each node needs a station/junction role and a name.')
-        if not all(math.isfinite(node[key]) for key in ('x','y','lat','lon')):
+        if not all(math.isfinite(node[key]) for key in (('x','y') if geography.get('coordinate_system')=='local_km' else ('x','y','lat','lon'))):
             raise ValueError('Node coordinates must be finite.')
         if not within_coverage(node,geography):
             raise ValueError(f'{node["name"]} is outside the cached Thames coverage. Use stations/junctions inside the central London study area; extend the geographic dataset before studying outer London.')
+    keys=[n.get('key') for n in nodes]
+    if any(not isinstance(k,str) or not k for k in keys) or len(set(keys))!=len(keys):raise ValueError('Each design node needs a unique stable key.')
+    if geography.get('coordinate_system')=='local_km':
+        bounds=geography.get('design_bounds_km',[])
+        if len(bounds)!=4 or not all(math.isfinite(v) for v in bounds) or bounds[0]>=bounds[2] or bounds[1]>=bounds[3]:raise ValueError('Invalid sandbox boundary.')
+        if any(not bounds[0]<=n['x']<=bounds[2] or not bounds[1]<=n['y']<=bounds[3] for n in nodes):raise ValueError('A food site is outside the sandbox boundary.')
     for rect in scene['barriers']:
         if len(rect)!=4 or not all(math.isfinite(v) for v in rect) or rect[0]>=rect[2] or rect[1]>=rect[3]:
             raise ValueError('Restricted rectangles must have finite ordered bounds.')
+    if 'mesh_bounds_km' in scene:
+        b=scene['mesh_bounds_km']
+        if len(b)!=4 or not all(math.isfinite(v) for v in b) or b[0]>=b[2] or b[1]>=b[3] or max(b[2]-b[0],b[3]-b[1])>100:raise ValueError('Invalid candidate-mesh extent.')
     elevation=geography['elevation']
     heights=np.asarray(elevation['metres'],dtype=float)
     if (len(elevation['x'])<2 or len(elevation['y'])<2 or heights.shape!=(len(elevation['y']),len(elevation['x'])) or

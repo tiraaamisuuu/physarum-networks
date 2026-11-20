@@ -8,8 +8,12 @@ from matplotlib.collections import LineCollection
 from matplotlib.figure import Figure
 from matplotlib.patches import Rectangle
 try:
+    from .scene_design import scene_title,scene_credit,is_sandbox
+    from .map_labels import FoodLabels
     from .mesh_data import DEFAULT_CUTOFF, mesh_metrics,archive_source_snapshot,solver_extrema
 except ImportError:
+    from scene_design import scene_title,scene_credit,is_sandbox
+    from map_labels import FoodLabels
     from mesh_data import DEFAULT_CUTOFF, mesh_metrics,archive_source_snapshot,solver_extrema
 
 INK='#263d38'
@@ -34,33 +38,44 @@ def draw_tubes(axis,run,index,cutoff=DEFAULT_CUTOFF,names=False,background=False
     links=LineCollection(segments[keep],colors=INK,linewidths=tube_widths(run.d[index,keep]),zorder=3)
     axis.add_collection(links)
     f=run.food_count
-    axis.scatter(*xy[:f].T,s=22,facecolors='#fafbf8',edgecolors=FOOD,linewidths=1,zorder=5)
+    for kind,marker,color in [('station','o',FOOD),('food','D','#b17c2b')]:
+        ids=[i for i,n in enumerate(run.mesh['nodes'][:f]) if n['kind']==kind]
+        if ids:axis.scatter(*xy[ids].T,s=30,marker=marker,facecolors='#fafbf8',edgecolors=color,linewidths=1.1,zorder=5)
     pair=run.pairs[index]
     axis.scatter(*xy[pair].T,s=44,c=['#196fad','#cf7639'],edgecolors='white',linewidths=.8,zorder=6)
-    if names:
-        for n in run.mesh['nodes'][:f]:axis.annotate(n['name'],(n['x'],n['y']),xytext=(4,4),textcoords='offset points',fontsize=6,zorder=7)
+    axis._food_labels=FoodLabels(axis,run.mesh['nodes'][:f],'key' if names else 'none')
     axis.set_xlim(xy[:,0].min()-.2,xy[:,0].max()+.2);axis.set_ylim(xy[:,1].min()-.2,xy[:,1].max()+.2)
     axis.set_aspect('equal');axis.tick_params(labelsize=8)
-    axis.set_xlabel('British National Grid easting (km)',fontsize=8);axis.set_ylabel('Northing (km)',fontsize=8)
+    axis.set_xlabel('Local easting (km)' if is_sandbox(run.scene) else 'British National Grid easting (km)',fontsize=8);axis.set_ylabel('Northing (km)',fontsize=8)
     axis.spines[['top','right']].set_visible(False)
+    axis.annotate('N',xy=(.96,.94),xytext=(.96,.84),xycoords='axes fraction',ha='center',fontsize=9,color='#40514b',arrowprops=dict(arrowstyle='-|>',color='#40514b',lw=.8))
+    if run.scene['geography']['river']:
+        way=max(run.scene['geography']['river'],key=lambda w:len(w['xy_km']));p=np.asarray(way['xy_km']);target=xy[:f].mean(axis=0);point=p[np.argmin(np.linalg.norm(p-target,axis=1))];axis.annotate('River Thames',point,xytext=(4,-11),textcoords='offset points',fontsize=7,color='#508b9d',zorder=2)
     return links
 
 
-def snapshot_figure(run,index,cutoff=DEFAULT_CUTOFF,names=False):
+def snapshot_figure(run,index,cutoff=DEFAULT_CUTOFF,names=False,route=None):
     figure=Figure(figsize=(11,7),dpi=160,layout='constrained',facecolor='white')
+    from matplotlib.backends.backend_agg import FigureCanvasAgg
+    FigureCanvasAgg(figure)
     axis=figure.add_subplot();draw_tubes(axis,run,index,cutoff,names)
+    if route:
+        coords=np.array([[n['x'],n['y']] for n in run.mesh['nodes']]);axis.plot(*coords[route['nodes']].T,color='#c36e2d',lw=2.5,zorder=6)
     metrics=mesh_metrics(run,index,cutoff,True)
-    axis.set_title(f"London · adaptive tube network · t = {run.times[index]:g}",loc='left',fontsize=12,pad=18)
+    axis.set_title(f"{scene_title(run.scene)} · adaptive tube network · t = {run.times[index]:g}",loc='left',fontsize=12,pad=18)
     figure.suptitle(f"γ = {run.settings['gamma']:g}   I₀ = {run.settings['current']:g}   Δt = {run.settings['dt']:g}   {run.settings.get('integrator','euler')}   seed = {run.settings['seed']}   mesh = {run.settings['spacing']:g} km",fontsize=9)
-    axis.text(.01,.01,f"{metrics['largest_food_component']}/{run.food_count} foods in largest component · retained length {metrics['length_km']:.2f} km\nD ≥ {cutoff:g}; width ∝ D¼ (1.2 pt at D = 0.5). Blue/orange: current source/sink.\nTfL coordinates · © OpenStreetMap contributors · model time, not biological hours",transform=axis.transAxes,fontsize=7,color='#40514b',va='bottom',bbox={'facecolor':'white','alpha':.9,'edgecolor':'none'})
+    route_label=f"\nOrange path: inspected retained route · {route['length_km']:.3f} km" if route else ''
+    axis.text(.01,.01,f"{metrics['largest_food_component']}/{run.food_count} foods in largest component · retained length {metrics['length_km']:.2f} km\nD ≥ {cutoff:g}; width ∝ D¼ (1.2 pt at D = 0.5). Blue/orange dots: current source/sink.{route_label}\n{scene_credit(run.scene)} · model time, not biological hours",transform=axis.transAxes,fontsize=7,color='#40514b',va='bottom',bbox={'facecolor':'white','alpha':.9,'edgecolor':'none'})
     return figure
 
 
-def export_snapshot(run,index,folder,cutoff=DEFAULT_CUTOFF,names=False):
+def export_snapshot(run,index,folder,cutoff=DEFAULT_CUTOFF,names=False,route=None):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     metrics=mesh_metrics(run,index,cutoff,True)
     record=dict(model='Tero_2010_sigmoid_mesh_v1',integration_method=run.settings.get('integrator','euler'),run_folder=str(run.folder.resolve()),state=index,time=float(run.times[index]),settings=run.settings,metrics=metrics,solver_extrema=solver_extrema(run),
         interpretation='Cutoff defines this measured/displayed graph only; all numerical D are unchanged. Single-break survival assumes one break uniformly along retained physical length; it is not the paper’s fault-tolerance statistic. Terminal MST is a reference, not a Steiner lower bound.')
+    record['coordinate_reference']='local_km' if is_sandbox(run.scene) else 'EPSG:27700 / km'
+    record['route']=route
     (folder/'snapshot.json').write_text(json.dumps(record,indent=2)+'\n')
     shutil.copyfile(run.folder/'scenario.json',folder/'scenario.json');archive_source_snapshot(run.folder,folder/'source.tar.gz')
     with (folder/'tubes.csv').open('w',newline='') as stream:
@@ -69,6 +84,13 @@ def export_snapshot(run,index,folder,cutoff=DEFAULT_CUTOFF,names=False):
     with (folder/'nodes.csv').open('w',newline='') as stream:
         w=csv.writer(stream);w.writerow(['node','key','name','food','easting_km','northing_km','pressure'])
         for i,n in enumerate(run.mesh['nodes']):w.writerow([i,n['key'],n['name'],int(i<run.food_count),n['x'],n['y'],run.p[index,i]])
-    fig=snapshot_figure(run,index,cutoff,names)
+    fig=snapshot_figure(run,index,cutoff,names,route)
+    fig.canvas.draw();fig.canvas.draw()
+    if route:
+        with (folder/'route.csv').open('w',newline='') as stream:
+            w=csv.writer(stream);w.writerow(['order','edge','from','to','length_km','D','Q_along_route','recorded_from','recorded_to','Q_recorded'])
+            for order,k in enumerate(route['edges']):
+                edge=run.mesh['edges'][k];a,b=route['nodes'][order:order+2];q=run.q[index,k]
+                w.writerow([order,k,a,b,edge['distance_km'],run.d[index,k],q if a==edge['from'] else -q,edge['from'],edge['to'],q])
     for extension in ('svg','png'):fig.savefig(folder/f'network.{extension}',dpi=200)
     return record

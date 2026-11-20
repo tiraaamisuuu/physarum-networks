@@ -8,7 +8,7 @@ This follows the *numerical* experiment in Tero et al. (2010), which begins with
 
 ## Geometry and forcing
 
-- Frozen TfL station locations use British National Grid coordinates in kilometres. Default: 46 selected stations. Choose 3–80 within the cached study bounds.
+- Frozen TfL station locations use British National Grid coordinates in kilometres. Default: 46 selected stations. Choose 2–80 food sites within the cached study bounds, including explicitly identified custom sites. The separate blank sandbox uses local kilometre coordinates without fabricated geography.
 - Candidate junctions form a seeded, jittered triangular lattice, default spacing 0.45 km; independent jitter is uniform in ±0.2 spacings on each coordinate. Background points within 0.12 spacings of fixed vertices are discarded before triangulation. Every food and user junction is inserted at its exact coordinate. Coincident fixed vertices are rejected.
 - Delaunay triangulation supplies actual piecewise-linear tube geometry. Rectangular restrictions remove intersecting candidate segments before initialization. Demand-free disconnected background components are discarded at that stage; disconnected food sites cause an error. No link is invented to rescue them. Geometry is frozen throughout adaptation.
 - Physical length is Euclidean distance. Effective resistance length adds the stated hypothetical km-equivalent cost once to each mesh edge intersecting the cached Thames centreline. This is a discretization-dependent assumption, not bathymetry, geology or a measured tunnelling cost. A zero penalty leaves the river as context only.
@@ -74,7 +74,11 @@ Biological expanding-front dynamics, experimental image calibration, exact Tokyo
 
 ## Map editing and parameter studies
 
-The **Layout** tab is a design canvas, separate from recorded results. Click available stations to add food, click selected stations to remove it, and hover for names. Selected food markers are amber in this design view. The cached study bounds and 3–80 food limit still apply. Draw rectangular exclusions to remove intersecting candidate segments before a new run. Food inside an exclusion is rejected, as is a disconnected resulting food graph. On the Network tab, dashed outlines indicate unapplied restriction edits; solid hatching belongs to the recorded run. Compute applies a design; it never changes an existing record.
+The **Map editor / sandbox** tab is a design canvas, separate from recorded results. Search for a station or click an unused grey station to add food. Selected stations are green circles; custom food sites are amber diamonds. Choose an explicit tool to place, inspect, move or remove food. Custom names and coordinates are editable; official stations retain their real names and locations. Undo/redo preserve stable node IDs. The cached London study bounds and 2–80 food limit apply. The blank sandbox uses a 16 × 10 km local arena; background candidate vertices span its domain rather than only the food bounding box, allowing routes around obstacles. London custom sites likewise use the cached study extent. Unedited legacy London mesh construction is unchanged.
+
+Draw rectangular exclusions to remove intersecting candidate segments before a new run. Food inside an exclusion is rejected, as is a disconnected resulting food graph. On the Network tab, dashed outlines indicate unapplied restriction edits; solid hatching belongs to the recorded run. Compute applies a design; it never changes an existing record. The editor hides old numerical measurements/playback. [Practical sandbox guide](SANDBOX.md).
+
+**Route inspector** uses Dijkstra's algorithm with physical edge lengths on the retained numerical graph. It highlights only an existing path at the recorded state and chosen cutoff, reports disconnected pairs and identifies food vertices actually traversed. This inspection does not change the model. Route exports include both recorded-edge and path-direction signed flows.
 
 Both maps can show sampled **surface elevation** as context, with Copernicus/Open-Meteo attribution. This is a coarse surface dataset, not underground geology; it does not alter tube resistance. No fabricated smooth terrain or inferred subsurface mechanics is introduced.
 

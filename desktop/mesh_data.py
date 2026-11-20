@@ -21,10 +21,10 @@ import numpy as np
 from matplotlib.tri import Triangulation
 from pyproj import Transformer
 try:
-    from .spatial_data import ROOT,default_scene,validate_scene,hits_rectangle,intersects
+    from .spatial_data import ROOT,default_scene,validate_scene,hits_rectangle,intersects,is_food
     from .growth_data import sha256_file
 except ImportError:
-    from spatial_data import ROOT,default_scene,validate_scene,hits_rectangle,intersects
+    from spatial_data import ROOT,default_scene,validate_scene,hits_rectangle,intersects,is_food
     from growth_data import sha256_file
 
 DEFAULT_MESH=dict(seed=42,spacing=.45,current=2.,gamma=1.8,dt=.0125,duration=30.,switch_interval=.05,
@@ -91,13 +91,16 @@ def archive_source_snapshot(run_folder,target):
 
 def build_mesh(scene,settings):
     validate_scene(scene);validate_mesh_settings(settings)
-    foods=[copy.deepcopy(n) for n in scene['nodes'] if n['kind']=='station']
+    foods=[copy.deepcopy(n) for n in scene['nodes'] if is_food(n)]
     extra=[copy.deepcopy(n) for n in scene['nodes'] if n['kind']=='junction']
-    if not 3<=len(foods)<=80:raise ValueError('Choose 3–80 food sources.')
+    if not 2<=len(foods)<=80:raise ValueError('Choose 2–80 food sources.')
     fixed=foods+extra;points=np.array([[n['x'],n['y']] for n in fixed])
     distances=np.linalg.norm(points[:,None]-points[None,:],axis=2)+np.eye(len(points))*1e6
     if distances.min()<1e-5:raise ValueError('Two selected food/junction coordinates coincide. Select one entry at that location.')
     s=settings['spacing'];lo=points.min(axis=0)-.8;hi=points.max(axis=0)+.8
+    domain=scene.get('mesh_bounds_km',scene['geography'].get('design_bounds_km'))
+    if domain is not None:lo=np.array(domain[:2],float);hi=np.array(domain[2:],float)
+    if np.prod(np.ceil((hi-lo)/[s,s*math.sqrt(3)/2])+2)>7500:raise ValueError('The study area is too large at this mesh spacing. Increase spacing or reduce the area.')
     rng=np.random.default_rng(np.random.SeedSequence([settings['seed'],11]))
     background=[]
     for row,y in enumerate(np.arange(lo[1],hi[1]+s*.1,s*math.sqrt(3)/2)):
@@ -105,6 +108,8 @@ def build_mesh(scene,settings):
     bg=np.array(background);bg+=rng.uniform(-.2,.2,bg.shape)*s
     near=np.linalg.norm(bg[:,None]-points[None,:],axis=2).min(axis=1)
     bg=bg[near>.12*s]
+    local=domain
+    if local is not None:bg=bg[(bg[:,0]>=local[0])&(bg[:,0]<=local[2])&(bg[:,1]>=local[1])&(bg[:,1]<=local[3])]
     bounds=scene['geography'].get('coverage_bounds_lat_lon')
     if bounds is not None:
         lon,lat=Transformer.from_crs(27700,4326,always_xy=True).transform(bg[:,0]*1000,bg[:,1]*1000)
@@ -153,7 +158,7 @@ def build_mesh(scene,settings):
 
 
 def mesh_demands(scene,settings):
-    steps,hold=validate_mesh_settings(settings);foods=[n for n in scene['nodes'] if n['kind']=='station']
+    steps,hold=validate_mesh_settings(settings);foods=[n for n in scene['nodes'] if is_food(n)]
     if settings['demand_mode']=='fixed_pair':
         keys={n['key']:i for i,n in enumerate(foods)}
         if settings['source_id'] not in keys or settings['sink_id'] not in keys:raise ValueError('Choose fixed source and sink from the selected food sites.')
@@ -172,7 +177,7 @@ def mesh_demands(scene,settings):
 
 
 def validate_pair_weights(scene):
-    rows=scene.get('weighted_demand',{}).get('pairs',[]);keys={n['key'] for n in scene['nodes'] if n['kind']=='station'}
+    rows=scene.get('weighted_demand',{}).get('pairs',[]);keys={n['key'] for n in scene['nodes'] if is_food(n)}
     if not 1<=len(rows)<=10000:raise ValueError('Import a CSV of 1–10,000 weighted food pairs before using weighted demand.')
     for row in rows:
         if set(row)!={'source','sink','weight'} or row['source'] not in keys or row['sink'] not in keys or row['source']==row['sink']:raise ValueError('Every weighted pair must join two distinct selected food sources. Update the food layout or import a revised CSV.')
@@ -185,15 +190,15 @@ def import_pair_weights(scene,path):
     """CSV weights control pair frequency, not calibrated current or journey volume."""
     path=Path(path)
     if path.stat().st_size>2_000_000:raise ValueError('Demand CSV exceeds 2 MB.')
-    foods=[n for n in scene['nodes'] if n['kind']=='station'];aliases={}
+    foods=[n for n in scene['nodes'] if is_food(n)];aliases={}
     for node in foods:
         for alias in (node['key'],node['name']):
-            if alias in aliases and aliases[alias]!=node['key']:raise ValueError('Ambiguous food name; use TfL station IDs.')
+            if alias in aliases and aliases[alias]!=node['key']:raise ValueError('Ambiguous food name; use stable site keys.')
             aliases[alias]=node['key']
     rows=[]
     with path.open(newline='',encoding='utf-8-sig') as stream:
         reader=csv.DictReader(stream)
-        if reader.fieldnames!=['source','sink','weight']:raise ValueError('CSV header must be exactly source,sink,weight. Use selected station names or TfL IDs.')
+        if reader.fieldnames!=['source','sink','weight']:raise ValueError('CSV header must be exactly source,sink,weight. Use selected food names or stable site keys.')
         for number,row in enumerate(reader,2):
             if len(rows)>=10000:raise ValueError('Demand CSV exceeds 10,000 rows.')
             try:
@@ -233,9 +238,9 @@ def load_mesh_run(folder):
     expected_config=mesh_config(settings)
     if (folder/'inputs/input.cfg').read_text()!=expected_config:raise ValueError('Tube solver configuration disagrees with recorded settings.')
     nodes,edges=mesh['nodes'],mesh['edges'];n,m=len(nodes),len(edges);f=mesh['food_count']
-    if not 3<=f<=80 or not f<=n<=5500 or not 1<=m<=17000 or m*(steps+1)>25000000:raise ValueError('Unsupported mesh record size.')
+    if not 2<=f<=80 or not f<=n<=5500 or not 1<=m<=17000 or m*(steps+1)>25000000:raise ValueError('Unsupported mesh record size.')
     if mesh_raw_bytes(mesh,settings)>512_000_000:raise ValueError('Tube record exceeds the 512 MB raw-state limit.')
-    foods=[node for node in scene['nodes'] if node['kind']=='station']
+    foods=[node for node in scene['nodes'] if is_food(node)]
     if len(foods)!=f or any(nodes[i]!=foods[i] for i in range(f)):raise ValueError('Food source is not attached to its exact recorded mesh vertex.')
     u=np.array([e['from'] for e in edges],dtype=int);v=np.array([e['to'] for e in edges],dtype=int);length=np.array([e['length'] for e in edges])
     if any(e['id']!=i for i,e in enumerate(edges)) or np.any(u<0) or np.any(v>=n) or np.any(u>=v) or not np.isfinite(length).all() or np.any(length<=0):raise ValueError('Invalid mesh edges.')

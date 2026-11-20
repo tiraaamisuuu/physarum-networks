@@ -509,6 +509,8 @@ def main():
     parser.add_argument("--mesh-run",type=Path,help="Open a recorded fine-mesh tube experiment.")
     parser.add_argument("--tubes",action="store_true",help="Open the London fine-mesh tube-adaptation laboratory.")
     parser.add_argument("--biology-run",type=Path,help="Open a recorded mechanistic growth benchmark.")
+    parser.add_argument("--biology",action="store_true",help="Open the separate corridor biological-growth benchmark.")
+    parser.add_argument("--sandbox",action="store_true",help="Open a blank click-to-place network sandbox.")
     args = parser.parse_args()
     prepare_platform_plugins()
     app = QApplication(sys.argv[:1])
@@ -530,14 +532,15 @@ def main():
         except ImportError:
             from growth_viewer import GrowthViewer
         window=GrowthViewer()
-    elif args.tubes or args.mesh_run:
+    elif not (args.biology or args.biology_run):
         try:
             from .mesh_viewer import MeshViewer
             from .mesh_data import load_mesh_run
         except ImportError:
             from mesh_viewer import MeshViewer
             from mesh_data import load_mesh_run
-        window=MeshViewer(auto_run=not args.mesh_run)
+        window=MeshViewer(auto_run=not (args.mesh_run or args.sandbox))
+        if args.sandbox:window.workspace.setCurrentIndex(1)
         if args.mesh_run:
             run=load_mesh_run(args.mesh_run)
             window.scene=copy.deepcopy(run.scene)

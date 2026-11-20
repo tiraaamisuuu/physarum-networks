@@ -115,7 +115,7 @@ D/Q/P outputs are state-major little-endian float64 arrays, accompanied by per-s
 
 ## Coupled biological migration engine
 
-The launcher now opens this separate benchmark by default. Use `desktop/viewer.py --tubes` for the fine-mesh London transport tool, and `--biology-run PATH` to reopen a complete biological record.
+The launcher opens the London network laboratory by default. Use `desktop/viewer.py --sandbox` for a blank food-site arena, `--biology` for this separate biological benchmark, and `--biology-run PATH` to reopen a complete biological record.
 
 CMake builds `physarum_biology`. Its direct CLI takes exact finite-element inputs:
 

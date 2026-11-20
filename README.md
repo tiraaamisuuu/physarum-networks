@@ -3,19 +3,39 @@
 
 # Physarum Networks
 
-**Mechanistic growth experiments first; London transport networks second.**
+**Explore London, design your own food-site experiment, and inspect the actual simulated connections.**
 
-The native laboratory now couples an advancing colony margin, calcium oscillations, dynamic pressure, compliant internal flow and adaptive veins. It follows the exploratory-migration framework of [Schenz et al. (2017)](https://doi.org/10.1088/1361-6463/aa88e9), with an explicitly identified cooperative calcium variant. The separate London laboratory retains the numerically checked pressure–flow and tube-adaptation implementation of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894).
+The native Qt laboratory opens on a named London station map. Place custom food sources, draw obstacles and test connections with the pressure–flow and tube-adaptation equations of [Tero et al. (2010)](https://doi.org/10.1126/science.1177894). A separate biological-growth benchmark couples an advancing margin, calcium oscillations, pressure, internal flow and adaptive veins, following [Schenz et al. (2017)](https://doi.org/10.1088/1361-6463/aa88e9) with an explicitly identified cooperative calcium variant.
+
+![Named London station map in the native network laboratory.](docs/assets/london-sandbox-laboratory.png)
+
+*Actual offscreen Qt widget render of a computed C++ run. Station locations are real; the dark connections are simulated routes, not existing TfL lines.*
+
+## Run it
+
+On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It builds the C++ engines and opens **London** at the final computed network. A complete matching local record is reused; otherwise one is computed and saved.
+
+1. Hover a station for its full name. Zoom for more labels. Click a tube to inspect its conductivity and flow; press **Play adaptation** to replay the run.
+2. Open **Edit map / place food**. Search for a station, click a grey station to add it, or choose **Place food · click map** for your own points. Rename or edit custom coordinates in the table. Use **Move custom food · drag**, **Remove food · click**, **Undo** and **Redo**.
+3. Choose **Blank sandbox** in the sidebar for a fresh local arena. **Load obstacle example** provides two named foods and a blocked rectangle. You can also place custom food directly on London.
+4. Choose **Connect all selected places**, or **Find a start → target route** for a fixed pair. Press **Compute tube experiment**. The final network opens automatically; designs and old computed records remain distinct.
+5. In **Route inspector**, choose two recorded sites and **Highlight route**. Orange traces the shortest physical-distance route through surviving simulated segments. Disconnected sites remain disconnected. **Export figure + data** includes the route and its underlying measurements.
+
+[Step-by-step sandbox guide](docs/SANDBOX.md) · [Model and numerical protocol](docs/TUBE_EXPERIMENT.md)
+
+![Computed sandbox network routing around a blocked area.](docs/assets/sandbox-pathfinding.png)
+
+*Both food coordinates are exact graph vertices. The obstacle excludes intersecting tubes before the run; the highlighted route uses only retained numerical edges. This is adaptation of an existing candidate mesh, not biological growth or a globally optimal path guarantee.*
+
+## Separate biological growth benchmark
+
+Open **Other models → Biological growth benchmark · corridor**, or use `--biology`. The corridor is a controlled biological modelling experiment, separate from the London and sandbox food-site tool. It does not yet grow towards arbitrary foods on London.
 
 ![Four recorded states of the cooperative growth variant exploring a bent corridor.](docs/assets/biology-growth-midpoint.png)
 
 *Actual C++ fields. Fine gold strokes are conductivity, with a fixed fourth-root width scale; body colour is a model proxy. These are not microscopy images. Time and length are uncalibrated.*
 
 The growth model is a **research prototype**, not a quantitative paper reproduction or a validated digital organism. The printed calcium expression settles under the listed coefficients, so the default makes its cooperative exponent and faster front timescale explicit. Food uptake, finite biomass and body retraction are not yet implemented. [Equations, source audit and limitations](docs/BIOLOGICAL_GROWTH.md).
-
-## Run it
-
-On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It builds the C++ engines and opens the **Biological growth laboratory**. A complete matching local run opens immediately; otherwise it computes and saves one.
 
 1. Press **Play growth**. Use **Run short growth experiment** to try new settings with the same physics over a shorter duration. **Follow colony** keeps the advancing footprint in view; turn it off to see the full arena.
 2. Switch between **Body + veins**, **Advancing margin** and **Calcium**. The adjustable D cutoff changes the drawing, never the underlying simulation.
@@ -39,13 +59,13 @@ The earlier first-order six-case study remains available. In it, halving dt chan
 
 ## London tube-adaptation experiment
 
-Open **Other models → London tube adaptation**, or launch with `--tubes`. This is a separate pre-existing-mesh experiment: every food source is an exact mesh vertex, and measured connectivity concerns the actual surviving tubes.
+London opens by default; `--tubes` remains an alias. Every food source is an exact mesh vertex, and measured connectivity concerns the actual surviving tubes.
 
 ![Computed tube network joining all 46 food sources at the stated conductivity cutoff.](docs/assets/tube-network.png)
 
 *Width ∝ D¼ on a fixed scale; tubes below D = 10⁻⁴ are omitted from the displayed/measured graph. Raw conductivities remain unchanged. TfL coordinates · © OpenStreetMap contributors.*
 
-Press **Play adaptation**, click tubes for D/Q trajectories and inspect the **Food sources** table. **Layout** edits station food sites and geographic exclusions. **Parameter study** runs matched-seed comparisons; **Export figure + data** preserves figures and underlying data. Surface elevation is attributed context, not underground geology. Optional CSV weights specify relative food-pair frequencies, not calibrated passenger demand.
+Press **Play adaptation**, click tubes for D/Q trajectories and inspect the **Food sources** table. **Map editor / sandbox** edits station/custom food sites and exclusions. **Parameter study** runs matched-seed comparisons; **Export figure + data** preserves figures and underlying data. Surface elevation is attributed context, not underground geology. Optional CSV weights specify relative food-pair frequencies, not calibrated passenger demand.
 
 The earlier particle foraging model remains available through **Other models** or `--particles`; its trail field is not vein conductivity. The four-node analytic fixture remains available through `--fixture`.
 
@@ -103,7 +123,7 @@ python3.14 -m venv .venv
 .venv/bin/python desktop/viewer.py
 ```
 
-Other modes: `--tubes` for the London tube laboratory, `--biology-run PATH` to reopen a growth run, `--fixture` for the analytic circuit, `--network` for the older coarse station graph, `--particles` for the separate particle experiment. `--mesh-run PATH` reopens a tube run. [Build details](docs/BUILDING.md).
+Other modes: `--sandbox` for an empty food-site arena, `--biology` for the separate biological benchmark, `--biology-run PATH` to reopen a growth run, `--fixture` for the analytic circuit, `--network` for the older coarse station graph, `--particles` for the separate particle experiment. `--mesh-run PATH` reopens a London or sandbox tube run. [Build details](docs/BUILDING.md).
 
 ```sh
 # Recompute matched biological integration evidence.
@@ -128,7 +148,7 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'tes
 
 The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every integration transition, exact food attachment and file checksums. Source snapshots and a compiled C++ fingerprint bind new records to their engine source. Metric fixtures test trees, cycles and disconnections.
 
-Locally, **34 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **88 Python tests** pass. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
+Locally, **34 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **96 Python tests** pass. The sandbox checks include actual C++ obstacle avoidance, exact food attachment, disconnected routes, signed route exports and native editing without record mutation. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
 
 The tube experiment implements its stated numerical equations; mesh construction, initial fluctuations, demand timing and integration are documented choices. The growth experiment has additional source-equation ambiguities and explicitly labelled variants. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
 

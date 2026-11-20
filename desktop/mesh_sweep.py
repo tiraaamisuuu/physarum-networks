@@ -65,8 +65,8 @@ def load_sweep(folder):
     folder=Path(folder).resolve();plan=json.loads((folder/'plan.json').read_text());summary=json.loads((folder/'summary.json').read_text())
     if plan.get('schema_version') not in (1,2) or plan.get('model')!='Tero_2010_sigmoid_mesh_v1' or summary.get('plan')!=plan:raise ValueError('Study plan and summary disagree.')
     try:
-        from .spatial_data import validate_scene
-    except ImportError:from spatial_data import validate_scene
+        from .spatial_data import validate_scene,is_food
+    except ImportError:from spatial_data import validate_scene,is_food
     validate_scene(plan['scene']);cases=sweep_plan(plan['base_settings'],plan['parameter'],plan['values'],plan['seeds'])
     if plan['cases']!=cases or not math.isfinite(plan['cutoff']) or plan['cutoff']<=0:raise ValueError('Invalid study plan.')
     rows=copy.deepcopy(summary['rows'])
@@ -74,8 +74,8 @@ def load_sweep(folder):
     for i,row in enumerate(rows):
         case=cases[i]
         if row['case']!=i or row['parameter']!=plan['parameter'] or row['seed']!=case['seed'] or row['value']!=case[plan['parameter']]:raise ValueError('Study result does not match its planned case.')
-        if not 3<=row['food_count']<=80 or not 1<=row['largest_food_component']<=row['food_count']:raise ValueError('Invalid food count in study summary.')
-        if row['food_count']!=sum(n['kind']=='station' for n in plan['scene']['nodes']):raise ValueError('Study food count disagrees with its scene.')
+        if not 2<=row['food_count']<=80 or not 1<=row['largest_food_component']<=row['food_count']:raise ValueError('Invalid food count in study summary.')
+        if row['food_count']!=sum(is_food(n) for n in plan['scene']['nodes']):raise ValueError('Study food count disagrees with its scene.')
         for key in ('gamma','current','dt','spacing','river_penalty','duration'):
             if key in row and row[key]!=case[key]:raise ValueError('Study row settings disagree with its planned case.')
         for key in ('length_km','max_conservation','max_backward_error','min_scaled_rcond_estimate'):
