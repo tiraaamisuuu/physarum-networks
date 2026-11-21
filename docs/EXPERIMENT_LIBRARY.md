@@ -18,7 +18,7 @@ The local catalog is `results/experiment_catalog.sqlite3`, excluded from Git. An
 
 ## Keep a reference while experimenting
 
-1. Open your control run, then choose **Compare runs → Keep current as reference**. Alternatively, select a library result and **Use as comparison reference**.
+1. Open your control run, then choose **Compare runs → Keep current as reference**. Alternatively, select a library result and **Use as comparison reference**. The library stays open so you can select the next result immediately.
 2. Change one control in the map laboratory and compute, or open another saved result. A pinned reference stays fixed while new current runs arrive.
 3. Open **Compare runs**. Both maps show final recorded states at the same conductivity cutoff. Shared coordinate contexts use linked axes: zooming/panning one updates the other. Different coordinate contexts use independent extents and are identified explicitly.
 4. Read the match checks and changed controls before interpreting the measurements. The checks distinguish food sites, candidate geometry, initial conductivities, food-pair schedule and injected current. Matching pair schedules alone does not imply matching current magnitude.

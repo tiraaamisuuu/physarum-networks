@@ -127,9 +127,9 @@ class ExperimentLibrary(QWidget):
             if remember:
                 try:self.catalog.remember(folder)
                 except Exception as error:self.status.setText('Record checked, but its location could not be remembered: '+str(error))
-            if kind=='reference':self.owner.pin_reference(run)
+            if kind=='reference':self.owner.pin_reference(run,show=False);self.status.setText('Reference pinned: '+self.owner.run_title(run)+'. Open another experiment, then choose Compare runs.')
             else:self.owner.install_record(run)
-            self.record_changed()
+            if remember:self.record_changed()
         self.start(kind,load,accept)
     def open_files(self):
         if self.selected:QDesktopServices.openUrl(QUrl.fromLocalFile(self.selected['folder']))

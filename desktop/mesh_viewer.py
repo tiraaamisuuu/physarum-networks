@@ -527,9 +527,10 @@ class MeshViewer(QMainWindow):
         self.update_comparison();self.sync_context()
     def update_comparison(self):
         self.comparison.update_runs(self.previous,self.run_data,self.cutoff.currentData())
-    def pin_reference(self,run):
+    def pin_reference(self,run,show=True):
         if run is None:return
-        record_key(run);self.previous=run;self.reference_pinned=True;self.update_comparison();self.tabs.setCurrentWidget(self.comparison)
+        record_key(run);self.previous=run;self.reference_pinned=True;self.update_comparison()
+        if show:self.tabs.setCurrentWidget(self.comparison)
     def automatic_reference(self):
         self.reference_pinned=False;self.previous=self.last_run;self.update_comparison()
     def install_record(self,run):
