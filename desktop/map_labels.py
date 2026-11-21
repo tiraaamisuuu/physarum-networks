@@ -9,7 +9,7 @@ class FoodLabels:
         self.axis=axis;self.nodes=nodes;self.mode=mode;self.priority=[];self.signature=None;self.annotations=[]
         for node in nodes:
             label='\n'.join(textwrap.wrap(node['name'],24))
-            a=axis.annotate(label,(node['x'],node['y']),xytext=(6,5),textcoords='offset points',fontsize=7.5,color='#263d38',zorder=8,annotation_clip=True)
+            a=axis.annotate(label,(node['x'],node['y']),xytext=(6,5),textcoords='offset points',fontsize=7.5,color='#263d38',zorder=8,annotation_clip=True,parse_math=False)
             a.set_path_effects([patheffects.withStroke(linewidth=2.5,foreground='#fafbf8')]);a.set_in_layout(False);a.set_visible(False);self.annotations.append(a)
         self.connection=axis.figure.canvas.mpl_connect('draw_event',self.draw)
     def disconnect(self):self.axis.figure.canvas.mpl_disconnect(self.connection)

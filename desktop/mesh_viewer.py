@@ -16,6 +16,9 @@ from PySide6.QtWidgets import (QMainWindow,QWidget,QSplitter,QVBoxLayout,QHBoxLa
     QLabel,QPushButton,QDoubleSpinBox,QSpinBox,QComboBox,QCheckBox,QSlider,QTabWidget,QTableWidget,
     QTableWidgetItem,QHeaderView,QFileDialog,QMessageBox,QScrollArea,QDialog,QTextBrowser)
 try:
+    from .experiment_catalog import ExperimentCatalog,record_key
+    from .experiment_library_view import ExperimentLibrary
+    from .comparison_view import ComparisonPanel
     from .spatial_data import is_food
     from .scene_design import sandbox_scene,example_scene,SANDBOX_EXAMPLES,scene_title,scene_credit,is_sandbox,food_nodes,edit_food,edit_barrier,DesignHistory
     from .mesh_routes import retained_route
@@ -25,6 +28,9 @@ try:
     from .mesh_sweep_view import SweepPanel
     from .mesh_layout import LayoutPanel
 except ImportError:
+    from experiment_catalog import ExperimentCatalog,record_key
+    from experiment_library_view import ExperimentLibrary
+    from comparison_view import ComparisonPanel
     from spatial_data import is_food
     from scene_design import sandbox_scene,example_scene,SANDBOX_EXAMPLES,scene_title,scene_credit,is_sandbox,food_nodes,edit_food,edit_barrier,DesignHistory
     from mesh_routes import retained_route
@@ -159,8 +165,8 @@ class TubeCanvas(FigureCanvasQTAgg):
 
 
 class MeshViewer(QMainWindow):
-    def __init__(self,auto_run=True):
-        super().__init__();self.scene=default_scene();self.run_data=None;self.worker=None;self.index=0;self.playing=False;self.playhead=0.;self.closing=False;self.previous=None;self.children_windows=[];self.selected_pick=('edge',0);self.design_history=DesignHistory();self.current_route=None;self.route_enabled=False;self._opening_default=False
+    def __init__(self,auto_run=True,catalog=None):
+        super().__init__();self.scene=default_scene();self.run_data=None;self.worker=None;self.index=0;self.playing=False;self.playhead=0.;self.closing=False;self.previous=None;self.last_run=None;self.reference_pinned=False;self.catalog=catalog or ExperimentCatalog(ROOT);self.current_run_title='';self.children_windows=[];self.selected_pick=('edge',0);self.design_history=DesignHistory();self.current_route=None;self.route_enabled=False;self._opening_default=False
         palette=QPalette()
         for role,color in ((QPalette.ColorRole.Window,'#f6f7f3'),(QPalette.ColorRole.WindowText,'#263d38'),(QPalette.ColorRole.Base,'#ffffff'),(QPalette.ColorRole.AlternateBase,'#f1f4ee'),(QPalette.ColorRole.Text,'#263d38'),(QPalette.ColorRole.Button,'#eef1eb'),(QPalette.ColorRole.ButtonText,'#263d38'),(QPalette.ColorRole.Highlight,'#287c66'),(QPalette.ColorRole.HighlightedText,'#ffffff')):palette.setColor(role,QColor(color))
         self.setPalette(palette);self.setAutoFillBackground(True)
@@ -170,6 +176,7 @@ class MeshViewer(QMainWindow):
         if auto_run:QTimer.singleShot(0,self.start_default)
     def build_ui(self):
         menu=self.menuBar().addMenu('&File')
+        menu.addAction('Experiment library').triggered.connect(lambda:self.tabs.setCurrentWidget(self.library))
         menu.addAction('Open recorded tube run…').triggered.connect(self.open_run)
         menu.addAction('Save experiment design…').triggered.connect(self.save_design)
         menu.addAction('Open experiment design…').triggered.connect(self.open_design)
@@ -191,6 +198,7 @@ class MeshViewer(QMainWindow):
         intro=QLabel('Explore connections between real stations or food sites you place yourself.');intro.setWordWrap(True);layout.addWidget(intro)
         self.workspace=QComboBox();self.workspace.addItems(['London · real stations + custom food','Blank sandbox · place your own food']);self.workspace.currentIndexChanged.connect(self.switch_workspace);layout.addWidget(self.workspace)
         edit=QPushButton('Edit map / place food…');edit.clicked.connect(lambda:self.tabs.setCurrentWidget(self.layout_panel));layout.addWidget(edit)
+        saved=QPushButton('Saved experiments…');saved.clicked.connect(lambda:self.tabs.setCurrentWidget(self.library));layout.addWidget(saved)
         self.choose_stations=QPushButton('Choose station food sources…');self.choose_stations.clicked.connect(self.choose_foods);layout.addWidget(self.choose_stations);self.food_label=QLabel();layout.addWidget(self.food_label)
         restriction_group=QGroupBox('Geographic restrictions');rl=QVBoxLayout(restriction_group)
         self.restriction_button=QPushButton('Draw a restricted area');self.restriction_button.setCheckable(True);self.restriction_button.toggled.connect(self.restriction_mode);rl.addWidget(self.restriction_button)
@@ -216,7 +224,7 @@ class MeshViewer(QMainWindow):
         reset=QPushButton('Restore London defaults');reset.clicked.connect(self.reset);self.fixed_controls.addWidget(reset)
         note=QLabel('This is the paper’s numerical approach: a pre-existing fine mesh adapts into tubes. It does not simulate the biological expanding margin.\n\nTime and flow are model units. Station coordinates are real; network geometry and crossing costs are experimental.');note.setWordWrap(True);note.setStyleSheet('color:#59665e; font-size:11px;');layout.addWidget(note);layout.addStretch()
         right=QWidget();main=QVBoxLayout(right);main.setContentsMargins(16,16,16,12);split.addWidget(right);split.setSizes([330,1210])
-        self.banner=QLabel('Preparing the experiment…');self.banner.setWordWrap(True);self.banner.setStyleSheet('padding:9px; background:#eef2ed; color:#263d38;');main.addWidget(self.banner)
+        self.banner=QLabel('Preparing the experiment…');self.banner.setTextFormat(Qt.TextFormat.PlainText);self.banner.setWordWrap(True);self.banner.setStyleSheet('padding:9px; background:#eef2ed; color:#263d38;');main.addWidget(self.banner)
         self.narrative=QLabel('');self.narrative.setWordWrap(True);main.addWidget(self.narrative)
         self.tabs=QTabWidget();main.addWidget(self.tabs,1)
         workspace=QWidget();wl=QVBoxLayout(workspace);wl.setContentsMargins(0,4,0,0)
@@ -235,7 +243,8 @@ class MeshViewer(QMainWindow):
         self.food_table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers);self.food_table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch);self.tabs.addTab(self.food_table,'Food sources')
         route_tab=QWidget();route_layout=QVBoxLayout(route_tab);route_help=QLabel('Choose two named sites and inspect their shortest physical-distance route through the retained network. This highlights existing simulated segments; it does not add connections or alter the experiment.');route_help.setWordWrap(True);route_layout.addWidget(route_help);route_row=QHBoxLayout();self.route_start=QComboBox();self.route_end=QComboBox();route_row.addWidget(QLabel('From'));route_row.addWidget(self.route_start,1);route_row.addWidget(QLabel('To'));route_row.addWidget(self.route_end,1);self.route_button=QPushButton('Highlight route');self.route_button.clicked.connect(self.show_route);route_row.addWidget(self.route_button);clear_route=QPushButton('Clear');clear_route.clicked.connect(self.clear_route);route_row.addWidget(clear_route);route_layout.addLayout(route_row);self.route_text=QTextBrowser();route_layout.addWidget(self.route_text,1);self.tabs.addTab(route_tab,'Route inspector')
         self.record=QTextBrowser();self.record.setOpenExternalLinks(True);self.tabs.addTab(self.record,'Equations & record')
-        self.comparison=QTextBrowser();self.comparison.setText('After a second experiment, this tab compares the previous and current final states at the same cutoff.');self.tabs.addTab(self.comparison,'Compare runs')
+        self.library=ExperimentLibrary(self,self.catalog);self.tabs.addTab(self.library,'Experiments')
+        self.comparison=ComparisonPanel(self);self.tabs.addTab(self.comparison,'Compare runs')
         self.sweep_panel=SweepPanel(self);self.tabs.addTab(self.sweep_panel,'Parameter study')
         self.measurements=QLabel('');self.measurements.setWordWrap(True);self.measurements.setStyleSheet('padding:8px; background:#f4f5f1; color:#263d38;');main.addWidget(self.measurements)
         self.playback=QWidget();playback_layout=QVBoxLayout(self.playback);playback_layout.setContentsMargins(0,0,0,0);main.addWidget(self.playback)
@@ -273,23 +282,27 @@ class MeshViewer(QMainWindow):
         self.workspace.blockSignals(True);self.workspace.setCurrentIndex(1 if is_sandbox(self.scene) else 0);self.workspace.blockSignals(False)
         self.choose_stations.setVisible(not is_sandbox(self.scene));self.controls['river_penalty'].setEnabled(not is_sandbox(self.scene))
         self.terrain.setEnabled(self.run_data is None or not is_sandbox(self.run_data.scene))
-        self.compute_button.setEnabled(len(food_nodes(self.scene))>=2 and not self.sweep_panel.running() and not (self.worker and self.worker.isRunning()))
+        self.compute_button.setEnabled(len(food_nodes(self.scene))>=2 and not self.sweep_panel.running() and not (self.worker and self.worker.isRunning()) and not self.library.loading())
         fixed=self.mode.currentData()=='fixed_pair';self.source.setEnabled(fixed);self.sink.setEnabled(fixed);self.demand_form.setRowVisible(self.source,fixed);self.demand_form.setRowVisible(self.sink,fixed)
         count=len(self.scene.get('weighted_demand',{}).get('pairs',[]))
         self.demand_label.setText(f'{count} imported weighted pairs · weights control sampling frequency, not I₀.' if self.mode.currentData()=='weighted_pairs' else 'Different food pairs take turns driving flow. Frequently used paths strengthen; unused paths fade.' if not fixed else 'Only Start and Target drive this experiment. Other places may lose their connections.')
         self.sync_context()
     def sync_context(self,*_):
         editing=self.tabs.currentWidget() is self.layout_panel
-        self.measurements.setVisible(not editing and self.run_data is not None);self.playback.setVisible(not editing);self.narrative.setVisible(not editing)
+        browsing=self.tabs.currentWidget() is self.library;comparing=self.tabs.currentWidget() is self.comparison;inspection=not(editing or browsing or comparing)
+        self.measurements.setVisible(inspection and self.run_data is not None);self.playback.setVisible(inspection);self.narrative.setVisible(inspection)
+        if browsing or comparing:self.pause()
         if editing:
             self.pause();self.route_pick.setChecked(False);self.narrative.setText('Place and name your food sites, choose the connection task, then Compute tube experiment. Blocked areas exclude candidate tubes. Undo and Redo restore design edits; the Network tab keeps the last computed result.')
         else:self.narrative.setText(getattr(self,'run_narrative','Choose a map and compute an experiment, or open a recorded run.'))
         if self.worker and self.worker.isRunning():return
+        if browsing:self.banner.setText('EXPERIMENT LIBRARY · saved runs, local notes and comparison references');return
+        if comparing:self.banner.setText(f'FINAL-STATE COMPARISON · shared cutoff D ≥ {self.cutoff.currentData():g} · '+('reference pinned' if self.reference_pinned else 'previous-run reference'));return
         changed=self.run_data is None or effective_mesh_settings(self.settings())!=effective_mesh_settings(self.run_data.settings) or self.scene!=self.run_data.scene
         if editing:
             self.banner.setText(f"{'DESIGN CHANGED · ' if changed else ''}EDITING {scene_title(self.scene).upper()} · {len(food_nodes(self.scene))} food sites · {len(self.scene['barriers'])} blocked areas · {'place at least two food sites' if len(food_nodes(self.scene))<2 else 'compute to see the result' if changed else 'saved result available in Network'}")
         elif changed and self.run_data:self.banner.setText(f'DESIGN CHANGED · This is the recorded {scene_title(self.run_data.scene)} result. Compute to apply your current {scene_title(self.scene)} design and controls.')
-        else:self.banner.setText('Place at least two food sites in the map editor, then compute.' if len(food_nodes(self.scene))<2 else 'Ready to compute your network experiment.' if changed else f"RECORDED {scene_title(self.run_data.scene).upper()} TUBE RUN · γ {self.run_data.settings['gamma']:g} · I₀ {self.run_data.settings['current']:g} · {self.run_data.settings.get('integrator','euler')} · seed {self.run_data.settings['seed']} · {self.run_data.food_count} foods")
+        else:self.banner.setText('Place at least two food sites in the map editor, then compute.' if len(food_nodes(self.scene))<2 else 'Ready to compute your network experiment.' if changed else f"{self.current_run_title}\nRECORDED {scene_title(self.run_data.scene).upper()} TUBE RUN · γ {self.run_data.settings['gamma']:g} · I₀ {self.run_data.settings['current']:g} · {self.run_data.settings.get('integrator','euler')} · seed {self.run_data.settings['seed']} · {self.run_data.food_count} foods")
     def start_default(self):
         self._opening_default=True
         for path in sorted((ROOT/'results/mesh_runs').glob('*/scenario.json'),key=lambda p:p.stat().st_mtime,reverse=True):
@@ -414,7 +427,7 @@ class MeshViewer(QMainWindow):
     def remove_restriction(self):
         if self.scene['barriers']:self.remove_barrier(len(self.scene['barriers'])-1)
     def compute(self):
-        if (self.worker and self.worker.isRunning()) or self.sweep_panel.running():return
+        if (self.worker and self.worker.isRunning()) or self.sweep_panel.running() or self.library.loading():return
         self.pause();self.worker=MeshWorker(self.scene,self.settings(),self);self.worker.completed.connect(self.accept_run);self.worker.failed.connect(self.failed);self.worker.finished.connect(self.worker_done)
         self.compute_button.setEnabled(False);self.cancel_button.setVisible(True);self.banner.setText('COMPUTING · steady pressure solves and simultaneous tube adaptation. Full states are saved automatically.');self.worker.start()
     def cancel(self):
@@ -428,7 +441,10 @@ class MeshViewer(QMainWindow):
     def failed(self,error):
         if not self.closing:QMessageBox.warning(self,'Experiment stopped',error)
     def accept_run(self,run):
-        if self.run_data:self.previous=self.run_data
+        record_key(run)
+        if self.run_data and record_key(self.run_data)!=record_key(run):self.last_run=self.run_data
+        if not self.reference_pinned:self.previous=self.last_run
+        self.current_run_title=self.run_title(run)
         self.run_data=run;self.index=0;self.playhead=0.;self.canvas.selected=int(np.argmax(run.d[-1]));self.selected_pick=('edge',self.canvas.selected);self.slider.blockSignals(True);self.slider.setRange(0,len(run.times)-1);self.slider.setValue(0);self.slider.blockSignals(False)
         self.route_enabled=False;self.current_route=None;self.route_pick.setChecked(False);self.route_pick.setEnabled(True);self.canvas.route_foods=[]
         self.update_legend();self.route_text.setText('Choose two sites from this recorded run, then Highlight route.')
@@ -438,6 +454,7 @@ class MeshViewer(QMainWindow):
             box.blockSignals(False)
         self.route_end.setCurrentIndex(run.food_count-1)
         self.replot();self.display(len(run.times)-1);self.update_record();self.update_comparison();self.tabs.setCurrentIndex(0);self.draft();self.statusBar().showMessage(f'Complete run saved: {run.folder}. Press Play adaptation to replay its development.')
+        self.library.record_changed()
         if self._opening_default:self.display(len(run.times)-1);self._opening_default=False
     def replot(self,*_):
         if not self.run_data:return
@@ -499,25 +516,27 @@ class MeshViewer(QMainWindow):
         self.record.append(f"<p><b>All accepted pressure solves, including predictor stages</b><br>Maximum conservation residual {extrema['max_conservation']:.4e}; maximum backward error {extrema['max_backward_error']:.4e}; minimum scaled reciprocal-condition estimate {extrema['min_scaled_rcond_estimate']:.4e}.</p>")
         if s.get('integrator','euler')=='heun':
             self.record.append('<p><b>Heun / SSPRK2 stages</b><br>First predict D* = (1−Δt)D + Δt f(Q). Solve a second pressure system at D* using the same held food pair. Correct D_next = ½D + ½[(1−Δt)D* + Δt f(Q*)]. Both stages conserve flow, and all predictor flows/pressures/diagnostics are recorded and independently checked. This is formally second order for smooth held forcing; refine Δt to assess the actual experiment. It does not add biological calibration.</p>')
+    def run_annotation(self,run):
+        try:return self.catalog.annotation(record_key(run))
+        except Exception as error:
+            self.statusBar().showMessage('Local notes unavailable: '+str(error));return dict(title='',notes='',favorite=False)
+    def run_title(self,run):
+        return self.run_annotation(run)['title'] or run.scene['name']
+    def annotations_changed(self):
+        if self.run_data:self.current_run_title=self.run_title(self.run_data)
+        self.update_comparison();self.sync_context()
     def update_comparison(self):
-        if self.previous is None or self.run_data is None:return
-        cut=self.cutoff.currentData();rows=[]
-        a,b=self.previous,self.run_data
-        ma,mb=[mesh_metrics(r,len(r.times)-1,cut,True) for r in (a,b)]
-        for key in ('integrator','gamma','current','seed','spacing','dt','duration','switch_interval','river_penalty'):rows.append(f'<tr><td>{key}</td><td>{effective_mesh_settings(a.settings)[key]}</td><td>{effective_mesh_settings(b.settings)[key]}</td></tr>')
-        for key in ('largest_food_component','length_km','mean_route_direct_ratio','single_break_survival','worst_break_connected_pair_fraction','critical_bridge_length_km','length_over_terminal_mst'):
-            def fmt(v):return 'Disconnected' if v is None else f'{v:.5g}'
-            rows.append(f'<tr><td>{key}</td><td>{fmt(ma[key])}</td><td>{fmt(mb[key])}</td></tr>')
-        self.comparison.setHtml(f'<h2>Final-state comparison · D ≥ {cut:g}</h2><table cellpadding="7"><tr><th>Parameter / measurement</th><th>Previous</th><th>Current</th></tr>{"".join(rows)}</table><p>Differences are exploratory. Isolate one parameter and repeat across seeds, cutoffs and mesh resolutions before drawing conclusions.</p><p>Previous: {a.folder}<br>Current: {b.folder}</p>')
-        numerical=compare_mesh_trajectories(a,b)
-        if numerical:
-            self.comparison.append(f"<h3>Matched numerical trajectories</h3><p>Identical graph, initialization, model parameters and complete held forcing; nested Δt {numerical['coarse_dt']:g} / {numerical['fine_dt']:g}. Methods: {numerical['method_a']} / {numerical['method_b']}.</p><p>Maximum transient |ΔD|: {numerical['max_D_difference']:.6g}<br>Final maximum |ΔD|: {numerical['final_D_max_difference']:.6g}<br>RMS |ΔD| over aligned states and edges: {numerical['rms_D_difference']:.6g}</p><p>This is a finite pairwise comparison, not error against an exact solution or proof that the extracted topology has converged.</p>")
+        self.comparison.update_runs(self.previous,self.run_data,self.cutoff.currentData())
+    def pin_reference(self,run):
+        if run is None:return
+        record_key(run);self.previous=run;self.reference_pinned=True;self.update_comparison();self.tabs.setCurrentWidget(self.comparison)
+    def automatic_reference(self):
+        self.reference_pinned=False;self.previous=self.last_run;self.update_comparison()
+    def install_record(self,run):
+        self.pause();self.commit_design(copy.deepcopy(run.scene),True);self.set_settings(run.settings);self.accept_run(run)
     def open_run(self):
         folder=QFileDialog.getExistingDirectory(self,'Open tube run',str(ROOT/'results/mesh_runs'))
-        if folder:
-            try:
-                r=load_mesh_run(folder);self.scene=copy.deepcopy(r.scene);self.refresh_pairs();self.set_settings(r.settings);self.accept_run(r);self.display(0);self.draft()
-            except Exception as error:QMessageBox.warning(self,'Could not open run',str(error))
+        if folder:self.tabs.setCurrentWidget(self.library);self.library.open_path(folder,'open',True)
     def save_design(self):
         path,_=QFileDialog.getSaveFileName(self,'Save experiment design',str(ROOT/('sandbox-design.json' if is_sandbox(self.scene) else 'london-design.json')),'JSON (*.json)')
         if path:
@@ -556,7 +575,7 @@ class MeshViewer(QMainWindow):
         self.pause();folder=QFileDialog.getExistingDirectory(self,'Choose snapshot export folder',str(self.run_data.folder))
         if folder:
             try:
-                target=Path(folder)/f'snapshot-{self.index:05d}-D{self.cutoff.currentData():g}';export_snapshot(self.run_data,self.index,target,self.cutoff.currentData(),self.names.isChecked(),self.current_route);self.statusBar().showMessage(f'Exported PNG, SVG, tubes.csv, nodes.csv and snapshot.json: {target}')
+                target=Path(folder)/f'snapshot-{self.index:05d}-D{self.cutoff.currentData():g}';export_snapshot(self.run_data,self.index,target,self.cutoff.currentData(),self.names.isChecked(),self.current_route,self.run_annotation(self.run_data));self.statusBar().showMessage(f'Exported PNG, SVG, tubes.csv, nodes.csv and snapshot.json: {target}')
             except Exception as error:QMessageBox.warning(self,'Export failed',str(error))
     def open_files(self):
         if self.run_data:QDesktopServices.openUrl(QUrl.fromLocalFile(str(self.run_data.folder.resolve())))
@@ -576,9 +595,12 @@ class MeshViewer(QMainWindow):
         self.children_windows.append(w);w.show()
     def closeEvent(self,event):
         self.pause()
-        if (self.worker and self.worker.isRunning()) or self.sweep_panel.running():
+        if self.library.note_dirty and not self.library.save_notes():self.tabs.setCurrentWidget(self.library);event.ignore();return
+        self.closing=True
+        if (self.worker and self.worker.isRunning()) or self.sweep_panel.running() or self.library.running():
             self.closing=True
             if self.worker and self.worker.isRunning():self.cancel()
             if self.sweep_panel.running():self.sweep_panel.cancel()
+            if self.library.running():self.library.cancel()
             event.ignore();return
         self.timer.stop();event.accept()

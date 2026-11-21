@@ -23,6 +23,10 @@ On the development Mac, open **`Desktop/physarum/Launch Physarum.command`**. It 
 
 [Step-by-step sandbox guide](docs/SANDBOX.md) · [Model and numerical protocol](docs/TUBE_EXPERIMENT.md)
 
+**Saved experiments…** opens a searchable library with names, notes and favourites stored separately from immutable numerical records. Pin a control as your comparison reference, then inspect two final networks on linked map axes, with explicit matching checks and measured differences. Export comparison figures, CSV and provenance. [Library and comparison guide](docs/EXPERIMENT_LIBRARY.md).
+
+![Matched final-state comparison of two recorded eight-food experiments.](docs/assets/experiment-comparison.png)
+
 ![Computed sandbox network routing around a blocked area.](docs/assets/sandbox-pathfinding.png)
 
 *Both food coordinates are exact graph vertices. The obstacle excludes intersecting tubes before the run; the highlighted route uses only retained numerical edges. This is adaptation of an existing candidate mesh, not biological growth or a globally optimal path guarantee.*
@@ -152,7 +156,7 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -p 'tes
 
 The original four-node baseline compares against analytic pressures, flows and an exact scalar adaptation solution. New sparse tests compare with that dense solver across terminals and switched-demand histories; NumPy independently solves a recorded mesh state. Record validation checks conservation, the pressure law, dissipation/work identity, every integration transition, exact food attachment and file checksums. Source snapshots and a compiled C++ fingerprint bind new records to their engine source. Metric fixtures test trees, cycles and disconnections.
 
-Locally, **34 CTests** pass in Release and Debug with UndefinedBehaviorSanitizer; **104 Python tests** pass. The sandbox checks include actual C++ obstacle avoidance, exact food attachment, disconnected routes, signed route exports, preview/run agreement, map route selection and native editing without record mutation. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
+Locally, **34 CTests** pass in Release; earlier Debug/UndefinedBehaviorSanitizer checks are recorded in the research log. **119 Python tests** pass, including actual C++ obstacle avoidance, exact food attachment, comparison conditions, annotation integrity, cancellable disk discovery, runtime-cache checks and native edits without record mutation. Tests check implementation and numerical contracts, not biological fidelity. Hosted Ubuntu/macOS outcomes are reported by the build badge. [Mathematical contract](docs/MATHEMATICAL_MODEL.md) · [Original baseline report](results/phase1/REPORT.md).
 
 The tube experiment implements its stated numerical equations; mesh construction, initial fluctuations, demand timing and integration are documented choices. The growth experiment has additional source-equation ambiguities and explicitly labelled variants. This is not an exact Tokyo replication, calibrated biological simulator, validated Tube design or a claim of new science. The previous particle model’s local-activity metrics did not establish maintained food connectivity; it is no longer the default research view. [Research log](docs/RESEARCH_LOG.md).
 

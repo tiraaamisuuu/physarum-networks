@@ -59,6 +59,8 @@ Orange follows the shortest physical-distance path through the currently retaine
 
 **File → Save experiment design** saves editable geometry and settings. Complete dynamic records are saved separately under `results/mesh_runs/`; reopen their entire folder through **File → Open recorded tube run**. A design alone is not a saved numerical trajectory.
 
+**Saved experiments…** also finds these results without requiring a timestamped folder lookup. Give runs names, add notes/favourites, and choose a fixed comparison reference. **Compare runs** shows linked final-state maps and explicit matching conditions, with figure/CSV/JSON exports. [Experiment library guide](EXPERIMENT_LIBRARY.md).
+
 ## What this can establish
 
 This tool solves the documented pressure–flow and sigmoid tube-adaptation equations on a fixed fine mesh. It can test connectivity, obstacle avoidance, retained length and sensitivity to parameters, seeds, time step and mesh spacing. It does not guarantee a globally shortest or optimal final network.

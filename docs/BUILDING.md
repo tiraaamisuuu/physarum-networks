@@ -1,5 +1,7 @@
 # Build, run and validate
 
+The macOS `Launch Physarum.command` prepares a pinned app runtime under `~/Library/Caches/Physarum/python-<major.minor>/` using `desktop/runtime_setup.py`. A requirements/version marker and package/plugin probe allow healthy subsequent launches to skip installation. Setup is serialized on macOS/Linux and a failed installation is not marked ready. This runtime is separate from the manual `.venv` workflow below. Running `python3.14 desktop/runtime_setup.py` prints the cached interpreter path; installation progress goes to stderr. The local experiment catalog is excluded from Git and does not alter solver records.
+
 ## Build and test
 
 Requires a C++20 compiler, CMake >=3.20 and Eigen with a CMake package (tested locally with Eigen 5.0.1; hosted Ubuntu/macOS builds check their installed packages, while other versions are not assumed compatible). On macOS, `brew install eigen cmake` supplies the build dependencies if needed. No dependencies are downloaded by CMake.

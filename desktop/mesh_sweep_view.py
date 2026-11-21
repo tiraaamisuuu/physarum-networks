@@ -48,7 +48,7 @@ class SweepPanel(QWidget):
         self.values.setText({'gamma':'1.15, 1.8, 2.2','current':'0.2, 1, 2','spacing':'0.3, 0.45, 0.6','river_penalty':'0, 1, 2','dt':'0.05, 0.025, 0.0125'}[self.parameter.currentData()])
     def running(self):return self.worker is not None and self.worker.isRunning()
     def begin(self):
-        if self.running() or (self.owner.worker and self.owner.worker.isRunning()):return
+        if self.running() or (self.owner.worker and self.owner.worker.isRunning()) or self.owner.library.loading():return
         try:
             values=[float(x.strip()) for x in self.values.text().split(',')];seeds=[int(x.strip()) for x in self.seeds.text().split(',')]
             settings=self.owner.settings();parameter=self.parameter.currentData();sweep_plan(settings,parameter,values,seeds)
@@ -85,7 +85,7 @@ class SweepPanel(QWidget):
         worker=self.worker;self.worker=None
         if worker:worker.deleteLater()
         for widget in (self.start,self.parameter,self.values,self.seeds):widget.setEnabled(True)
-        self.cancel_button.setEnabled(False);self.owner.compute_button.setEnabled(True)
+        self.cancel_button.setEnabled(False);self.owner.draft()
         if self.owner.closing:self.owner.close()
     def open_selected(self):
         row=self.table.currentRow()

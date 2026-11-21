@@ -8,10 +8,12 @@ from matplotlib.collections import LineCollection
 from matplotlib.figure import Figure
 from matplotlib.patches import Rectangle
 try:
+    from .experiment_catalog import validate_note,record_key
     from .scene_design import scene_title,scene_credit,is_sandbox
     from .map_labels import FoodLabels
     from .mesh_data import DEFAULT_CUTOFF, mesh_metrics,archive_source_snapshot,solver_extrema
 except ImportError:
+    from experiment_catalog import validate_note,record_key
     from scene_design import scene_title,scene_credit,is_sandbox
     from map_labels import FoodLabels
     from mesh_data import DEFAULT_CUTOFF, mesh_metrics,archive_source_snapshot,solver_extrema
@@ -71,10 +73,14 @@ def snapshot_figure(run,index,cutoff=DEFAULT_CUTOFF,names=False,route=None):
     return figure
 
 
-def export_snapshot(run,index,folder,cutoff=DEFAULT_CUTOFF,names=False,route=None):
+def export_snapshot(run,index,folder,cutoff=DEFAULT_CUTOFF,names=False,route=None,annotation=None):
     folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)
     if route is None:(folder/'route.csv').unlink(missing_ok=True)
     metrics=mesh_metrics(run,index,cutoff,True)
+    note=validate_note(annotation or {})
+    if note['title'] or note['notes'] or note['favorite']:
+        (folder/'experiment-notes.json').write_text(json.dumps(dict(schema_version=1,scenario_sha256=record_key(run),annotation=note,interpretation='User annotations, separate from numerical evidence.'),indent=2,ensure_ascii=False)+'\n')
+    else:(folder/'experiment-notes.json').unlink(missing_ok=True)
     record=dict(model='Tero_2010_sigmoid_mesh_v1',integration_method=run.settings.get('integrator','euler'),run_folder=str(run.folder.resolve()),state=index,time=float(run.times[index]),settings=run.settings,metrics=metrics,solver_extrema=solver_extrema(run),
         interpretation='Cutoff defines this measured/displayed graph only; all numerical D are unchanged. Single-break survival assumes one break uniformly along retained physical length; it is not the paper’s fault-tolerance statistic. Terminal MST is a reference, not a Steiner lower bound.')
     record['coordinate_reference']='local_km' if is_sandbox(run.scene) else 'EPSG:27700 / km'
